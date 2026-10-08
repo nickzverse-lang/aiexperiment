@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Survey Chart Builder</title>
+<style>
+  :root { --bg:#fafaf8; --fg:#1a1a1a; --muted:#6b6b6b; --bar:#1f4fd8; --track:#e8e8e4; --card:#fff; --line:#e2e2dd; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121212; --fg:#eee; --muted:#9a9a9a; --bar:#6d8dff; --track:#2a2a2a; --card:#1b1b1b; --line:#2c2c2c; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; }
+  main { max-width:900px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:22px; margin:0 0 4px; } p { color:var(--muted); margin:0 0 16px; }
+  textarea { width:100%; box-sizing:border-box; height:160px; font:13px monospace; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--fg); }
+  label { display:flex; gap:8px; align-items:center; color:var(--muted); margin:10px 0; }
+  button { background:var(--bar); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-weight:600; cursor:pointer; }
+  .chart { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-top:16px; }
+  .chart h2 { font-size:15px; margin:0 0 4px; } .n { color:var(--muted); font-size:12px; margin-bottom:12px; }
+  .row { display:grid; grid-template-columns:minmax(120px,38%) 1fr 64px; gap:10px; align-items:center; margin:6px 0; font-size:13px; }
+  .track { background:var(--track); border-radius:4px; height:14px; } .fill { background:var(--bar); height:100%; border-radius:4px; }
+  .val { text-align:right; font-variant-numeric:tabular-nums; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Survey Chart Builder</h1>
+  <p>Google Forms → Responses → ⋮ → Download responses (.csv). Paste the CSV below. Multi-select answers (comma-separated) are counted per option. Each chart shows the % of respondents.</p>
+  <textarea id="csv" placeholder="Paste CSV here…"></textarea>
+  <label><input type="checkbox" id="skipFirst" checked> Skip first column (Timestamp)</label>
+  <button id="go">Build charts</button>
+  <div id="out"></div>
+</main>
+<script>
+function parseCSV(text) {
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i+1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i+1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(v => v.trim()));
+}
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+document.getElementById('go').onclick = () => {
+  const rows = parseCSV(document.getElementById('csv').value);
+  const out = document.getElementById('out'); out.innerHTML = '';
+  if (rows.length < 2) { out.append(el('p', null, 'Need a header row plus at least one response.')); return; }
+  const [head, ...data] = rows;
+  head.forEach((h, col) => {
+    if (col === 0 && document.getElementById('skipFirst').checked) return;
+    const counts = new Map(); let answered = 0;
+    data.forEach(r => {
+      const v = (r[col] || '').trim(); if (!v) return; answered++;
+      v.split(/,\s+/).forEach(opt => counts.set(opt, (counts.get(opt) || 0) + 1));
+    });
+    if (!answered || counts.size > 15) return; // skip empty and open-ended text questions
+    const card = el('div', 'chart');
+    card.append(el('h2', null, h), el('div', 'n', `n = ${answered} respondents`));
+    [...counts.entries()].sort((a, b) => b[1] - a[1]).forEach(([k, c]) => {
+      const pct = Math.round(c / answered * 100);
+      const row = el('div', 'row'); const track = el('div', 'track'); const fill = el('div', 'fill');
+      fill.style.width = pct + '%'; track.append(fill);
+      row.append(el('div', null, k), track, el('div', 'val', `${pct}% (${c})`));
+      card.append(row);
+    });
+    out.append(card);
+  });
+};
+</script>
+</body>
+</html>
