@@ -34,6 +34,7 @@
 | **Creative fatigue** | Performance drops as frequency rises (often flagged above ~3 frequency, or after weeks 3–4 of prospecting) | A pipeline of fresh variations is needed, and the team needs to know *when* to refresh |
 
 **Key benchmark signals (directional):**
+
 - Fashion brands: **Reels ~1.9% engagement vs ~0.8%** for carousels/static, and higher reach per post (Dash Social fashion data via NetInfluencer).
 - All industries / large accounts: **carousels often win** on engagement and reach (Socialinsider 2026; Dash Social H2 2025).
 - Engagement is **declining year on year** across formats (Socialinsider).
@@ -44,6 +45,7 @@
 
 ### 3.4 Content taxonomy (working vocabulary for the project)
 **Organic formats & IPs (recurring series):**
+
 | IP / format | Description | Typical goal |
 |---|---|---|
 | Drop Countdown | Teasers, close-ups, "3 days left" | Hype, notify |
@@ -58,6 +60,7 @@
 | Founder POV | Story behind a collection | Trust, recall |
 
 **Paid (Meta ads) creative angles:**
+
 | Angle | Example |
 |---|---|
 | Scarcity / Drop | "Drops Friday 8 PM. Limited units." |

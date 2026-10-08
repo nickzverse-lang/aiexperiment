@@ -61,6 +61,7 @@
 | **S5: The Partner** | Agency, freelancer, creator | Deliver what the brand wants | Varies | Brand DNA + brief |
 
 **Audience segmentation (for content taxonomy, not product users):**
+
 | Segment | Description | Content they likely respond to |
 |---|---|---|
 | Hype Hunters | Follow drops, buy fast, resell-aware | Countdowns, scarcity, drop alerts |
@@ -77,12 +78,14 @@
 *Intro:* "I'm a design student researching how fashion brands decide what content to create. 10 minutes, anonymous."
 
 **Section 1: About you**
+
 1. Your role? *(Social media manager / Content strategist / Cinematographer-photographer / Editor / Performance marketer / Founder / Agency / Other)*
 2. Brand type? *(Streetwear / Premium fashion / Mass fashion / Other D2C)*
 3. Team size? *(1–3 / 4–10 / 11–25 / 25+)*
 4. Years of experience? *(<1 / 1–3 / 3–5 / 5+)*
 
 **Section 2: How you decide content**
+
 5. How do you mainly decide what content to make? *(multi-select: Gut/experience · Trends/audio · Competitors · Past performance data · Founder/manager decides · Agency suggests · Audience comments/DMs)*
 6. How often do you look at content performance data? *(Daily / Weekly / Monthly / Rarely / Never)*
 7. When you look at data, do you use it to plan the next content? *(Always / Often / Sometimes / Rarely / Never)*
@@ -91,6 +94,7 @@
 10. Rate (1–5): "Coming up with fresh content ideas every week is hard."
 
 **Section 3: Organic ↔ paid**
+
 11. How often are your best organic posts turned into ads? *(Always … Never)*
 12. Rate (1–5): "Organic and paid teams plan content together."
 13. *(Perf. marketers)* How many new ad creatives do you test per month? *(0–2 / 3–5 / 6–10 / 10+)*
@@ -98,11 +102,13 @@
 15. How do you notice an ad is fatigued? *(open)*
 
 **Section 4: Brief & production**
+
 16. How are content briefs usually shared? *(Verbal · WhatsApp · Doc/Notion · Deck · No brief)*
 17. How often do vague briefs cause re-shoots or re-edits? *(Very often … Never)*
 18. Rate (1–5): "Drop weeks are stressful for content."
 
 **Section 5: Pain & wishes**
+
 19. Rank your top 3 problems: *(Idea block · Not knowing what works · Too little time · Too few ad variations · Unclear briefs · Approval delays · Staying on-brand · Reporting takes time)*
 20. Would you trust content suggestions from an AI tool? *(Yes / Only if it explains why / Only as inspiration / No)*
 21. What must such a tool NEVER do? *(open)*
@@ -252,6 +258,7 @@ Make these charts from your Google Forms export (Forms → Responses → Sheets,
 **End goal:** a tested hi-fi prototype of BLUPRINT (web dashboard + mobile companion) and a design system.
 
 **Modules in scope:**
+
 1. **Pulse (Insights):** what worked and why, by content type.
 2. **Ideas (Recommendations):** organic IPs & formats, paid angles & hooks.
 3. **Briefs:** auto-generated shot lists, references, ratios, captions.

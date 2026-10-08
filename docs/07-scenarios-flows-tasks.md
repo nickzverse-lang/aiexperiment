@@ -26,6 +26,7 @@ At T+7, BLUPRINT's **Pulse** digest says: "Creator try-on ads had **38% lower CP
 *Draw these as 6-frame comic strips (pen sketches are fine for jury).*
 
 **Storyboard 1: "From idea block to drop plan" (Ria)**
+
 | Frame | Visual | Caption |
 |---|---|---|
 | 1 | Ria staring at a blank Notion page, phone buzzing with "drop in 12 days" | Idea block before a drop |
@@ -36,6 +37,7 @@ At T+7, BLUPRINT's **Pulse** digest says: "Creator try-on ads had **38% lower CP
 | 6 | Ria relaxed; founder replies "Approved 🔥" | Confident, fast, on-brand |
 
 **Storyboard 2: "One shoot, twelve ads" (Arjun + Kabir)**
+
 | Frame | Visual | Caption |
 |---|---|---|
 | 1 | Arjun looking at 3 near-identical ads, frequency 4.2 | Creative fatigue |

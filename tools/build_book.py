@@ -1,16 +1,21 @@
-"""Build docs/bluprint-project-book.html from docs/0*.md plus the drawn figures in tools/book/.
+"""Build docs/bluprint-project-book.html from docs/0*.md plus the layout and figures in tools/book/.
 
-Run: python3 tools/build_book.py   (needs: pip install markdown)
+Run:  python3 tools/build_book.py                       (needs: pip install markdown)
+      python3 tools/build_book.py --local DEPS OUT.html (offline copy for PDF export; DEPS is an npm folder with
+                                                         three, @fontsource-variable/archivo, @fontsource/geist-sans, @fontsource/geist-mono)
 """
+import base64
 import html
 import pathlib
 import re
+import sys
 
 import markdown
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BOOK = ROOT / "tools" / "book"
 OUT = ROOT / "docs" / "bluprint-project-book.html"
+THREE_CDN = "https://cdn.jsdelivr.net/npm/three@0.160.0/"
 
 CHAPTERS = [
     ("Brief", "The brief", "What we're building, who it's for, and the 20-week plan to get there.",
@@ -59,6 +64,14 @@ def load_figures():
     return {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
 
 
+def load_logos():
+    logos = {}
+    for f in (BOOK / "brand").glob("*.svg"):
+        svg = f.read_text().replace('<svg xmlns="http://www.w3.org/2000/svg"', '<svg class="logo" aria-hidden="true" focusable="false"')
+        logos[f"{{{{SVG_{f.stem}}}}}"] = svg
+    return logos
+
+
 def clean(md):
     md = md.replace("✅", "Yes").replace("❌", "No")
     md = re.sub(r"[\U0001F300-\U0001FAFF☀-➿️]\s?", "", md)
@@ -69,8 +82,7 @@ def clean(md):
 def apply_sections(h, figs):
     heads = [(m.start(), m.end(), int(m.group(1)), re.sub("<[^>]+>", "", m.group(2)).strip())
              for m in re.finditer(r"<h([23])>(.*?)</h\1>", h)]
-    out, pos = [], 0
-    skip_until = None
+    out, pos, skip_until = [], 0, None
     for i, (s, e, lvl, text) in enumerate(heads):
         if skip_until is not None and s < skip_until:
             continue
@@ -93,33 +105,65 @@ def apply_sections(h, figs):
     return "".join(out)
 
 
-def main():
+def font_faces(deps):
+    fs = pathlib.Path(deps) / "node_modules"
+    faces = [("Archivo", fs / "@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2", "100 900", "font-stretch: 62% 125%;")]
+    for w in (400, 500, 600):
+        faces.append(("Geist", fs / f"@fontsource/geist-sans/files/geist-sans-latin-{w}-normal.woff2", str(w), ""))
+    for w in (400, 500):
+        faces.append(("Geist Mono", fs / f"@fontsource/geist-mono/files/geist-mono-latin-{w}-normal.woff2", str(w), ""))
+    rules = "".join(f'@font-face {{ font-family: "{n}"; src: url("{p}") format("woff2"); font-weight: {w}; {extra} }}\n'
+                    for n, p, w, extra in faces)
+    return f"<style>\n{rules}</style>"
+
+
+def build(local_deps=None):
     figs = load_figures()
+    logos = load_logos()
     files = sorted((ROOT / "docs").glob("0*.md"))
     mermaid = iter(MERMAID)
-    nav, chapters = [], []
+    nav, coll, foot, chapters = [], [], [], []
     for i, (f, (short, title, summary, stages)) in enumerate(zip(files, CHAPTERS), 1):
         md = clean(re.sub(r"^# .+\n", "", f.read_text(), count=1))
         h = markdown.markdown(md, extensions=["tables", "fenced_code", "sane_lists"])
-        h = re.sub(r'<pre><code class="language-mermaid">.*?</code></pre>',
-                   lambda m: figs.get(next(mermaid), ""), h, flags=re.S)
+        h = re.sub(r'<pre><code class="language-mermaid">.*?</code></pre>', lambda m: figs.get(next(mermaid), ""), h, flags=re.S)
         h = apply_sections(h, figs)
         h = re.sub(r"<table>", '<div class="table-wrap"><table>', h).replace("</table>", "</table></div>")
         h = h.replace("<hr />", "")
         h = h.replace("<td>Yes", '<td><span class="ok">Yes</span>').replace("<td>No</td>", '<td><span class="no">No</span></td>')
-        sid = f"part{i}"
-        nav.append(f'      <a href="#{sid}">{short}</a>')
+        sid, t = f"part{i}", html.escape(title)
+        nav.append(f'    <a href="#{sid}">{short}</a>')
+        render = base64.b64encode((BOOK / "renders" / f"mark-{i}.webp").read_bytes()).decode()
+        coll.append(f'      <a href="#{sid}"><span class="num">Part 0{i}</span><span class="r3d"><img src="data:image/webp;base64,{render}" alt=""></span>'
+                    f'<div><h3>{t}</h3><div class="ct">{len(stages)} stages</div></div></a>')
+        foot.append(f'<li><a href="#{sid}">{t}</a></li>')
         chips = "".join(f"<span>{html.escape(s)}</span>" for s in stages)
         chapters.append(
             f'<section class="band chapter" id="{sid}"><div class="wrap">'
-            f'<div class="band-head"><div><p class="eyebrow">Part {i} of 8</p><h2>{html.escape(title)}</h2></div>'
+            f'<p class="crumbs-store">Home / The collection / <b>Part 0{i}</b></p>'
+            f'<div class="sec-head"><div><h2>{t}</h2><span class="count">{len(stages)} stages</span></div>'
             f'<div><p>{html.escape(summary)}</p><div class="stage-chips">{chips}</div></div></div>'
             f'<div class="doc">{h}</div></div></section>')
     page = (BOOK / "template.html").read_text()
-    page = page.replace("{{NAV}}", "\n".join(nav)).replace("{{CHAPTERS}}", "\n".join(chapters))
-    OUT.write_text(page)
-    print(OUT, len(page))
+    page = (page.replace("{{NAV}}", "\n".join(nav)).replace("{{COLL}}", "\n".join(coll))
+                .replace("{{FOOTNAV}}", "".join(foot)).replace("{{CHAPTERS}}", "\n".join(chapters)))
+    if local_deps:
+        three = str(pathlib.Path(local_deps) / "node_modules" / "three") + "/"
+        page = page.replace("{{FONTFACE}}", font_faces(local_deps))
+    else:
+        three = THREE_CDN
+        page = page.replace("{{FONTFACE}}\n", "")
+    page = page.replace("{{THREE}}", three + "build/three.module.js").replace("{{THREE_ADDONS}}", three + "examples/jsm/")
+    for k, v in logos.items():
+        page = page.replace(k, v)
+    assert "{{" not in page, re.findall(r"\{\{\w+\}\}", page)
+    return page
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 4 and sys.argv[1] == "--local":
+        out, page = pathlib.Path(sys.argv[3]), build(sys.argv[2])
+    else:
+        out, page = OUT, build()
+    out.write_text(page)
+    print(out, len(page))

@@ -102,6 +102,7 @@ flowchart LR
 ```
 
 **Observations:**
+
 1. **Broken feedback loop:** measurement data rarely flows back into ideation in a structured way.
 2. **Organic ↔ paid silo:** the organic team and the performance marketer use different tools and metrics, and organic winners are rarely promoted systematically.
 3. **Single point of decision:** founder approval is the bottleneck, and the criteria are taste-based and undocumented.

@@ -128,6 +128,7 @@ journey
 > *Content teams at drop-led fashion brands like BLUORNG lack a connected, brand-aware system that turns their own organic and paid performance data into clear, explainable ideas and shootable briefs. This leads to guess-based content, repetitive ads, wasted production and spend, and weak learning between drops.*
 
 **How Might We…**
+
 1. HMW help the team understand *why* a piece of content worked, by type, not just by number?
 2. HMW turn insights into fresh, on-brand ideas for Instagram series/IPs?
 3. HMW help performance marketers plan diverse ad angles *before* the shoot?

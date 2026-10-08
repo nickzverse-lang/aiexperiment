@@ -18,6 +18,7 @@
 
 ### 1.3 Background
 BLUORNG grew from an Instagram-first niche label into a fast-rising fashion brand. Its content is a mix of:
+
 - **Organic content:** drop teasers, lookbooks, campaign films, behind-the-scenes, store-launch content, collaborations, community/culture posts.
 - **Inorganic (paid) content:** Meta ads (Instagram + Facebook) for drops, retargeting, store footfall and evergreen products.
 

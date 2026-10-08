@@ -16,8 +16,11 @@
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
 ## Project book
-- [`docs/bluprint-project-book.html`](docs/bluprint-project-book.html): all 8 parts on one designed page with product screens and drawn figures.
-- Rebuild it after editing the Markdown: `pip install markdown && python3 tools/build_book.py` (layout in `tools/book/template.html`, figures in `tools/book/graphics.html`).
+- [`docs/bluprint-project-book.html`](docs/bluprint-project-book.html): all 8 parts as one page in BLUORNG's monochrome store style, with the BG mark in 3D, product screens and drawn figures.
+- [`docs/bluprint-project-book.pdf`](docs/bluprint-project-book.pdf): the same book as a 40-page PDF.
+- Rebuild the page after editing the Markdown: `pip install markdown && python3 tools/build_book.py`.
+- Rebuild the PDF: install `three@0.160.0 @fontsource-variable/archivo @fontsource/geist-sans @fontsource/geist-mono` into a folder, run `python3 tools/build_book.py --local <folder> <out>.html`, wrap it in a document, serve `/` over http and run `node tools/make_pdf.js <url> docs/bluprint-project-book.pdf` (needs Playwright).
+- Layout: `tools/book/template.html`. Figures: `tools/book/graphics.html`. Traced logos: `tools/book/brand/` (from `tools/trace_logos.py`). 3D renders for the chapter tiles: `tools/book/renders/`.
 
 ## Tools
 - [`research/chart-builder.html`](research/chart-builder.html): open it in a browser and paste your Google Forms CSV export to get a bar chart per question (for the research report).
