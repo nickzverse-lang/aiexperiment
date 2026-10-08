@@ -4,7 +4,7 @@
 
 ## 19. Ideation Techniques
 
-### 19.1 Brainstorming (HMW-driven, 40+ raw ideas)
+### 19.1 Brainstorming (HMW-driven, 35 ideas)
 | HMW | Ideas |
 |---|---|
 | **HMW1** understand *why* content worked | Auto-tag every post by format/IP/hook/emotion · "Why it worked" cards · Compare to own median · Hook heatmap (retention curve) · Weekly AI digest on WhatsApp · Leaderboard of IPs · "Content DNA" fingerprint per post |

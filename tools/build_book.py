@@ -28,7 +28,7 @@ CHAPTERS = [
      ["Research plan", "Segmentation", "Questionnaires", "Interviews", "Focus group", "Ethnography", "Report", "Inferences"]),
     ("Synthesis", "People and problem", "Who we design for, how their week feels today, and the problem in one sentence.",
      ["Personas", "Empathy maps", "Journey map", "Problem statement", "Design goals"]),
-    ("Ideation", "Ideas to direction", "From forty-plus raw ideas to three concepts, then one direction with a reason.",
+    ("Ideation", "Ideas to direction", "From 50 raw ideas (35 brainstormed, 7 from SCAMPER, 8 sketches) to three concepts, then one direction with a reason.",
      ["Brainstorming", "Brainwriting", "SCAMPER", "Space saturation", "Bullseye", "Priority matrix", "3 concepts", "Final selection"]),
     ("Flows", "Scenarios and flows", "How each person moves through BLUPRINT, step by step.",
      ["User scenarios", "Storyboards", "User flows", "Task flows", "Task analysis", "Feature mapping"]),
@@ -37,31 +37,83 @@ CHAPTERS = [
 ]
 
 # mermaid block order across all docs -> figure key ("" drops the block; a section override draws it instead)
-MERMAID = ["timeline", "", "asis", "tobe", "", "", "", "userflow", "tf-brief", "tf-promote", "tf-approve", "sitemap", "loop"]
+MERMAID = ["", "", "asis", "tobe", "", "", "", "userflow", "tf-brief", "tf-promote", "tf-approve", "sitemap", "loop"]
 
 # heading text prefix -> (mode, figure key, end heading prefix or None)
 # replace: keep the heading, swap its body for the figure until the next heading of the same or higher level (or `end`)
 # prepend: keep the heading and body, put the figure right after the heading
 SECTIONS = {
+    "1.6 Objectives": ("replace", "objectives", None),
+    "1.7 Scope": ("replace", "scope", None),
+    "1.8 Expected": ("replace", "outcome", None),
+    "1.9 Methodology": ("replace", "method", None),
+    "1.10 Why": ("replace", "value", None),
+    "2. Project Timeline": ("replace", "timeline-sec", None),
+    "3.1 The brand": ("replace", "brand", None),
+    "3.2 The market": ("replace", "market", None),
+    "3.3 The platform": ("replace", "platforms", None),
+    "3.4 Content taxonomy": ("replace", "taxonomy", None),
+    "3.5 Existing tools": ("replace", "tools", None),
+    "4. Literature Review": ("replace", "lit", "4.1"),
+    "4.1 Literature synthesis": ("replace", "synth", None),
     "5.1": ("replace", "onion", None),
     "5.2": ("replace", "power", None),
     "7.1": ("replace", "tree", None),
+    "7.2 Problem clusters": ("replace", "clusters", None),
+    "7.3 5 Whys": ("replace", "whys", None),
+    "8.2 Target users": ("replace", "targets", None),
+    "9.1 Research questions": ("replace", "rq", None),
+    "9.2 Hypotheses": ("replace", "hyp", None),
+    "9.3 Methods": ("replace", "methods", None),
+    "9.4 Ethics": ("replace", "ethics", None),
+    "10.2 Segmentation": ("replace", "segments", None),
+    "11. Research Instruments": ("prepend", "instr", None),
+    "11.2 Survey B": ("prepend", "surveymock", None),
+    "12.2 Data representation": ("replace", "slots", None),
+    "12.6 Priority areas": ("replace", "priority", None),
+    "13.2 Defining": ("replace", "rebrief", None),
+    "13.4 Environment": ("replace", "context", None),
     "14. Personas": ("replace", "personas", None),
     "15. Empathy Maps": ("replace", "empathy", None),
     "16. User Journey Map": ("replace", "journey", None),
+    "17. Problem Statement": ("replace", "statement", None),
+    "18. Defined Design Goals": ("replace", "goals", None),
+    "19.1 Brainstorming": ("replace", "brainstorm", None),
+    "19.2 Brainwriting": ("replace", "brainwriting", None),
+    "19.3 SCAMPER": ("replace", "scamper", None),
+    "19.4 Space Saturation": ("replace", "saturation", None),
+    "19.5 Crazy 8s": ("replace", "crazy8", None),
     "20.1": ("replace", "bullseye", None),
     "20.2": ("replace", "matrix", None),
     "21. Three Concepts": ("replace", "concepts", "21.1"),
-    "21.1": ("prepend", "scores", None),
+    "21.1": ("replace", "scores2", None),
     "22. Final Concept": ("prepend", "venn", None),
+    "23. User Scenarios": ("replace", "scenarios", None),
+    "24. Storyboards": ("replace", "storyboards", None),
+    "26.2 Task table": ("replace", "tasks", None),
+    "27. Feature Mapping": ("replace", "features", None),
+    "28.1 Content goals": ("replace", "cgoals", None),
+    "28.2 Content inventory": ("replace", "inventory", None),
+    "28.3 Content types": ("replace", "ctypes", None),
+    "28.4 Voice": ("replace", "voice", None),
+    "29.1 Organisation schemes": ("replace", "schemes", None),
+    "29.2 Card sorting": ("replace", "cardsort", None),
     "31. Navigation": ("prepend", "navmock", None),
+    "32. Labeling": ("replace", "labels", None),
+    "33.3 Core modules": ("replace", "modules", None),
+    "33.4 Platforms": ("replace", "devices", None),
+    "33.5 Value summary": ("replace", "valuesum", None),
+    "33.6 Next stages": ("replace", "nextsteps", None),
 }
 
 
 def load_figures():
     text = (BOOK / "graphics.html").read_text()
     parts = re.split(r"<!-- @@([\w-]+) -->\n", text)
-    return {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
+    figs = {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
+    for k, v in figs.items():
+        figs[k] = re.sub(r"\{\{FIG:([\w-]+)\}\}", lambda m: figs[m.group(1)], v)
+    return figs
 
 
 def load_logos():

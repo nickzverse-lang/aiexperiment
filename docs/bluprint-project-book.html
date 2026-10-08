@@ -471,6 +471,146 @@ svg text { font-family: var(--body); }
 .tabbar span.on { color: var(--ink); }
 .tabbar .plus { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; margin-top: -6px; }
 
+
+/* ---------- data + graphic blocks ---------- */
+.tiles { display: grid; gap: 10px; margin: 20px 0 32px; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+.tiles.c2 { --cols: 2; } .tiles.c4 { --cols: 4; } .tiles.c5 { --cols: 5; }
+.t { background: var(--bg-2); padding: 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.t.dk { background: var(--ink); color: var(--bg); } .t.dk p, .t.dk li { color: #bdbdbd; } .t.dk .k { color: #9b9b9b; }
+.t.dash { background: transparent; border: 1.5px dashed var(--line); }
+.t .k { font: 700 10px/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.t .n { font: 800 clamp(28px, 3vw, 40px)/1 var(--display); letter-spacing: -0.02em; }
+.t .n small { font-size: .45em; letter-spacing: 0; color: var(--muted); font-weight: 600; }
+.t h5 { margin: 0; font: 800 14px/1.25 var(--display); letter-spacing: .04em; text-transform: uppercase; }
+.t p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); max-width: none; }
+.t ul { margin: 0; padding-left: 16px; display: grid; gap: 4px; } .doc .t li { margin: 0; font-size: 13px; max-width: none; }
+.t .ico { width: 22px; height: 22px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { font: 600 10px/1.1 var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 7px 9px; border: 1px solid var(--line); color: var(--ink); background: var(--bg); }
+.chips span.f { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chips span.d { border-style: dashed; color: var(--muted); }
+.t.dk .chips span { background: transparent; color: #f4f4f4; border-color: #3a3a3a; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 20px 0 32px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 20px 0 32px; }
+.panel { background: var(--bg-2); padding: 22px; min-width: 0; }
+.chart-t { font: 700 11px/1.35 var(--display); letter-spacing: .12em; text-transform: uppercase; margin: 0 0 18px; color: var(--ink); }
+.chart-s { font: 500 10px/1.4 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 0; }
+.hb { display: grid; gap: 12px; }
+.hb-row { display: grid; grid-template-columns: minmax(80px, 140px) minmax(0, 1fr) 76px; gap: 12px; align-items: center; font-size: 13px; color: var(--ink-2); }
+.hb-row .tr { height: 14px; background: var(--bg); position: relative; }
+.hb-row .tr i { position: absolute; inset: 0 auto 0 0; background: var(--ink); border-radius: 0 3px 3px 0; }
+.hb-row .tr i.g { background: #9d9d9d; }
+.hb-row b { font: 600 13px/1 var(--mono); text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.vb { display: flex; align-items: flex-end; gap: 28px; height: 210px; padding: 0 8px; border-bottom: 1.5px solid var(--ink); }
+.vb .c { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 10px; }
+.vb .c b { font: 800 24px/1 var(--display); color: var(--ink); }
+.vb .c i { display: block; width: 100%; max-width: 120px; background: var(--ink); border-radius: 3px 3px 0 0; }
+.vb .c i.g { background: #a6a6a6; }
+.vb-l { display: flex; gap: 28px; padding: 10px 8px 0; }
+.vb-l span { flex: 1; text-align: center; font: 600 10px/1.35 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.callout { margin: 20px 0 32px; padding: 22px 26px; background: var(--ink); color: var(--bg); font: 700 clamp(16px, 1.6vw, 20px)/1.35 var(--display); letter-spacing: -0.005em; }
+.callout small { display: block; font: 600 10px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #9b9b9b; margin-bottom: 10px; }
+.mx { display: grid; min-width: 760px; font-size: 13px; }
+.mx > div { padding: 11px 10px; border-bottom: 1px solid var(--line); color: var(--ink-2); display: flex; align-items: center; }
+.mx > .h { font: 700 9.5px/1.25 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom-color: var(--ink); }
+.mx > .c { justify-content: center; }
+.mx > .nm { color: var(--ink); font-weight: 600; }
+.mx > .me { background: var(--ink); color: var(--bg); border-bottom-color: var(--ink); }
+.dt { width: 13px; height: 13px; border-radius: 50%; display: inline-block; border: 1.5px solid var(--ink); }
+.dt.f { background: var(--ink); } .dt.h { background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); } .dt.o { border-color: var(--line); }
+.mx > .me .dt { border-color: #f4f4f4; } .mx > .me .dt.f { background: #f4f4f4; }
+.hm { width: 100%; border-collapse: collapse; min-width: 560px; }
+.hm th, .hm td { padding: 11px 12px; font-size: 13px; text-align: left; border-bottom: 1px solid var(--bg); }
+.hm th { font: 700 9.5px/1.25 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.hm td.s { text-align: center; font: 700 14px/1 var(--mono); width: 90px; }
+.s1 { background: #efefef; color: #0b0b0b; } .s2 { background: #d2d2d2; color: #0b0b0b; } .s3 { background: #a1a1a1; color: #0b0b0b; } .s4 { background: #575757; color: #fff; } .s5 { background: #0b0b0b; color: #fff; }
+.hm tr.tot td { border-top: 1.5px solid var(--ink); font-weight: 700; color: var(--ink); }
+.ladder { display: grid; gap: 8px; margin: 20px 0 32px; }
+.ladder > div { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--bg-2); font-size: 14px; color: var(--ink-2); }
+.ladder b { font: 800 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.ladder > div.root { background: var(--ink); color: var(--bg); } .ladder > div.root b { color: #9b9b9b; }
+.rank { display: grid; margin: 20px 0 32px; }
+.rank > div { display: grid; grid-template-columns: 60px minmax(0, 1.2fr) 28px minmax(0, 1fr); gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.rank .no { font: 800 40px/1 var(--display); color: var(--ink); }
+.rank h6 { margin: 0 0 4px; font: 800 13px/1.3 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.rank p { margin: 0; font-size: 13px; color: var(--muted); }
+.rank .rs { font-size: 13.5px; color: var(--ink); font-weight: 500; }
+.ba { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: stretch; margin: 20px 0 32px; }
+.ba .arrow-r { font-size: 22px; }
+.rhythm { display: grid; grid-template-columns: 150px repeat(8, minmax(0, 1fr)); row-gap: 8px; align-items: center; min-width: 640px; font-size: 12.5px; }
+.rhythm .wk { font: 500 10px/1 var(--mono); color: var(--muted); text-align: center; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.rhythm .rl { grid-column: 1; color: var(--ink); font-weight: 500; }
+.rhythm .m { justify-self: center; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+.rhythm .m.o { background: transparent; border: 2px solid var(--ink); }
+.rhythm .dw { height: 22px; background: var(--ink); color: var(--bg); font: 700 9px/22px var(--display); letter-spacing: .12em; text-align: center; text-transform: uppercase; }
+.strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin: 16px 0 34px; }
+.frame { background: var(--bg-2); padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.frame svg { width: 100%; height: auto; display: block; background: var(--bg); }
+.frame .cap { font-size: 12px; line-height: 1.4; color: var(--ink-2); }
+.frame .cap b { display: block; font: 800 10px/1 var(--mono); color: var(--muted); margin-bottom: 4px; }
+.sk-l { stroke: var(--ink); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sk-f { fill: var(--ink); } .sk-g { fill: #d9d9d9; } .sk-g2 { fill: #ededed; } .sk-r { fill: none; stroke: var(--heat); stroke-width: 2; stroke-dasharray: 4 3; }
+.c8 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 16px 0 34px; }
+.c8 .frame svg { aspect-ratio: 4 / 3; }
+.fb { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 10px; min-width: 820px; }
+.fb .col h6 { margin: 0 0 10px; padding: 10px 12px; background: var(--ink); color: var(--bg); font: 800 11px/1.2 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+.fb .ft { padding: 10px 12px; margin-bottom: 6px; background: var(--bg); border: 1.5px solid var(--ink); font-size: 12.5px; line-height: 1.35; color: var(--ink); }
+.fb .ft.sh { border-color: var(--line); } .fb .ft.co { border-style: dashed; border-color: var(--line); color: var(--muted); }
+.fb .ft small { display: block; margin-top: 6px; font: 600 9px/1 var(--display); letter-spacing: .1em; color: var(--muted); }
+.legend-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 16px; font: 600 10px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.legend-row i { display: inline-block; width: 18px; height: 12px; margin-right: 6px; vertical-align: -2px; border: 1.5px solid var(--ink); }
+.legend-row i.sh { border-color: var(--line); } .legend-row i.co { border-style: dashed; border-color: var(--line); } .legend-row i.fl { background: var(--ink); }
+.yr { position: relative; height: 54px; margin: 8px 0 18px; border-bottom: 1.5px solid var(--ink); }
+.yr span { position: absolute; bottom: -6px; width: 11px; height: 11px; border-radius: 50%; background: var(--ink); transform: translateX(-50%); }
+.yr span.s2 { bottom: 8px; } .yr span.s3 { bottom: 22px; }
+.yr-l { position: relative; height: 18px; font: 500 10px/1 var(--mono); color: var(--muted); }
+.yr-l span { position: absolute; transform: translateX(-50%); }
+.lit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 32px; }
+.lit .t .n { font-size: 26px; }
+.objm { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; min-width: 900px; align-items: stretch; }
+.objm .ob { position: relative; padding: 14px; background: var(--bg); border: 1.5px solid var(--ink); margin-right: 18px; font-size: 12.5px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+.objm .ob:not(:last-child)::after { content: "→"; position: absolute; right: -16px; top: 50%; transform: translateY(-50%); color: var(--ink); font-size: 14px; }
+.objm .ob h6 { margin: 0; font: 800 12px/1.2 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.objm .ob small { font: 600 9px/1.3 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.side-obj { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; min-width: 900px; }
+.phones2 { display: grid; grid-template-columns: repeat(2, minmax(0, 260px)); gap: 28px; justify-content: center; }
+.form-q { padding: 10px 14px; display: grid; gap: 8px; }
+.form-q .q { font-weight: 600; color: var(--ink); line-height: 1.35; }
+.form-q label { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2); }
+.form-q label i { width: 14px; height: 14px; border: 1.5px solid var(--ink); flex: none; }
+.form-q label i.on { background: var(--ink); }
+.likert { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.likert span { aspect-ratio: 1; border: 1.5px solid var(--ink); display: grid; place-items: center; font: 700 12px/1 var(--mono); }
+.likert span.on { background: var(--ink); color: var(--bg); }
+.likert-l { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); }
+.slots { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 20px 0 32px; }
+.slot { border: 1.5px dashed var(--line); padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.slot .gh { height: 70px; display: flex; align-items: flex-end; gap: 5px; border-bottom: 1px solid var(--line); }
+.slot .gh i { flex: 1; background: repeating-linear-gradient(135deg, #d6d6d6 0 2px, transparent 2px 6px); }
+.slot .gh.h { flex-direction: column; align-items: stretch; justify-content: center; border-bottom: 0; border-left: 1px solid var(--line); }
+.slot .gh.h i { flex: none; height: 9px; }
+.slot .gh.p { align-items: center; justify-content: center; border: 0; }
+.slot .gh.p i { flex: none; width: 64px; height: 64px; border-radius: 50%; }
+.slot h6 { margin: 0; font: 800 11px/1.25 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.slot p { margin: 0; font-size: 11.5px; color: var(--muted); }
+@media (max-width: 1080px) {
+  .tiles.c4, .tiles.c5, .slots { --cols: 3; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lit, .grid3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .c8 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .tiles, .tiles.c2, .tiles.c4, .tiles.c5, .slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid2, .grid3, .lit, .ba { grid-template-columns: minmax(0, 1fr); }
+  .ba .arrow-r { transform: rotate(90deg); }
+  .rank > div { grid-template-columns: 44px minmax(0, 1fr); } .rank .arr, .rank .rs { grid-column: 2; } .rank .arr { display: none; }
+  .phones2 { grid-template-columns: minmax(0, 260px); }
+}
+@media (max-width: 480px) {
+  .tiles, .tiles.c2, .tiles.c4, .tiles.c5, .slots, .strip { grid-template-columns: minmax(0, 1fr); }
+  .hb-row { grid-template-columns: 90px minmax(0, 1fr) 60px; }
+}
+
 /* footer */
 .foot-top { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 64px 48px; border-bottom: 1px solid var(--line); }
 .foot-top h4 { margin: 0 0 14px; font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
@@ -545,7 +685,7 @@ svg text { font-family: var(--body); }
   .store { display: none; }
   .band { break-before: page; }
   .interlude { break-before: page; }
-  .fig, .persona-in, .concept, .emp, .prod, .coll a, tr { break-inside: avoid; }
+  .fig, .persona-in, .concept, .emp, .prod, .coll a, tr, .t, .panel, .frame, .callout, .rank > div, .ladder > div, .slot { break-inside: avoid; }
   .doc h2, .doc h3 { break-after: avoid; }
   * { animation: none !important; }
 }
@@ -569,6 +709,16 @@ svg text { font-family: var(--body); }
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-cam" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="11" rx="2"/><path d="M16 11l5-3v9l-5-3"/></symbol>
   <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.7 3 2.4 3.5 5.2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-7"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
 </svg>
 
 <div class="announce">BLUPRINT × BLUORNG, pronounced Blue~Orange. A UI/UX graduation project.</div>
@@ -802,180 +952,56 @@ svg text { font-family: var(--body); }
 </blockquote>
 <h3>1.5 Aim</h3>
 <p>Design a platform that turns <strong>performance data + brand identity + trend signals</strong> into <strong>clear, brand-safe content recommendations and ready-to-shoot briefs</strong>, for both organic and paid content.</p>
-<h3>1.6 Objectives</h3>
-<ol>
-<li>Understand how BLUORNG's content and performance-marketing teams currently ideate, plan, produce, publish and evaluate content.</li>
-<li>Identify the key pain points and decision gaps in that workflow.</li>
-<li>Understand what BLUORNG's audience actually engages with, and why.</li>
-<li>Define a content taxonomy (formats, IPs/series, hooks, angles) the platform can learn from.</li>
-<li>Generate, evaluate and select a design concept (3 concepts → 1 final).</li>
-<li>Design the IA, flows, wireframes, UI system and prototype, and test them with real users.</li>
-</ol>
-<h3>1.7 Scope</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>In scope</th>
-<th>Out of scope</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ideation &amp; recommendation for <strong>Instagram organic</strong> (Reels, carousels, stories, series/IPs like ASMR, story experiences, studio diaries)</td>
-<td>Actually building the ML model / backend</td>
-</tr>
-<tr>
-<td>Ideation &amp; recommendation for <strong>Meta Ads</strong> (angles, hooks, formats, variations, fatigue alerts)</td>
-<td>Auto-posting / ad buying inside the tool</td>
-</tr>
-<tr>
-<td>Insight layer (what worked and why), brief generation, content calendar around drops</td>
-<td>Other platforms (YouTube, X); these appear only as "future scope"</td>
-</tr>
-<tr>
-<td>Desktop web app (planning) + mobile companion (on-shoot use)</td>
-<td>E-commerce site redesign</td>
-</tr>
-</tbody>
-</table></div>
-<h3>1.8 Expected outcome</h3>
-<ul>
-<li>A researched, tested <strong>hi-fidelity prototype</strong> of BLUPRINT (web + mobile companion).</li>
-<li>A design system and documented IA.</li>
-<li>A validated set of design recommendations BLUORNG can use even without building the product.</li>
-</ul>
-<h3>1.9 Methodology</h3>
-<p><strong>Double Diamond:</strong> Discover (secondary + primary research) → Define (synthesis, personas, problem statement) → Develop (ideation, concepts, IA, wireframes) → Deliver (UI, prototype, usability testing).</p>
-<h3>1.10 Why this matters (value)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>For BLUORNG</th>
-<th>For the team</th>
-<th>For the audience</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Less wasted production &amp; ad spend; more repeatable wins</td>
-<td>Faster decisions, clearer briefs, less back-and-forth</td>
-<td>More content they actually want: less noise, more culture</td>
-</tr>
-</tbody>
-</table></div>
+<h3>1.6 Objectives</h3><div class="tiles">
+  <div class="t"><span class="k">Objective 1</span><h5>Understand the workflow</h5><p>How the content and performance teams ideate, plan, shoot, publish and review.</p></div>
+  <div class="t"><span class="k">Objective 2</span><h5>Find the gaps</h5><p>The pain points and decision gaps inside that workflow.</p></div>
+  <div class="t"><span class="k">Objective 3</span><h5>Know the audience</h5><p>What BLUORNG's audience actually engages with, and why.</p></div>
+  <div class="t"><span class="k">Objective 4</span><h5>Build a shared language</h5><p>A taxonomy of formats, series, hooks and angles the platform can learn from.</p></div>
+  <div class="t"><span class="k">Objective 5</span><h5>Choose a direction</h5><p>Generate and evaluate three concepts, then select one.</p></div>
+  <div class="t dk"><span class="k">Objective 6</span><h5>Design and test</h5><p>IA, flows, wireframes, UI and a prototype, tested with real users.</p></div>
+</div>
 
-<h2>2. Project Timeline</h2>
-<blockquote>
-<p>Adjust the week numbers to your college calendar. Presentation 1 = end of research, Presentation 2 = final concept.</p>
-</blockquote>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Week</th>
-<th>Phase</th>
-<th>Stages / Deliverables</th>
-<th>Milestone</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Kick-off</td>
-<td>Project proposal, timeline, mentor sign-off, confidentiality agreement</td>
-<td>Proposal approved</td>
-</tr>
-<tr>
-<td>2–3</td>
-<td>Discover: secondary</td>
-<td>Domain study, literature review, competitor/tool analysis</td>
-<td></td>
-</tr>
-<tr>
-<td>3–4</td>
-<td>Discover: system</td>
-<td>Stakeholder map, system map, problem mapping, problem area &amp; target users</td>
-<td></td>
-</tr>
-<tr>
-<td>4</td>
-<td>Plan</td>
-<td>Primary research plan, questionnaire draft, <strong>pilot test (3–5 people)</strong>, revise</td>
-<td></td>
-</tr>
-<tr>
-<td>5–6</td>
-<td>Discover: primary</td>
-<td>Survey (team/industry + audience), interviews, focus group, shadowing a drop week</td>
-<td></td>
-</tr>
-<tr>
-<td>7</td>
-<td>Define</td>
-<td>Primary research report, data charts, inferences, <strong>redefined brief</strong></td>
-<td><strong>Presentation 1</strong></td>
-</tr>
-<tr>
-<td>8</td>
-<td>Define</td>
-<td>Personas, empathy maps, user journey map, problem statement, design goals</td>
-<td></td>
-</tr>
-<tr>
-<td>9</td>
-<td>Develop</td>
-<td>Ideation (brainstorming, brainwriting, SCAMPER, space saturation)</td>
-<td></td>
-</tr>
-<tr>
-<td>10</td>
-<td>Develop</td>
-<td>Filtration (bullseye, priority matrix), <strong>3 concepts</strong>, feasibility check, final selection with mentors</td>
-<td></td>
-</tr>
-<tr>
-<td>11</td>
-<td>Develop</td>
-<td>User scenarios, storyboards, user/task flows, task analysis, feature mapping</td>
-<td></td>
-</tr>
-<tr>
-<td>12</td>
-<td>Develop</td>
-<td>Information architecture: content strategy, sitemap, navigation, labeling</td>
-<td><strong>Presentation 2</strong></td>
-</tr>
-<tr>
-<td>13–14</td>
-<td>Develop</td>
-<td>Wireframes, paper prototype + quick test</td>
-<td></td>
-</tr>
-<tr>
-<td>15–16</td>
-<td>Deliver</td>
-<td>Design system, UI elements, style guide, accessibility checks, grids</td>
-<td></td>
-</tr>
-<tr>
-<td>17–18</td>
-<td>Deliver</td>
-<td>Wireflows + digital prototype</td>
-<td></td>
-</tr>
-<tr>
-<td>19</td>
-<td>Deliver</td>
-<td>Usability testing (2 rounds) + iteration</td>
-<td></td>
-</tr>
-<tr>
-<td>20</td>
-<td>Final</td>
-<td>Documentation, final presentation, jury</td>
-<td><strong>Final jury</strong></td>
-</tr>
-</tbody>
-</table></div>
+<h3>1.7 Scope</h3><div class="grid2">
+  <div class="t dk"><span class="k">In scope</span>
+    <ul><li>Instagram organic ideas: Reels, carousels, stories and series like ASMR or story experiences</li><li>Meta ads ideas: angles, hooks, variations and fatigue alerts</li><li>Insights on what worked, briefs and a drop calendar</li><li>Desktop web app plus a mobile companion for set and approvals</li></ul></div>
+  <div class="t dash"><span class="k">Out of scope</span>
+    <ul><li>Building the machine-learning model or backend</li><li>Auto-posting or buying ads inside the tool</li><li>YouTube and X, kept as future scope</li><li>Redesigning the e-commerce site</li></ul></div>
+</div>
+
+<h3>1.8 Expected outcome</h3><div class="tiles">
+  <div class="t dk"><svg class="i ico"><use href="#i-phone"/></svg><h5>Hi-fi prototype</h5><p>BLUPRINT web app and mobile companion, researched and usability-tested.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-layers"/></svg><h5>Design system and IA</h5><p>Documented structure, navigation, labels and UI components.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-check"/></svg><h5>Usable recommendations</h5><p>Validated changes BLUORNG can apply even without building the product.</p></div>
+</div>
+
+<h3>1.9 Methodology</h3><figure class="fig"><div class="fig-core">
+  <svg class="svg-fluid" viewBox="0 0 960 300" role="img" aria-label="Double Diamond process mapped to the project parts" style="min-width:640px">
+    <polygon points="40,130 250,20 250,240" fill="#e4e4e4"/><polygon points="250,20 460,130 250,240" fill="#c9c9c9"/>
+    <polygon points="500,130 710,20 710,240" fill="#3b3b3b"/><polygon points="710,20 920,130 710,240" fill="#0b0b0b"/>
+    <g font-size="13" font-weight="800" text-anchor="middle" style="font-family:var(--display);letter-spacing:.14em">
+      <text x="160" y="135" fill="#0b0b0b">DISCOVER</text><text x="340" y="135" fill="#0b0b0b">DEFINE</text>
+      <text x="620" y="135" fill="#fff">DEVELOP</text><text x="805" y="135" fill="#fff">DELIVER</text>
+    </g>
+    <circle cx="480" cy="130" r="9" class="sv-heat"/>
+    <g font-size="12" text-anchor="middle" class="sv-mute">
+      <text x="160" y="272">Parts 2 to 4: research</text><text x="340" y="272">Part 5: synthesis</text>
+      <text x="620" y="272">Parts 6 to 8: ideas, flows, IA</text><text x="805" y="272">Next: UI, prototype, testing</text>
+      <text x="480" y="160" class="sv-heat" font-weight="700">Problem statement</text>
+    </g>
+  </svg>
+</div><figcaption class="fig-cap"><b>Double Diamond</b><span>Diverge, converge, twice</span></figcaption></figure>
+
+<h3>1.10 Why this matters (value)</h3><div class="tiles">
+  <div class="t dk"><span class="k">For BLUORNG</span><h5>Less guesswork spend</h5><p>Fewer wasted shoot days and ad budget, more repeatable wins.</p></div>
+  <div class="t"><span class="k">For the team</span><h5>Faster, clearer work</h5><p>Quicker decisions, clear briefs, less back-and-forth on WhatsApp.</p></div>
+  <div class="t"><span class="k">For the audience</span><h5>Better content</h5><p>More of what they want to watch: less noise, more culture.</p></div>
+</div>
+
+<h2>2. Project Timeline</h2><div class="tiles">
+  <div class="t"><span class="k">Week 7</span><div class="n">Pres. 1</div><p>End of research: report, charts, redefined brief.</p></div>
+  <div class="t"><span class="k">Week 12</span><div class="n">Pres. 2</div><p>Final concept, flows and information architecture.</p></div>
+  <div class="t dk"><span class="k">Week 20</span><div class="n">Jury</div><p>Tested prototype and full documentation.</p></div>
+</div>
 <figure class="fig"><div class="fig-core">
   <div class="gantt">
     <span></span><span class="wk">1</span><span class="wk">2</span><span class="wk">3</span><span class="wk">4</span><span class="wk">5</span><span class="wk">6</span><span class="wk">7</span><span class="wk">8</span><span class="wk">9</span><span class="wk">10</span><span class="wk">11</span><span class="wk">12</span><span class="wk">13</span><span class="wk">14</span><span class="wk">15</span><span class="wk">16</span><span class="wk">17</span><span class="wk">18</span><span class="wk">19</span><span class="wk">20</span>
@@ -1006,391 +1032,173 @@ svg text { font-family: var(--body); }
   </div>
 </div><figcaption class="fig-cap"><b>20-week plan, Double Diamond</b><span>Shift the weeks to match the college calendar</span></figcaption></figure>
 
+
+
 </div></div></section>
 <section class="band chapter" id="part2"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 02</b></p><div class="sec-head"><div><h2>Secondary research</h2><span class="count">3 stages</span></div><div><p>The brand, the market, the platforms, the existing tools, and twelve sources that shape the design.</p><div class="stage-chips"><span>Domain study</span><span>Tool review</span><span>Literature review</span></div></div></div><div class="doc"><blockquote>
 <p>Sources are listed at the end of this file. Figures from market-research firms and ad-tech vendors are <strong>estimates</strong>. Present them as "industry estimates", not facts, and cross-check before your final document.</p>
 </blockquote>
 
 <h2>3. Domain Study</h2>
-<h3>3.1 The brand: BLUORNG</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Attribute</th>
-<th>What we know (secondary sources + internal observation)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Founded</td>
-<td>2020, New Delhi, by Siddhant Sabharwal &amp; Mokam Singh (Pearl Academy alumni)</td>
-</tr>
-<tr>
-<td>Positioning</td>
-<td>Premium / luxury Indian streetwear. Design-led, strong visual storytelling</td>
-</tr>
-<tr>
-<td>Recognition</td>
-<td>GQ India <em>Streetwear Label of the Year</em> (2023)</td>
-</tr>
-<tr>
-<td>Retail</td>
-<td>Began as an appointment-only studio in Greater Kailash, Delhi → flagship in Gurugram → larger Mumbai store (reopened 2026) + online, ships worldwide</td>
-</tr>
-<tr>
-<td>Price band</td>
-<td>Premium: T-shirts in the few-thousand-rupee range, outerwear far higher (verify current prices on the site)</td>
-</tr>
-<tr>
-<td>Business model</td>
-<td><strong>Drop-led:</strong> limited releases, sell-outs, scarcity and hype. Collabs (Jägermeister, Budweiser jersey collection)</td>
-</tr>
-<tr>
-<td>Growth engine</td>
-<td>Instagram-first: discovery, hype, community. Meta ads for conversion</td>
-</tr>
-<tr>
-<td>Known challenge (per an agency case study)</td>
-<td>Despite a lively social presence, <strong>brand recall was low</strong> and <strong>Instagram traffic was not converting to website sales at the needed rate</strong></td>
-</tr>
-</tbody>
-</table></div>
-<blockquote>
-<p><em>Add from inside:</em> follower count, posting frequency, team size, monthly content volume, typical shoot cost, ad budget band (indexed if confidential).</p>
-</blockquote>
-<h3>3.2 The market</h3>
-<ul>
-<li><strong>Indian streetwear:</strong> estimated at <strong>USD 23.1 bn (2025)</strong>, projected to reach about USD 43 bn by 2034 (~7.1% CAGR, Deep Market Insights). This is a single-firm estimate.</li>
-<li><strong>Online fashion in India:</strong> about <strong>USD 11 bn</strong>, projected at <strong>USD 35 bn by 2028</strong> (Entrepreneur India).</li>
-<li><strong>D2C:</strong> fashion is one of the largest D2C categories in India. Growth is driven by Instagram campaigns, creator collabs and <strong>social-led drops</strong> instead of seasonal calendars (Fibre2Fashion).</li>
-<li><strong>Peer / competitor brands</strong> (content benchmarks): Jaywalking, Almost Gods, Huemn, Capsul, Urban Monkey, Bonkers Corner, The Souled Store, Snitch (mass), plus global references (Fear of God Essentials, Corteiz, Represent, Aimé Leon Dore, Stüssy).</li>
-</ul>
-<h3>3.3 The platform ecosystem</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Channel</th>
-<th>How it works today</th>
-<th>Implication for content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Instagram organic</strong></td>
-<td>Reels, carousels, single images, stories, Broadcast channels, Collabs posts. Reach is algorithmic and driven by watch time, shares and saves</td>
-<td>Hook in the <strong>first ~3–4 s</strong> matters. Shares/saves &gt; likes. Series ("IPs") build habit and recall</td>
-</tr>
-<tr>
-<td><strong>Meta Ads</strong></td>
-<td>Advantage+ automation. Targeting is increasingly done <strong>by the creative itself</strong> ("creative is the new targeting")</td>
-<td>The team's main lever is <strong>creative diversity</strong>: different angles, hooks and formats, not just different product shots</td>
-</tr>
-<tr>
-<td><strong>Creative fatigue</strong></td>
-<td>Performance drops as frequency rises (often flagged above ~3 frequency, or after weeks 3–4 of prospecting)</td>
-<td>A pipeline of fresh variations is needed, and the team needs to know <em>when</em> to refresh</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Key benchmark signals (directional):</strong></p>
-<ul>
-<li>Fashion brands: <strong>Reels ~1.9% engagement vs ~0.8%</strong> for carousels/static, and higher reach per post (Dash Social fashion data via NetInfluencer).</li>
-<li>All industries / large accounts: <strong>carousels often win</strong> on engagement and reach (Socialinsider 2026; Dash Social H2 2025).</li>
-<li>Engagement is <strong>declining year on year</strong> across formats (Socialinsider).</li>
-<li>Meta reports <strong>diversified creative can improve CPA by up to 32%</strong> and incremental reach by 9% compared with similar-looking creative (via B&amp;T / AdNews).</li>
-<li>UGC-style ads often beat polished brand ads on CTR/CVR for D2C (vendor data, figures vary by source).</li>
-</ul>
-<p><strong>Inference:</strong> No single format "wins". It depends on the brand, account size and goal. That is exactly why BLUORNG needs a tool that learns from <strong>its own</strong> data, not generic rules.</p>
-<h3>3.4 Content taxonomy (working vocabulary for the project)</h3>
-<p><strong>Organic formats &amp; IPs (recurring series):</strong></p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>IP / format</th>
-<th>Description</th>
-<th>Typical goal</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Drop Countdown</td>
-<td>Teasers, close-ups, "3 days left"</td>
-<td>Hype, notify</td>
-</tr>
-<tr>
-<td>Lookbook / Campaign Film</td>
-<td>Hero visual storytelling</td>
-<td>Brand, desire</td>
-</tr>
-<tr>
-<td><strong>ASMR series</strong></td>
-<td>Fabric, embroidery, zips, packing orders, store sounds</td>
-<td>Saves, watch time, quality perception</td>
-</tr>
-<tr>
-<td><strong>Story Experience</strong></td>
-<td>Interactive stories: polls, quizzes, "pick the colourway", choose-your-fit</td>
-<td>Engagement, research</td>
-</tr>
-<tr>
-<td>Studio Diaries / BTS</td>
-<td>Design → sampling → shoot</td>
-<td>Craft, recall</td>
-</tr>
-<tr>
-<td>One Piece, Three Ways</td>
-<td>Styling guide</td>
-<td>Saves, conversion</td>
-</tr>
-<tr>
-<td>Fit Check / Street Style</td>
-<td>In-store and on-street community fits</td>
-<td>Community, social proof</td>
-</tr>
-<tr>
-<td>Collab Universe</td>
-<td>Brand × brand / artist content</td>
-<td>Reach, new audiences</td>
-</tr>
-<tr>
-<td>Culture / Memes</td>
-<td>Trends, audio, inside jokes</td>
-<td>Reach, shares</td>
-</tr>
-<tr>
-<td>Founder POV</td>
-<td>Story behind a collection</td>
-<td>Trust, recall</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Paid (Meta ads) creative angles:</strong></p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Angle</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Scarcity / Drop</td>
-<td>"Drops Friday 8 PM. Limited units."</td>
-</tr>
-<tr>
-<td>Craft &amp; Quality</td>
-<td>Macro fabric/detail video (ASMR-style)</td>
-</tr>
-<tr>
-<td>Social proof</td>
-<td>Store queues, creators wearing, sold-out stamps</td>
-</tr>
-<tr>
-<td>UGC / Creator try-on</td>
-<td>Creator styling the piece in their own voice</td>
-</tr>
-<tr>
-<td>Lookbook carousel</td>
-<td>Multi-product catalogue feel</td>
-</tr>
-<tr>
-<td>Retargeting / DPA</td>
-<td>Dynamic product ads for viewers and cart-abandoners</td>
-</tr>
-<tr>
-<td>Store footfall</td>
-<td>"Now open in Mumbai" with a map</td>
-</tr>
-<tr>
-<td>Collab announce</td>
-<td>Partner-brand co-branded hero</td>
-</tr>
-</tbody>
-</table></div>
-<h3>3.5 Existing tools (competitive / analogous analysis)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Category</th>
-<th>Organic</th>
-<th>Paid</th>
-<th>Recommends <em>what to make</em>?</th>
-<th>Brand-specific learning</th>
-<th>Gap for BLUORNG</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Meta Business Suite / IG Insights</td>
-<td>Native analytics</td>
-<td><span class="ok">Yes</span></td>
-<td>partial</td>
-<td><span class="no">No</span></td>
-<td><span class="no">No</span></td>
-<td>Data only, no "so what"</td>
-</tr>
-<tr>
-<td>Meta Ads Manager / Ads Library</td>
-<td>Ads + competitor ads</td>
-<td><span class="no">No</span></td>
-<td><span class="ok">Yes</span></td>
-<td><span class="no">No</span></td>
-<td><span class="no">No</span></td>
-<td>Not built for creative ideation</td>
-</tr>
-<tr>
-<td>Later / Hootsuite / Sprout / Iconosquare</td>
-<td>Scheduling + analytics</td>
-<td><span class="ok">Yes</span></td>
-<td>partial</td>
-<td>Limited (best time to post)</td>
-<td><span class="no">No</span></td>
-<td>Scheduling-centric</td>
-</tr>
-<tr>
-<td>Motion</td>
-<td>Creative analytics</td>
-<td><span class="no">No</span></td>
-<td><span class="ok">Yes</span></td>
-<td>Partial (which hooks work)</td>
-<td><span class="ok">Yes</span></td>
-<td>Paid-only, expensive, no organic IPs</td>
-</tr>
-<tr>
-<td>Foreplay</td>
-<td>Ad swipe file / research</td>
-<td><span class="no">No</span></td>
-<td><span class="ok">Yes</span></td>
-<td>Inspiration only</td>
-<td><span class="no">No</span></td>
-<td>Competitor-focused</td>
-</tr>
-<tr>
-<td>Atria / Superscale / Segwise</td>
-<td>Analytics → briefs → generation</td>
-<td><span class="no">No</span></td>
-<td><span class="ok">Yes</span></td>
-<td><span class="ok">Yes</span></td>
-<td>partial</td>
-<td>Paid-only, generic, not drop-culture aware</td>
-</tr>
-<tr>
-<td>ChatGPT / generic AI</td>
-<td>Text ideation</td>
-<td><span class="ok">Yes</span></td>
-<td><span class="ok">Yes</span></td>
-<td><span class="ok">Yes</span> (generic)</td>
-<td><span class="no">No</span></td>
-<td>No data, no brand memory, off-brand ideas</td>
-</tr>
-<tr>
-<td>Notion / Sheets / WhatsApp</td>
-<td>Planning</td>
-<td>manual</td>
-<td>manual</td>
-<td><span class="no">No</span></td>
-<td><span class="no">No</span></td>
-<td>Where planning actually happens today</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Opportunity gap:</strong> No tool <strong>joins organic + paid</strong>, learns from a <strong>brand's own performance</strong>, protects <strong>brand identity</strong>, understands <strong>drop calendars</strong>, and outputs <strong>shootable briefs</strong> for a small creative team.</p>
+<h3>3.1 The brand: BLUORNG</h3><figure class="fig"><div class="fig-core">
+  <div class="rail" style="min-width:900px">
+    <div class="node"><div class="card endc"><small>2020</small>Founded in New Delhi by Siddhant Sabharwal and Mokam Singh. Appointment-only studio in Greater Kailash.</div></div>
+    <div class="node"><div class="card"><small>NEXT</small>Flagship store in Gurugram.</div></div>
+    <div class="node"><div class="card"><small>2023</small>GQ India Streetwear Label of the Year.</div></div>
+    <div class="node"><div class="card"><small>2024</small>Jägermeister collaboration, covered by Rolling Stone India.</div></div>
+    <div class="node"><div class="card"><small>COLLAB</small>Budweiser limited-edition jersey collection.</div></div>
+    <div class="node"><div class="card endc"><small>2026</small>Larger Mumbai store reopens.</div></div>
+  </div>
+</div><figcaption class="fig-cap"><b>BLUORNG milestones</b><span>From secondary sources, verify inside</span></figcaption></figure>
+<div class="tiles c4">
+  <div class="t"><span class="k">Positioning</span><p>Premium Indian streetwear. Design-led, strong visual storytelling.</p></div>
+  <div class="t"><span class="k">Business model</span><p>Drop-led: limited releases, sell-outs, collabs.</p></div>
+  <div class="t"><span class="k">Growth engine</span><p>Instagram first for discovery and hype. Meta ads for conversion.</p></div>
+  <div class="t dk"><span class="k">Known challenge</span><p>Low brand recall, and Instagram traffic not converting to sales at the needed rate (agency case study).</p></div>
+</div>
+<div class="t dash"><span class="k">Add from inside</span><p>Follower count, posting frequency, team size, monthly content volume, typical shoot cost, ad budget band (indexed if confidential).</p></div>
 
-<h2>4. Literature Review</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>#</th>
-<th>Source</th>
-<th>Key idea</th>
-<th>Relevance to BLUPRINT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Kaplan &amp; Haenlein (2010), <em>Users of the world, unite!</em>, Business Horizons</td>
-<td>Social media as a set of platforms built on user-generated content; brands must take part, not broadcast</td>
-<td>Organic content must be participatory (Story Experience, UGC)</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Berger &amp; Milkman (2012), <em>What makes online content viral?</em>, J. of Marketing Research</td>
-<td>High-arousal emotions (awe, excitement, amusement) drive sharing more than low-arousal ones</td>
-<td>Recommendation engine should tag content by <strong>emotion/arousal</strong>, not just format</td>
-</tr>
-<tr>
-<td>3</td>
-<td>de Vries, Gensler &amp; Leeflang (2012), <em>Popularity of brand posts on brand fan pages</em>, J. of Interactive Marketing</td>
-<td>Vividness and interactivity of posts affect likes and comments differently</td>
-<td>Tag posts by vividness (video/static) and interactivity (polls/questions)</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Ashley &amp; Tuten (2015), <em>Creative strategies in social media marketing</em>, Psychology &amp; Marketing</td>
-<td>Brands use different message strategies (functional, emotional, experiential, user-image)</td>
-<td>Basis for the platform's <strong>creative-angle taxonomy</strong></td>
-</tr>
-<tr>
-<td>5</td>
-<td>Kim &amp; Ko (2012), <em>Do social media marketing activities enhance customer equity?</em> (luxury fashion), J. of Business Research</td>
-<td>Entertainment, interaction, trendiness, customisation and word-of-mouth drive equity for luxury fashion</td>
-<td>The five dimensions become content-goal tags for a premium brand</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Godey et al. (2016), <em>Social media marketing efforts of luxury brands</em>, J. of Business Research</td>
-<td>Social media efforts build brand awareness and image, which drive preference and loyalty</td>
-<td>Supports measuring <strong>recall/brand-building</strong>, not only sales</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Cialdini (1984/2021), <em>Influence</em>: Scarcity principle</td>
-<td>Limited availability increases perceived value</td>
-<td>Drop model: scarcity content must be timed and not overused (fatigue)</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Lemon &amp; Verhoef (2016), <em>Understanding customer experience throughout the customer journey</em>, J. of Marketing</td>
-<td>Touchpoints across pre-purchase, purchase and post-purchase</td>
-<td>Map content types to the <strong>audience journey</strong> (discover → desire → drop → wear → share)</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Meta (2023–25), <em>Creative is the new targeting</em> / creative diversification guidance</td>
-<td>Diverse creative improves CPA and reach. Similar openers are treated as near-duplicates</td>
-<td>Paid module must push <strong>hook and angle diversity</strong> and flag sameness</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Amershi et al. (2019), <em>Guidelines for Human-AI Interaction</em>, CHI</td>
-<td>18 guidelines: make clear what the system can do, show why, support correction, learn from feedback</td>
-<td>Core UX principles: <strong>explainable recommendations</strong>, editable, feedback loop</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Davis (1989), <em>Technology Acceptance Model</em></td>
-<td>Adoption depends on perceived usefulness and ease of use</td>
-<td>The team will only adopt it if it saves time <strong>and</strong> gives better ideas than WhatsApp + gut</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Nielsen (1994), <em>10 Usability Heuristics</em></td>
-<td>Visibility, match with real world, control, consistency…</td>
-<td>Evaluation framework for later usability testing</td>
-</tr>
-</tbody>
-</table></div>
-<h3>4.1 Literature synthesis</h3>
-<ol>
-<li><strong>Content success is multi-dimensional:</strong> format, emotion, interactivity, timing and creative angle all matter (2, 3, 4).</li>
-<li><strong>Luxury/premium fashion has different goals:</strong> brand equity and desire matter as much as clicks (5, 6), so the tool must not chase vanity metrics or cheapen the brand.</li>
-<li><strong>Scarcity is powerful but fragile</strong> (7). Drop content needs planning around a calendar.</li>
-<li><strong>Paid performance now depends on creative variety</strong> (9). Teams need help producing <em>different</em> ideas, not more of the same.</li>
-<li><strong>AI recommendations must be explainable and controllable</strong> (10, 11), otherwise creative teams reject them.</li>
-</ol>
+<h3>3.2 The market</h3><div class="grid2">
+  <div class="panel">
+    <p class="chart-t">India streetwear market, USD bn</p>
+    <div class="vb">
+      <div class="c" title="2025: USD 23.1 bn"><b>23.1</b><i style="height:51%"></i></div>
+      <div class="c" title="2034 projection: about USD 43 bn"><b>~43</b><i class="g" style="height:95%"></i></div>
+    </div>
+    <div class="vb-l"><span>2025</span><span>2034, projected</span></div>
+    <p class="chart-s">About 7.1% a year. Deep Market Insights, single-firm estimate</p>
+  </div>
+  <div class="panel">
+    <p class="chart-t">Online fashion in India, USD bn</p>
+    <div class="vb">
+      <div class="c" title="Today: about USD 11 bn"><b>~11</b><i style="height:30%"></i></div>
+      <div class="c" title="2028 projection: USD 35 bn"><b>35</b><i class="g" style="height:95%"></i></div>
+    </div>
+    <div class="vb-l"><span>Today</span><span>2028, projected</span></div>
+    <p class="chart-s">More than 3x in a few years. Entrepreneur India</p>
+  </div>
+</div>
+<div class="callout"><small>D2C signal</small>Fashion is one of India's largest D2C categories, and its growth runs on Instagram campaigns, creator collabs and social-led drops instead of seasonal calendars.</div>
+<p class="chart-t">Peer brands to benchmark content against</p>
+<div class="chips"><span class="f">Jaywalking</span><span class="f">Almost Gods</span><span class="f">Huemn</span><span class="f">Capsul</span><span class="f">Urban Monkey</span><span class="f">Bonkers Corner</span><span class="f">The Souled Store</span><span class="f">Snitch</span><span>Fear of God Essentials</span><span>Corteiz</span><span>Represent</span><span>Aimé Leon Dore</span><span>Stüssy</span></div>
+<p class="chart-s">Filled: Indian peers. Outlined: global references.</p>
 
+<h3>3.3 The platform ecosystem</h3><div class="tiles">
+  <div class="t"><svg class="i ico"><use href="#i-phone"/></svg><h5>Instagram organic</h5><p>Reach is algorithmic, driven by watch time, shares and saves. The hook in the first 3 to 4 seconds matters, and series build habit and recall.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-target"/></svg><h5>Meta ads</h5><p>Advantage+ automates targeting, so the creative itself now does the targeting. The team's main lever is creative diversity.</p></div>
+  <div class="t dk"><svg class="i ico"><use href="#i-clock"/></svg><h5>Creative fatigue</h5><p>Results drop as people see the same ad again. The team needs fresh variations, and to know when to refresh.</p></div>
+</div>
+<div class="grid3">
+  <div class="panel">
+    <p class="chart-t">Engagement rate by format, fashion brands</p>
+    <div class="hb">
+      <div class="hb-row" title="Reels: 1.9%"><span>Reels</span><span class="tr"><i style="width:100%"></i></span><b>1.9%</b></div>
+      <div class="hb-row" title="Carousels: 0.8%"><span>Carousels</span><span class="tr"><i class="g" style="width:42%"></i></span><b>0.8%</b></div>
+      <div class="hb-row" title="Single images: 0.8%"><span>Single image</span><span class="tr"><i class="g" style="width:42%"></i></span><b>0.8%</b></div>
+    </div>
+    <p class="chart-s">Dash Social via NetInfluencer</p>
+  </div>
+  <div class="panel">
+    <p class="chart-t">Average reach per post, fashion brands</p>
+    <div class="hb">
+      <div class="hb-row" title="Reels: 60,000"><span>Reels</span><span class="tr"><i style="width:100%"></i></span><b>60.0k</b></div>
+      <div class="hb-row" title="Carousels: 44,500"><span>Carousels</span><span class="tr"><i class="g" style="width:74%"></i></span><b>44.5k</b></div>
+      <div class="hb-row" title="Single images: 27,900"><span>Single image</span><span class="tr"><i class="g" style="width:47%"></i></span><b>27.9k</b></div>
+    </div>
+    <p class="chart-s">Dash Social via NetInfluencer</p>
+  </div>
+  <div class="panel">
+    <p class="chart-t">Median reach, brands with 1M+ followers</p>
+    <div class="hb">
+      <div class="hb-row" title="Carousels: 217,668"><span>Carousels</span><span class="tr"><i style="width:100%"></i></span><b>217.7k</b></div>
+      <div class="hb-row" title="Reels: 110,500"><span>Reels</span><span class="tr"><i class="g" style="width:51%"></i></span><b>110.5k</b></div>
+    </div>
+    <p class="chart-s">All industries. Socialinsider</p>
+  </div>
+</div>
+
+<div class="tiles c4">
+  <div class="t"><div class="n">32%</div><p>Best-case improvement in cost per acquisition from diversified ad creative.</p><span class="k">Meta via B&amp;T</span></div>
+  <div class="t"><div class="n">+9%</div><p>Incremental reach from diversified creative compared with similar-looking ads.</p><span class="k">Meta via B&amp;T</span></div>
+  <div class="t"><div class="n">Wk 3–4</div><p>When fatigue typically sets in for prospecting campaigns.</p><span class="k">Vendor benchmark</span></div>
+  <div class="t"><div class="n">&gt; 3</div><p>Ad frequency often flagged as the fatigue trigger.</p><span class="k">Vendor benchmark</span></div>
+</div>
+<div class="callout"><small>Inference</small>No single format wins: fashion data favours Reels, large accounts favour carousels. BLUORNG needs a tool that learns from its own results, not generic rules.</div>
+
+
+
+<h3>3.4 Content taxonomy (working vocabulary for the project)</h3><p class="chart-t">Organic series (IPs) and what each is for</p>
+<div class="tiles c5">
+  <div class="t"><h5>Drop Countdown</h5><p>Teasers, close-ups, "3 days left".</p><div class="chips"><span>Hype</span><span>Notify</span></div></div>
+  <div class="t"><h5>Lookbook / Film</h5><p>Hero visual storytelling.</p><div class="chips"><span>Brand</span><span>Desire</span></div></div>
+  <div class="t dk"><h5>ASMR</h5><p>Fabric, embroidery, zips, packing orders, store sounds.</p><div class="chips"><span>Saves</span><span>Quality</span></div></div>
+  <div class="t dk"><h5>Story Experience</h5><p>Polls, quizzes, "pick the colourway".</p><div class="chips"><span>Engagement</span><span>Research</span></div></div>
+  <div class="t"><h5>Studio Diaries</h5><p>Design, sampling, shoot.</p><div class="chips"><span>Craft</span><span>Recall</span></div></div>
+  <div class="t"><h5>One Piece, 3 Ways</h5><p>Styling guide.</p><div class="chips"><span>Saves</span><span>Sales</span></div></div>
+  <div class="t"><h5>Fit Check</h5><p>In-store and street community fits.</p><div class="chips"><span>Community</span><span>Proof</span></div></div>
+  <div class="t"><h5>Collab Universe</h5><p>Brand and artist partner content.</p><div class="chips"><span>Reach</span><span>New fans</span></div></div>
+  <div class="t"><h5>Culture / Memes</h5><p>Trends, audio, inside jokes.</p><div class="chips"><span>Reach</span><span>Shares</span></div></div>
+  <div class="t"><h5>Founder POV</h5><p>The story behind a collection.</p><div class="chips"><span>Trust</span><span>Recall</span></div></div>
+</div>
+
+<p class="chart-t">Paid angles for Meta ads</p>
+<div class="tiles c4">
+  <div class="t"><h5>Scarcity / Drop</h5><p>"Drops Friday 8 PM. Limited units."</p></div>
+  <div class="t"><h5>Craft &amp; Quality</h5><p>Macro fabric and detail video, ASMR-style.</p></div>
+  <div class="t"><h5>Social proof</h5><p>Store queues, creators wearing it, sold-out stamps.</p></div>
+  <div class="t"><h5>Creator / UGC</h5><p>A creator styling the piece in their own voice.</p></div>
+  <div class="t"><h5>Lookbook carousel</h5><p>Multi-product catalogue feel.</p></div>
+  <div class="t"><h5>Retargeting / DPA</h5><p>Dynamic product ads for viewers and cart-abandoners.</p></div>
+  <div class="t"><h5>Store footfall</h5><p>"Now open in Mumbai", with a map.</p></div>
+  <div class="t"><h5>Collab announce</h5><p>Co-branded hero with the partner brand.</p></div>
+</div>
+
+
+<h3>3.5 Existing tools (competitive / analogous analysis)</h3><figure class="fig"><div class="fig-core">
+  <div class="mx" style="grid-template-columns:minmax(170px,1.5fr) repeat(4,minmax(78px,.7fr)) minmax(180px,1.6fr)">
+    <div class="h">Tool</div><div class="h c">Organic</div><div class="h c">Paid</div><div class="h c">Suggests what to make</div><div class="h c">Learns the brand</div><div class="h">Gap for BLUORNG</div>
+    <div class="nm">IG Insights, Business Suite</div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt o"></i></div><div>Data only, no "so what"</div>
+    <div class="nm">Ads Manager, Ads Library</div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt o"></i></div><div>Not built for ideation</div>
+    <div class="nm">Later, Hootsuite, Sprout</div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt o"></i></div><div>Scheduling-first</div>
+    <div class="nm">Motion</div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt f"></i></div><div>Paid only, expensive, no series</div>
+    <div class="nm">Foreplay</div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt o"></i></div><div>Competitor swipe file</div>
+    <div class="nm">Atria, Superscale, Segwise</div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div>Paid only, not drop-aware</div>
+    <div class="nm">ChatGPT, generic AI</div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt o"></i></div><div>No data, no brand memory</div>
+    <div class="nm">Notion, Sheets, WhatsApp</div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt h"></i></div><div class="c"><i class="dt o"></i></div><div class="c"><i class="dt o"></i></div><div>Where planning happens today</div>
+    <div class="me" style="font-weight:800;letter-spacing:.08em">BLUPRINT</div><div class="me c"><i class="dt f"></i></div><div class="me c"><i class="dt f"></i></div><div class="me c"><i class="dt f"></i></div><div class="me c"><i class="dt f"></i></div><div class="me">Joins all four, plus shootable briefs</div>
+  </div>
+  <div class="legend-row"><span><i class="dt f" style="width:12px;height:12px;border-radius:50%"></i>Yes</span><span><i class="dt h" style="width:12px;height:12px;border-radius:50%"></i>Partial or manual</span><span><i class="dt o" style="width:12px;height:12px;border-radius:50%"></i>No</span></div>
+</div><figcaption class="fig-cap"><b>Capability matrix, 8 tool groups</b><span>No existing tool covers all four</span></figcaption></figure>
+
+<h2>4. Literature Review</h2><div class="yr" aria-hidden="true">
+  <span style="left:0%"></span><span style="left:12.2%"></span><span style="left:24.4%"></span><span style="left:63.4%"></span>
+  <span style="left:68.3%"></span><span class="s2" style="left:68.3%"></span><span class="s3" style="left:68.3%"></span>
+  <span style="left:75.6%"></span><span style="left:78%"></span><span class="s2" style="left:78%"></span><span style="left:85.4%"></span><span style="left:97.6%"></span>
+</div>
+<div class="yr-l" aria-hidden="true"><span style="left:0%">1984</span><span style="left:24.4%">1994</span><span style="left:63.4%">2010</span><span style="left:78%">2016</span><span style="left:97.6%">2024</span></div>
+<p class="chart-s" style="margin:0 0 18px">12 sources, 1984 to 2025. Dots stack where several share a year.</p>
+<div class="lit">
+  <div class="t"><span class="k">Drops</span><div class="n">1984</div><h5>Cialdini, Influence</h5><p>Scarcity raises perceived value.</p><p><b>Use:</b> time drop content and don't overuse it.</p></div>
+  <div class="t"><span class="k">Adoption</span><div class="n">1989</div><h5>Davis, TAM</h5><p>Adoption depends on usefulness and ease.</p><p><b>Use:</b> it must beat WhatsApp and gut feel.</p></div>
+  <div class="t"><span class="k">Usability</span><div class="n">1994</div><h5>Nielsen, 10 heuristics</h5><p>Visibility, real-world match, control, consistency.</p><p><b>Use:</b> the usability test framework.</p></div>
+  <div class="t"><span class="k">Content</span><div class="n">2010</div><h5>Kaplan &amp; Haenlein</h5><p>Brands must take part, not broadcast.</p><p><b>Use:</b> participatory content like Story Experience and UGC.</p></div>
+  <div class="t"><span class="k">Content</span><div class="n">2012</div><h5>Berger &amp; Milkman</h5><p>High-arousal emotions drive sharing.</p><p><b>Use:</b> tag content by emotion, not just format.</p></div>
+  <div class="t"><span class="k">Content</span><div class="n">2012</div><h5>de Vries et al.</h5><p>Vividness and interactivity change likes and comments.</p><p><b>Use:</b> tag video vs static, and polls.</p></div>
+  <div class="t"><span class="k">Luxury</span><div class="n">2012</div><h5>Kim &amp; Ko</h5><p>Entertainment, interaction, trendiness, customisation and word of mouth build luxury equity.</p><p><b>Use:</b> content-goal tags for a premium brand.</p></div>
+  <div class="t"><span class="k">Ads</span><div class="n">2015</div><h5>Ashley &amp; Tuten</h5><p>Functional, emotional, experiential and user-image strategies.</p><p><b>Use:</b> the basis of the ad-angle taxonomy.</p></div>
+  <div class="t"><span class="k">Luxury</span><div class="n">2016</div><h5>Godey et al.</h5><p>Social builds awareness and image, then loyalty.</p><p><b>Use:</b> measure recall, not only sales.</p></div>
+  <div class="t"><span class="k">Journey</span><div class="n">2016</div><h5>Lemon &amp; Verhoef</h5><p>Touchpoints across the whole journey.</p><p><b>Use:</b> map content to discover, desire, drop, wear, share.</p></div>
+  <div class="t"><span class="k">AI and UX</span><div class="n">2019</div><h5>Amershi et al., CHI</h5><p>18 human-AI guidelines: show why, allow correction, learn.</p><p><b>Use:</b> explainable, editable ideas.</p></div>
+  <div class="t dk"><span class="k">Ads</span><div class="n">2023–25</div><h5>Meta, creative is targeting</h5><p>Diverse creative improves cost and reach. Similar openers count as duplicates.</p><p><b>Use:</b> push hook and angle diversity.</p></div>
+</div>
+
+<h3>4.1 Literature synthesis</h3><div class="tiles c5">
+  <div class="t"><span class="k">1</span><h5>Success is multi-dimensional</h5><p>Format, emotion, interactivity, timing and angle all matter.</p></div>
+  <div class="t"><span class="k">2</span><h5>Premium has its own rules</h5><p>Equity and desire matter as much as clicks.</p></div>
+  <div class="t"><span class="k">3</span><h5>Scarcity is fragile</h5><p>Drop content needs a calendar, not a reflex.</p></div>
+  <div class="t"><span class="k">4</span><h5>Paid runs on variety</h5><p>Different ideas, not more of the same.</p></div>
+  <div class="t dk"><span class="k">5</span><h5>AI must explain itself</h5><p>Explainable and editable, or the team rejects it.</p></div>
+</div>
 <h3>Sources</h3>
 <ul>
 <li>Indian Retailer, Business News This Week, Fibre2Fashion, Mediainfoline: BLUORNG background, Mumbai store, collabs</li>
@@ -1590,366 +1398,140 @@ svg text { font-family: var(--body); }
   </div>
 </div></div><figcaption class="fig-cap"><b>Problem tree</b><span>Causes at the roots, effects in the branches</span></figcaption></figure>
 
-<h3>7.2 Problem clusters (affinity)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Cluster</th>
-<th>Problems</th>
-<th>Severity (H/M/L)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>A. Knowing what works</strong></td>
-<td>Can't link a post's <em>type</em> to its result. Vanity metrics. No benchmark vs own history</td>
-<td><strong>H</strong></td>
-</tr>
-<tr>
-<td><strong>B. Ideation</strong></td>
-<td>Idea block. Trend-chasing feels off-brand. Same ideas repeated</td>
-<td><strong>H</strong></td>
-</tr>
-<tr>
-<td><strong>C. Organic ↔ paid</strong></td>
-<td>Organic winners not promoted. Ads made separately. Different KPIs</td>
-<td><strong>H</strong></td>
-</tr>
-<tr>
-<td><strong>D. Ad creative</strong></td>
-<td>Not enough variations. Fatigue noticed late. Unclear what to test next</td>
-<td><strong>H</strong></td>
-</tr>
-<tr>
-<td><strong>E. Briefing &amp; production</strong></td>
-<td>Vague briefs, re-shoots, missing aspect ratios, last-minute changes</td>
-<td>M</td>
-</tr>
-<tr>
-<td><strong>F. Planning</strong></td>
-<td>Content not aligned to drop calendar. Last-minute rush before drops</td>
-<td>M</td>
-</tr>
-<tr>
-<td><strong>G. Approvals</strong></td>
-<td>Founder bottleneck. Taste criteria undocumented</td>
-<td>M</td>
-</tr>
-<tr>
-<td><strong>H. Brand consistency</strong></td>
-<td>Fear of looking "mass" or salesy. No brand guardrails</td>
-<td>M</td>
-</tr>
-</tbody>
-</table></div>
-<h3>7.3 5 Whys (example)</h3>
-<ol>
-<li><em>Why did the last drop's ads underperform?</em> → The creatives looked very similar.</li>
-<li><em>Why?</em> → All were cut from the same lookbook shoot.</li>
-<li><em>Why?</em> → Only one shoot was planned, focused on the lookbook.</li>
-<li><em>Why?</em> → Nobody planned ad angles (UGC, detail, social proof) before the shoot.</li>
-<li><em>Why?</em> → <strong>There's no step that converts "what wins" into a pre-shoot content plan for both organic and paid.</strong> ← the design opportunity.</li>
-</ol>
+<h3>7.2 Problem clusters (affinity)</h3><figure class="fig"><div class="fig-core">
+  <div class="mx" style="grid-template-columns:minmax(170px,1fr) minmax(260px,2fr) minmax(140px,1fr);min-width:640px">
+    <div class="h">Cluster</div><div class="h">Problems</div><div class="h">Severity</div>
+    <div class="nm">A. Knowing what works</div><div>Can't link a post's type to its result. Vanity metrics. No benchmark against own history.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i style="width:100%"></i></span><b>H</b></span></div>
+    <div class="nm">B. Ideation</div><div>Idea block. Trend-chasing feels off-brand. Same ideas repeated.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i style="width:100%"></i></span><b>H</b></span></div>
+    <div class="nm">C. Organic and paid</div><div>Organic winners not promoted. Ads made separately. Different KPIs.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i style="width:100%"></i></span><b>H</b></span></div>
+    <div class="nm">D. Ad creative</div><div>Too few variations. Fatigue noticed late. Unclear what to test next.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i style="width:100%"></i></span><b>H</b></span></div>
+    <div class="nm">E. Briefing and production</div><div>Vague briefs, re-shoots, missing aspect ratios, last-minute changes.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i class="g" style="width:60%"></i></span><b>M</b></span></div>
+    <div class="nm">F. Planning</div><div>Content not aligned to the drop calendar. Last-minute rush before drops.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i class="g" style="width:60%"></i></span><b>M</b></span></div>
+    <div class="nm">G. Approvals</div><div>Founder bottleneck. Taste criteria never written down.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i class="g" style="width:60%"></i></span><b>M</b></span></div>
+    <div class="nm">H. Brand consistency</div><div>Fear of looking mass-market or salesy. No brand guardrails.</div><div><span class="hb-row" style="grid-template-columns:1fr 30px;width:100%"><span class="tr"><i class="g" style="width:60%"></i></span><b>M</b></span></div>
+  </div>
+</div><figcaption class="fig-cap"><b>8 problem clusters, 4 high severity</b><span>H and M are draft ratings, confirm with research</span></figcaption></figure>
+
+<h3>7.3 5 Whys (example)</h3><div class="ladder">
+  <div style="margin-left:0"><b>Why 1</b><span>Why did the last drop's ads underperform? The creatives looked very similar.</span></div>
+  <div style="margin-left:4%"><b>Why 2</b><span>All of them were cut from the same lookbook shoot.</span></div>
+  <div style="margin-left:8%"><b>Why 3</b><span>Only one shoot was planned, and it focused on the lookbook.</span></div>
+  <div style="margin-left:12%"><b>Why 4</b><span>Nobody planned ad angles like UGC, detail or social proof before the shoot.</span></div>
+  <div class="root" style="margin-left:16%"><b>Root</b><span>No step turns "what wins" into a pre-shoot plan for both organic and paid. This is the design opportunity.</span></div>
+</div>
 
 <h2>8. Defined Problem Area &amp; Target Users</h2>
 <h3>8.1 Problem area</h3>
 <blockquote>
 <p><strong>The ideation-to-brief stage of content creation</strong>, meaning the point where a streetwear brand's team decides <em>what to make</em> for Instagram and Meta ads. Today it is disconnected from performance data, brand rules and the drop calendar.</p>
 </blockquote>
-<h3>8.2 Target users</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Tier</th>
-<th>Users</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Primary</strong></td>
-<td><strong>In-house content team</strong> (social media manager, content strategist/creative lead) and <strong>performance marketer</strong></td>
-<td>They decide what gets made and run, every week</td>
-</tr>
-<tr>
-<td><strong>Secondary</strong></td>
-<td><strong>Cinematographer / photographer / editor</strong>, <strong>founders/brand head</strong> (approver)</td>
-<td>They consume briefs and recommendations and approve</td>
-</tr>
-<tr>
-<td><strong>Tertiary</strong></td>
-<td>Agencies, freelancers, creators working with the brand</td>
-<td>Receive briefs, need brand context</td>
-</tr>
-<tr>
-<td><strong>Indirect beneficiary</strong></td>
-<td>BLUORNG's audience</td>
-<td>Gets better, more relevant content</td>
-</tr>
-<tr>
-<td><strong>Scale-up market</strong></td>
-<td>Other Indian premium D2C streetwear &amp; fashion brands (5–50 person teams, Instagram-led, drop-based)</td>
-<td>Shows the product's viability beyond one client</td>
-</tr>
-</tbody>
-</table></div></div></div></section>
+<h3>8.2 Target users</h3><div class="tiles c5">
+  <div class="t dk"><span class="k">Primary</span><h5>Content team and performance marketer</h5><p>They decide what gets made and run, every week.</p></div>
+  <div class="t"><span class="k">Secondary</span><h5>Makers and founders</h5><p>Cinematographers, editors, and the brand head who approves.</p></div>
+  <div class="t"><span class="k">Tertiary</span><h5>Agencies and creators</h5><p>They receive briefs and need brand context.</p></div>
+  <div class="t"><span class="k">Indirect</span><h5>The audience</h5><p>Gets better, more relevant content.</p></div>
+  <div class="t dash"><span class="k">Scale-up market</span><h5>Other premium D2C brands</h5><p>Indian, Instagram-led, drop-based, 5 to 50 person teams.</p></div>
+</div>
+
+</div></div></section>
 <section class="band chapter" id="part4"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 04</b></p><div class="sec-head"><div><h2>Primary research</h2><span class="count">8 stages</span></div><div><p>How we learn from the team and the audience, the instruments, and what we expect to find.</p><div class="stage-chips"><span>Research plan</span><span>Segmentation</span><span>Questionnaires</span><span>Interviews</span><span>Focus group</span><span>Ethnography</span><span>Report</span><span>Inferences</span></div></div></div><div class="doc"><blockquote>
 <p><strong>Read this first:</strong> This part gives you the research <strong>plan, instruments, analysis method and report structure</strong>, filled with <strong>hypotheses</strong> where the results will go. You must run the research yourself; the jury will check that the data is real. Every <code>[ ]</code> / <code>▢</code> cell is a slot for your real findings. Hypotheses (H1–H10) are what we <em>expect</em> to find. Your data will confirm or reject them, and a rejected hypothesis is a good finding too.</p>
 </blockquote>
 
 <h2>9. Primary Research Plan</h2>
-<h3>9.1 Research questions</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>#</th>
-<th>Research question</th>
-<th>Method(s)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RQ1</td>
-<td>How does BLUORNG's team currently decide what content to make (organic &amp; paid)?</td>
-<td>Contextual inquiry, shadowing, interviews</td>
-</tr>
-<tr>
-<td>RQ2</td>
-<td>Which data do they look at, how often, and what do they do with it?</td>
-<td>Interviews, survey (team/industry)</td>
-</tr>
-<tr>
-<td>RQ3</td>
-<td>Where are the biggest time, money and frustration losses in ideation → brief → shoot → post → measure?</td>
-<td>Shadowing a drop week, journey mapping, survey</td>
-</tr>
-<tr>
-<td>RQ4</td>
-<td>How do organic and paid teams coordinate (or not)?</td>
-<td>Interviews with both roles</td>
-</tr>
-<tr>
-<td>RQ5</td>
-<td>What content does BLUORNG's audience engage with, save, share, and buy from, and why?</td>
-<td>Audience survey, focus group, content audit</td>
-</tr>
-<tr>
-<td>RQ6</td>
-<td>What would make the team trust (or reject) AI/data-based content recommendations?</td>
-<td>Interviews, concept test</td>
-</tr>
-</tbody>
-</table></div>
-<h3>9.2 Hypotheses</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Hypothesis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>H1</td>
-<td>Most content decisions are made on intuition/trends, not on structured data</td>
-</tr>
-<tr>
-<td>H2</td>
-<td>Teams check performance data, but fewer than half use it to plan the <em>next</em> content</td>
-</tr>
-<tr>
-<td>H3</td>
-<td>Organic winners are rarely turned into ads systematically</td>
-</tr>
-<tr>
-<td>H4</td>
-<td>Performance marketers feel they don't get enough ad creative variations</td>
-</tr>
-<tr>
-<td>H5</td>
-<td>Vague briefs cause re-shoots/re-edits at least occasionally</td>
-</tr>
-<tr>
-<td>H6</td>
-<td>Drop weeks create last-minute content pressure</td>
-</tr>
-<tr>
-<td>H7</td>
-<td>The audience engages more with behind-the-scenes, craft/detail (ASMR) and styling content than with plain product posts</td>
-</tr>
-<tr>
-<td>H8</td>
-<td>The audience dislikes ads that look like ads, and prefers creator/UGC-style ones</td>
-</tr>
-<tr>
-<td>H9</td>
-<td>Teams would trust AI suggestions only if they're explained and editable</td>
-</tr>
-<tr>
-<td>H10</td>
-<td>Brand consistency ("not looking mass") is a top concern for premium brands</td>
-</tr>
-</tbody>
-</table></div>
-<h3>9.3 Methods &amp; sample</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Who</th>
-<th>Sample</th>
-<th>Duration</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Content audit</strong> (secondary/primary)</td>
-<td>BLUORNG IG: last 90 posts + 30 ads (with permission) + 3 peer brands</td>
-<td>90 + 30 posts</td>
-<td>1 week</td>
-<td>Tagged spreadsheet: format, IP, hook, emotion, goal → metrics</td>
-</tr>
-<tr>
-<td><strong>Survey A: Practitioners</strong></td>
-<td>Social media managers, content creators, cinematographers, performance marketers at fashion/D2C brands (incl. BLUORNG team)</td>
-<td>20–40</td>
-<td>10 min</td>
-<td>Quant data on workflow &amp; pain</td>
-</tr>
-<tr>
-<td><strong>Survey B: Audience</strong></td>
-<td>18–30 streetwear followers (BLUORNG followers via story link + college + streetwear communities)</td>
-<td>100–150</td>
-<td>5–7 min</td>
-<td>What content people engage with and buy from</td>
-</tr>
-<tr>
-<td><strong>In-depth interviews</strong></td>
-<td>BLUORNG founder/brand head, social manager, perf. marketer, editor + 3–4 external practitioners</td>
-<td>6–8</td>
-<td>30–45 min</td>
-<td>Qualitative insights, quotes</td>
-</tr>
-<tr>
-<td><strong>Focus group</strong></td>
-<td>6–8 audience members (BLUORNG buyers + followers)</td>
-<td>1–2 groups</td>
-<td>60 min</td>
-<td>Reactions to content types &amp; ads</td>
-</tr>
-<tr>
-<td><strong>Ethnography / shadowing</strong></td>
-<td>Shadow one full <strong>drop week</strong> (planning meeting → shoot → edit → posting → ad launch)</td>
-<td>1 drop cycle</td>
-<td>5–7 days</td>
-<td>Observation log, photos, time-on-task, journey map</td>
-</tr>
-<tr>
-<td><strong>Concept probe</strong> (end of research)</td>
-<td>4–5 team members</td>
-<td>4–5</td>
-<td>20 min</td>
-<td>Reactions to 3 rough concept sketches</td>
-</tr>
-</tbody>
-</table></div>
-<h3>9.4 Ethics</h3>
-<ul>
-<li>Mentor approval for internal data. Consent at the start of every survey/interview. Anonymise names ("P1, P2…"). No personal audience data stored. Record only with permission.</li>
-</ul>
+<h3>9.1 Research questions</h3><figure class="fig"><div class="fig-core">
+  <div class="mx" style="grid-template-columns:minmax(260px,2.4fr) repeat(7,minmax(70px,.6fr));min-width:900px">
+    <div class="h">Research question</div><div class="h c">Shadowing</div><div class="h c">Interviews</div><div class="h c">Survey A</div><div class="h c">Survey B</div><div class="h c">Focus group</div><div class="h c">Content audit</div><div class="h c">Concept test</div>
+    <div class="nm">RQ1. How does the team decide what to make?</div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+    <div class="nm">RQ2. Which data do they use, and for what?</div><div class="c"></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+    <div class="nm">RQ3. Where are time, money and morale lost?</div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+    <div class="nm">RQ4. How do organic and paid coordinate?</div><div class="c"></div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+    <div class="nm">RQ5. What does the audience engage with and buy from?</div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"><i class="dt f"></i></div><div class="c"></div>
+    <div class="nm">RQ6. What would make them trust AI suggestions?</div><div class="c"></div><div class="c"><i class="dt f"></i></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"><i class="dt f"></i></div>
+  </div>
+</div><figcaption class="fig-cap"><b>6 questions x 7 methods</b><span>Every question is covered by at least one method</span></figcaption></figure>
+
+<h3>9.2 Hypotheses</h3><div class="tiles c5">
+  <div class="t"><div class="n">H1</div><p>Most content decisions come from intuition and trends, not structured data.</p><div class="chips"><span>Survey A Q5</span></div></div>
+  <div class="t"><div class="n">H2</div><p>Teams check data, but fewer than half use it to plan the next content.</p><div class="chips"><span>A Q6, Q7</span></div></div>
+  <div class="t"><div class="n">H3</div><p>Organic winners are rarely turned into ads.</p><div class="chips"><span>A Q11</span></div></div>
+  <div class="t"><div class="n">H4</div><p>Performance marketers don't get enough ad variations.</p><div class="chips"><span>A Q14</span></div></div>
+  <div class="t"><div class="n">H5</div><p>Vague briefs cause re-shoots or re-edits at least sometimes.</p><div class="chips"><span>A Q17</span></div></div>
+  <div class="t"><div class="n">H6</div><p>Drop weeks create last-minute content pressure.</p><div class="chips"><span>A Q18</span></div></div>
+  <div class="t"><div class="n">H7</div><p>The audience prefers BTS, ASMR detail and styling over plain product posts.</p><div class="chips"><span>Audit</span><span>B Q6–8</span></div></div>
+  <div class="t"><div class="n">H8</div><p>The audience prefers creator-style ads to ads that look like ads.</p><div class="chips"><span>B Q10</span></div></div>
+  <div class="t"><div class="n">H9</div><p>Teams trust AI only if it explains itself and can be edited.</p><div class="chips"><span>A Q20</span></div></div>
+  <div class="t"><div class="n">H10</div><p>Brand consistency is a top concern for premium brands.</p><div class="chips"><span>Interviews</span></div></div>
+</div>
+
+<h3>9.3 Methods &amp; sample</h3><div class="panel" style="margin:20px 0 14px">
+  <p class="chart-t">Planned participants per method</p>
+  <div class="hb">
+    <div class="hb-row" title="Survey B: 100 to 150 audience members"><span>Survey B, audience</span><span class="tr"><i style="left:66.7%;width:33.3%;border-radius:3px"></i></span><b>100–150</b></div>
+    <div class="hb-row" title="Survey A: 20 to 40 practitioners"><span>Survey A, practitioners</span><span class="tr"><i style="left:13.3%;width:13.4%;border-radius:3px"></i></span><b>20–40</b></div>
+    <div class="hb-row" title="Focus groups: 1 to 2 groups of 6 to 8"><span>Focus groups</span><span class="tr"><i class="g" style="left:4%;width:6.7%;border-radius:3px"></i></span><b>6–16</b></div>
+    <div class="hb-row" title="Interviews: 6 to 8"><span>Interviews</span><span class="tr"><i class="g" style="left:4%;width:1.4%;min-width:6px;border-radius:3px"></i></span><b>6–8</b></div>
+    <div class="hb-row" title="Concept probe: 4 to 5"><span>Concept probe</span><span class="tr"><i class="g" style="left:2.7%;width:0.7%;min-width:6px;border-radius:3px"></i></span><b>4–5</b></div>
+  </div>
+  <p class="chart-s">Scale: 0 to 150 people. Bars show the planned range.</p>
+</div>
+<div class="tiles c4">
+  <div class="t"><span class="k">Content audit</span><div class="n">120</div><p>90 BLUORNG posts and 30 ads, plus 3 peer brands. 1 week.</p></div>
+  <div class="t"><span class="k">Shadowing</span><div class="n">1 drop</div><p>A full drop week, planning meeting to ad launch. 5 to 7 days.</p></div>
+  <div class="t"><span class="k">Time per person</span><div class="n">5–60<small> min</small></div><p>Survey B 5–7, Survey A 10, concept probe 20, interviews 30–45, focus group 60.</p></div>
+  <div class="t dk"><span class="k">Total reach</span><div class="n">136–219</div><p>People across all methods, before the audit and shadowing.</p></div>
+</div>
+
+<h3>9.4 Ethics</h3><div class="tiles c4">
+  <div class="t"><svg class="i ico"><use href="#i-shield"/></svg><h5>Mentor approval</h5><p>For any internal data.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-check"/></svg><h5>Consent first</h5><p>At the start of every survey and interview.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-lock"/></svg><h5>Anonymised</h5><p>P1, P2... No audience personal data stored.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-mic"/></svg><h5>Record with permission</h5><p>Only when the participant agrees.</p></div>
+</div>
 
 <h2>10. User Study: User Base &amp; User Segmentation</h2>
 <h3>10.1 User base</h3>
 <p><strong>Internal users (product users):</strong> people who <strong>create or decide on content</strong> at drop-led fashion brands.</p>
-<h3>10.2 Segmentation</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Segment</th>
-<th>Role examples</th>
-<th>Main goal</th>
-<th>Data comfort</th>
-<th>Key need from BLUPRINT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>S1: The Strategist</strong></td>
-<td>Social media manager, content strategist</td>
-<td>Consistent, growing, on-brand feed</td>
-<td>Medium</td>
-<td>Ideas + calendar + insights in plain language</td>
-</tr>
-<tr>
-<td><strong>S2: The Maker</strong></td>
-<td>Cinematographer, photographer, editor, designer</td>
-<td>Shoot great content efficiently</td>
-<td>Low–medium</td>
-<td>Clear brief, shot list, references, ratios</td>
-</tr>
-<tr>
-<td><strong>S3: The Optimiser</strong></td>
-<td>Performance marketer, media buyer</td>
-<td>ROAS / CPA, fresh creatives</td>
-<td>High</td>
-<td>Angle/hook matrix, variation planning, fatigue alerts</td>
-</tr>
-<tr>
-<td><strong>S4: The Approver</strong></td>
-<td>Founder, brand head</td>
-<td>Brand integrity + growth</td>
-<td>Low (wants summaries)</td>
-<td>Quick review, rationale, brand-guard</td>
-</tr>
-<tr>
-<td><strong>S5: The Partner</strong></td>
-<td>Agency, freelancer, creator</td>
-<td>Deliver what the brand wants</td>
-<td>Varies</td>
-<td>Brand DNA + brief</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Audience segmentation (for content taxonomy, not product users):</strong></p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Segment</th>
-<th>Description</th>
-<th>Content they likely respond to</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hype Hunters</td>
-<td>Follow drops, buy fast, resell-aware</td>
-<td>Countdowns, scarcity, drop alerts</td>
-</tr>
-<tr>
-<td>Culture Seekers</td>
-<td>Love the aesthetic, music, art, community</td>
-<td>Campaign films, collabs, culture posts, BTS</td>
-</tr>
-<tr>
-<td>Style Learners</td>
-<td>Want to dress well</td>
-<td>Styling guides, fit checks</td>
-</tr>
-<tr>
-<td>Quality Checkers</td>
-<td>Premium buyers judging value</td>
-<td>ASMR detail, fabric/craft, founder POV</td>
-</tr>
-<tr>
-<td>Window Shoppers</td>
-<td>Aspirational, low purchase frequency</td>
-<td>Memes, reels, entertainment</td>
-</tr>
-</tbody>
-</table></div>
+<h3>10.2 Segmentation</h3><figure class="fig"><div class="fig-core"><div class="split">
+  <svg class="svg-fluid" viewBox="0 0 520 400" role="img" aria-label="Internal user segments by data comfort and influence">
+    <rect x="50" y="20" width="450" height="320" class="sv-line"/>
+    <line x1="275" y1="20" x2="275" y2="340" class="sv-line" stroke-dasharray="4 4"/><line x1="50" y1="180" x2="500" y2="180" class="sv-line" stroke-dasharray="4 4"/>
+    <text x="275" y="372" text-anchor="middle" font-size="12" class="sv-mute">Comfort with data →</text>
+    <text transform="translate(24 180) rotate(-90)" text-anchor="middle" font-size="12" class="sv-mute">Influence on what gets made →</text>
+    <ellipse cx="275" cy="300" rx="150" ry="16" style="fill:color-mix(in srgb, var(--ink) 8%, transparent)" class="sv-line" stroke-dasharray="3 3"/>
+    <text x="275" y="304" text-anchor="middle" font-size="12" class="sv-ink2">S5 Partner: comfort varies</text>
+    <circle cx="117" cy="52" r="12" class="sv-ink"/><text x="135" y="56" font-size="13" font-weight="600" class="sv-ink">S4 Approver</text>
+    <circle cx="275" cy="84" r="12" class="sv-ink"/><text x="293" y="88" font-size="13" font-weight="600" class="sv-ink">S1 Strategist</text>
+    <circle cx="455" cy="132" r="12" class="sv-ink"/><text x="437" y="160" text-anchor="end" font-size="13" font-weight="600" class="sv-ink">S3 Optimiser</text>
+    <circle cx="185" cy="196" r="12" class="sv-mute"/><text x="203" y="200" font-size="13" font-weight="600" class="sv-ink">S2 Maker</text>
+  </svg>
+  <div class="legend-list">
+    <div class="lg-row"><i style="background:var(--ink)"></i><div><b>S1 Strategist</b><span>Social media manager, content strategist. Needs ideas, a calendar and insights in plain language.</span></div></div>
+    <div class="lg-row"><i style="background:var(--muted)"></i><div><b>S2 Maker</b><span>Cinematographer, photographer, editor. Needs a clear brief, shot list, references and ratios.</span></div></div>
+    <div class="lg-row"><i style="background:var(--ink)"></i><div><b>S3 Optimiser</b><span>Performance marketer. Needs an angle and hook matrix, variation plans and fatigue alerts.</span></div></div>
+    <div class="lg-row"><i style="background:var(--ink)"></i><div><b>S4 Approver</b><span>Founder, brand head. Needs quick review, the reason and a brand-fit check.</span></div></div>
+    <div class="lg-row"><i style="border:1.5px dashed var(--line)"></i><div><b>S5 Partner</b><span>Agency, freelancer, creator. Needs Brand DNA and the brief.</span></div></div>
+  </div>
+</div></div><figcaption class="fig-cap"><b>Internal segments</b><span>Placed from the segmentation table, qualitative</span></figcaption></figure>
+<p class="chart-t">Audience segments, used for the content taxonomy</p>
+<div class="tiles c5">
+  <div class="t"><h5>Hype Hunters</h5><p>Follow drops, buy fast, resale-aware.</p><div class="chips"><span>Countdowns</span><span>Drop alerts</span></div></div>
+  <div class="t"><h5>Culture Seekers</h5><p>Love the aesthetic, music, art, community.</p><div class="chips"><span>Films</span><span>Collabs</span><span>BTS</span></div></div>
+  <div class="t"><h5>Style Learners</h5><p>Want to dress well.</p><div class="chips"><span>Styling</span><span>Fit checks</span></div></div>
+  <div class="t"><h5>Quality Checkers</h5><p>Premium buyers judging value.</p><div class="chips"><span>ASMR detail</span><span>Founder POV</span></div></div>
+  <div class="t"><h5>Window Shoppers</h5><p>Aspirational, buy rarely.</p><div class="chips"><span>Memes</span><span>Reels</span></div></div>
+</div>
 
-<h2>11. Research Instruments</h2>
+<h2>11. Research Instruments</h2><div class="tiles">
+  <div class="t dk"><span class="k">Survey A, practitioners</span><div class="n">22<small> questions</small></div><p>10 minutes. 5 sections: about you, deciding content, organic and paid, briefs, pain and wishes.</p></div>
+  <div class="t dk"><span class="k">Survey B, audience</span><div class="n">14<small> questions</small></div><p>5 to 7 minutes. Discovery, what people watch, save, share and buy from.</p></div>
+  <div class="t"><span class="k">Interview guide</span><div class="n">10<small> prompts</small></div><p>30 to 45 minutes, plus a founder variant.</p></div>
+  <div class="t"><span class="k">Focus group</span><div class="n">5<small> activities</small></div><p>60 minutes, including a 15-post card sort.</p></div>
+  <div class="t"><span class="k">Shadowing log</span><div class="n">8<small> fields</small></div><p>Day, time, activity, people, tools, time spent, pain, quote.</p></div>
+  <div class="t"><span class="k">Content audit sheet</span><div class="n">14<small> fields</small></div><p>Format, series, hook, emotion, goal, reach, saves, shares, CTR, CPA and more.</p></div>
+</div>
+
+
 <h3>11.1 Survey A: Practitioners (Google Form)</h3>
 <p><em>Intro:</em> "I'm a design student researching how fashion brands decide what content to create. 10 minutes, anonymous."</p>
 <p><strong>Section 1: About you</strong></p>
@@ -1989,7 +1571,31 @@ svg text { font-family: var(--body); }
 <li>What must such a tool NEVER do? <em>(open)</em></li>
 <li>If you had a magic content assistant, what's the first thing it would do for you? <em>(open)</em></li>
 </ol>
-<h3>11.2 Survey B: Audience</h3>
+<h3>11.2 Survey B: Audience</h3><figure class="fig"><div class="fig-core"><div class="phones2">
+  <div class="phone"><div class="phone-in">
+    <div class="island"></div>
+    <div class="ph-head"><div class="k">Survey B / Question 6 of 14</div><h5>Content you watch fully</h5><div class="prog"><span class="t"><i style="width:43%"></i></span>43%</div></div>
+    <div class="form-q">
+      <div class="q">Which content from fashion brands do you watch till the end?</div>
+      <label><i class="on"></i>Drop teasers</label><label><i></i>Lookbooks</label><label><i class="on"></i>Behind the scenes</label>
+      <label><i class="on"></i>ASMR, fabric close-ups</label><label><i></i>Styling guides</label><label><i></i>Fit checks, street style</label>
+      <label><i></i>Memes and culture</label><label><i class="on"></i>Collabs</label><label><i></i>Founder stories</label>
+    </div>
+  </div></div>
+  <div class="phone"><div class="phone-in">
+    <div class="island"></div>
+    <div class="ph-head"><div class="k">Survey A / Question 9 of 22</div><h5>Knowing what works</h5><div class="prog"><span class="t"><i style="width:41%"></i></span>41%</div></div>
+    <div class="form-q">
+      <div class="q">"I know clearly which type of content works best for our brand."</div>
+      <div class="likert"><span>1</span><span class="on">2</span><span>3</span><span>4</span><span>5</span></div>
+      <div class="likert-l"><span>Strongly disagree</span><span>Strongly agree</span></div>
+      <div class="q" style="margin-top:14px">How are briefs usually shared?</div>
+      <label><i></i>Verbal</label><label><i class="on"></i>WhatsApp</label><label><i></i>Doc or Notion</label><label><i></i>Deck</label><label><i></i>No brief</label>
+    </div>
+  </div></div>
+</div></div><figcaption class="fig-cap"><b>How the forms look on a phone</b><span>Selections shown are illustrative</span></figcaption></figure>
+
+
 <ol>
 <li>Age, 2. City, 3. Do you follow BLUORNG?, 4. Have you bought from BLUORNG? <em>(Yes / Planning to / No)</em></li>
 <li>Where do you <strong>discover</strong> new streetwear brands? <em>(IG Reels, IG Explore, Friends, Creators, Ads, Stores, Reddit/Discord, Other)</em></li>
@@ -2189,80 +1795,20 @@ svg text { font-family: var(--body); }
 </tr>
 </tbody>
 </table></div>
-<h3>12.2 Data representation: charts to produce</h3>
-<p>Make these charts from your Google Forms export (Forms → Responses → Sheets, or use <code>research/chart-builder.html</code> in this repo: paste your CSV and it draws the bar charts):</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Chart</th>
-<th>Type</th>
-<th>Question(s)</th>
-<th>Tests</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>How content is decided</td>
-<td>Horizontal bar (multi-select %)</td>
-<td>A-Q5</td>
-<td>H1</td>
-</tr>
-<tr>
-<td>Data use vs data check</td>
-<td>Grouped bar</td>
-<td>A-Q6 vs A-Q7</td>
-<td>H2</td>
-</tr>
-<tr>
-<td>Organic → ads conversion</td>
-<td>Stacked bar</td>
-<td>A-Q11</td>
-<td>H3</td>
-</tr>
-<tr>
-<td>Enough variations?</td>
-<td>Likert diverging bar</td>
-<td>A-Q14</td>
-<td>H4</td>
-</tr>
-<tr>
-<td>Top problems</td>
-<td>Ranked bar (weighted 3-2-1)</td>
-<td>A-Q19</td>
-<td>priority</td>
-</tr>
-<tr>
-<td>AI trust</td>
-<td>Pie/donut</td>
-<td>A-Q20</td>
-<td>H9</td>
-</tr>
-<tr>
-<td>Content watched vs saved vs bought</td>
-<td>Grouped bar per content type</td>
-<td>B-Q6/7/8</td>
-<td>H7</td>
-</tr>
-<tr>
-<td>Ad styles that stop the scroll</td>
-<td>Horizontal bar</td>
-<td>B-Q10</td>
-<td>H8</td>
-</tr>
-<tr>
-<td>Content audit: median saves/reach by IP</td>
-<td>Bar per IP</td>
-<td>Audit</td>
-<td>H7</td>
-</tr>
-<tr>
-<td>Content audit: ad CPA by angle (indexed)</td>
-<td>Bar per angle</td>
-<td>Audit</td>
-<td>H8</td>
-</tr>
-</tbody>
-</table></div>
+<h3>12.2 Data representation: charts to produce</h3><p>Each chart below is ready for data. Export responses from Google Forms and paste the CSV into <code>research/chart-builder.html</code>, or build them in Sheets.</p>
+<div class="slots">
+  <div class="slot"><div class="gh h"><i style="width:90%"></i><i style="width:60%"></i><i style="width:40%"></i></div><h6>How content is decided</h6><p>A Q5 / tests H1</p></div>
+  <div class="slot"><div class="gh"><i style="height:80%"></i><i style="height:40%"></i><i style="height:70%"></i><i style="height:30%"></i></div><h6>Data checked vs used</h6><p>A Q6, Q7 / H2</p></div>
+  <div class="slot"><div class="gh"><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i></div><h6>Organic to ads</h6><p>A Q11 / H3</p></div>
+  <div class="slot"><div class="gh h"><i style="width:70%;margin-left:30%"></i><i style="width:50%;margin-left:20%"></i><i style="width:80%"></i></div><h6>Enough variations?</h6><p>A Q14 / H4</p></div>
+  <div class="slot"><div class="gh h"><i style="width:95%"></i><i style="width:75%"></i><i style="width:55%"></i><i style="width:30%"></i></div><h6>Top problems</h6><p>A Q19 / priority</p></div>
+  <div class="slot"><div class="gh p"><i></i></div><h6>Trust in AI</h6><p>A Q20 / H9</p></div>
+  <div class="slot"><div class="gh"><i style="height:60%"></i><i style="height:90%"></i><i style="height:40%"></i><i style="height:75%"></i><i style="height:50%"></i></div><h6>Watched, saved, bought</h6><p>B Q6–8 / H7</p></div>
+  <div class="slot"><div class="gh h"><i style="width:85%"></i><i style="width:65%"></i><i style="width:45%"></i></div><h6>Ads that stop the scroll</h6><p>B Q10 / H8</p></div>
+  <div class="slot"><div class="gh"><i style="height:95%"></i><i style="height:70%"></i><i style="height:60%"></i><i style="height:40%"></i></div><h6>Saves by series</h6><p>Audit / H7</p></div>
+  <div class="slot"><div class="gh"><i style="height:45%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:35%"></i></div><h6>Ad cost by angle</h6><p>Audit / H8</p></div>
+</div>
+
 <h3>12.3 Findings table (fill in with your real numbers)</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -2342,55 +1888,14 @@ svg text { font-family: var(--body); }
 <li><strong>"Protect the cool."</strong> Any suggestion that feels mass, salesy or trend-chasing will be rejected.</li>
 <li><strong>"Show me why."</strong> Trust in AI depends on explanation, examples from the brand's own past, and the ability to edit.</li>
 </ol>
-<h3>12.6 Priority areas of concern (shortlist)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Rank</th>
-<th>Area</th>
-<th>Why it's priority</th>
-<th>Design response</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Knowing what works (by <em>type</em> of content)</td>
-<td>Root cause for everything else</td>
-<td>Auto-tagging + "Why it worked" insights</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Ideation for organic IPs</td>
-<td>Highest-frequency pain</td>
-<td>IP/series recommender + idea bank</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Ad creative diversity &amp; fatigue</td>
-<td>Direct money impact</td>
-<td>Angle × hook matrix, fatigue alerts</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Organic → paid bridge</td>
-<td>Quick win</td>
-<td>"Promote this winner" + shared calendar</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Briefs</td>
-<td>Saves maker time</td>
-<td>One-click brief with shot list</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Brand guardrails</td>
-<td>Adoption condition</td>
-<td>Brand DNA + brand-fit score</td>
-</tr>
-</tbody>
-</table></div>
+<h3>12.6 Priority areas of concern (shortlist)</h3><div class="rank">
+  <div><span class="no">1</span><div><h6>Knowing what works, by type</h6><p>Root cause of everything else</p></div><span class="arr">→</span><span class="rs">Auto-tagging and "why it worked" insights</span></div>
+  <div><span class="no">2</span><div><h6>Ideas for organic series</h6><p>The most frequent pain</p></div><span class="arr">→</span><span class="rs">Series recommender and idea bank</span></div>
+  <div><span class="no">3</span><div><h6>Ad variety and fatigue</h6><p>Direct money impact</p></div><span class="arr">→</span><span class="rs">Angle and hook matrix, fatigue alerts</span></div>
+  <div><span class="no">4</span><div><h6>Organic to paid bridge</h6><p>Quick win</p></div><span class="arr">→</span><span class="rs">"Promote this winner" and a shared calendar</span></div>
+  <div><span class="no">5</span><div><h6>Briefs</h6><p>Saves the makers' time</p></div><span class="arr">→</span><span class="rs">One-click brief with shot list</span></div>
+  <div><span class="no">6</span><div><h6>Brand guardrails</h6><p>Condition for adoption</p></div><span class="arr">→</span><span class="rs">Brand DNA and brand-fit score</span></div>
+</div>
 
 <h2>13. Research Analysis &amp; Inferences</h2>
 <h3>13.1 Immersion into the research</h3>
@@ -2398,13 +1903,13 @@ svg text { font-family: var(--body); }
 <li><strong>Insider access as a strength:</strong> I work inside BLUORNG's content team, so I can shadow real planning meetings, shoots and ad launches. My inside role is also a <strong>bias risk</strong>. I control for it with external practitioner interviews, the audience survey, and by separating <em>observation</em> from <em>interpretation</em> in my shadowing log.</li>
 <li><strong>Data access:</strong> with mentor approval, export IG Insights and Meta Ads data (indexed) for the content audit.</li>
 </ul>
-<h3>13.2 Defining (redefining) the problem</h3>
-<p><strong>Original brief:</strong> "A platform to help BLUORNG know what content to make for organic &amp; Meta ads."</p>
-<p><strong>Redefined brief (after research, update with your evidence):</strong></p>
-<blockquote>
-<p>Design <strong>BLUPRINT</strong>, a decision and ideation tool for small, drop-led fashion content teams. It <strong>(1)</strong> learns which <em>types</em> of content work for the brand from its own organic and paid data, <strong>(2)</strong> turns that into on-brand recommendations for Instagram series/IPs and Meta ad angles, and <strong>(3)</strong> converts chosen ideas into shootable briefs planned around the drop calendar, so one shoot can feed both organic and paid.</p>
-</blockquote>
-<p><em>What changed:</em> the focus moved from "suggest content" to <strong>"connect insight → idea → brief → shoot"</strong>, and <strong>brand guardrails</strong> and <strong>explainability</strong> were added as must-haves.</p>
+<h3>13.2 Defining (redefining) the problem</h3><div class="ba">
+  <div class="t dash"><span class="k">Original brief</span><p style="font-size:16px">A platform to help BLUORNG know what content to make for organic and Meta ads.</p></div>
+  <div class="arrow-r">→</div>
+  <div class="t dk"><span class="k">Redefined brief, update with evidence</span><p style="font-size:15px;color:#f4f4f4">Design BLUPRINT, a decision and ideation tool for small, drop-led fashion content teams. It (1) learns which types of content work from the brand's own organic and paid data, (2) turns that into on-brand suggestions for Instagram series and Meta ad angles, and (3) turns chosen ideas into shootable briefs planned around the drop calendar, so one shoot feeds both organic and paid.</p></div>
+</div>
+<div class="chips"><span class="f">Suggest content → insight, idea, brief, shoot</span><span class="f">+ Brand guardrails</span><span class="f">+ Explainability</span></div>
+
 <h3>13.3 Elaborated scope of design</h3>
 <p><strong>End goal:</strong> a tested hi-fi prototype of BLUPRINT (web dashboard + mobile companion) and a design system.</p>
 <p><strong>Modules in scope:</strong></p>
@@ -2417,41 +1922,23 @@ svg text { font-family: var(--body); }
 </ol>
 <p><strong>User segments who benefit and can afford it:</strong> BLUORNG's in-house team (sponsor), then other Indian premium D2C fashion brands with 5–50 person teams that spend on Meta ads. They already pay for tools like Later or Motion, so a focused SaaS tier is realistic.</p>
 <p><strong>How we proceed:</strong> research findings → personas → problem statement → design goals → ideation → 3 concepts → final concept → IA → wireframes → UI → prototype → testing.</p>
-<h3>13.4 Environment &amp; context</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Dimension</th>
-<th>Context</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Where</strong></td>
-<td>BLUORNG office/studio (planning on laptop), shoot locations and stores (mobile, on the go), founder reviewing on phone</td>
-</tr>
-<tr>
-<td><strong>When</strong></td>
-<td>Weekly content planning, monthly reviews, <strong>drop weeks</strong> (high pressure, high volume), ad refresh cycles (every 2–4 weeks)</td>
-</tr>
-<tr>
-<td><strong>Devices</strong></td>
-<td>Desktop/laptop for planning &amp; analysis; <strong>mobile</strong> for briefs on set, approvals, quick idea capture</td>
-</tr>
-<tr>
-<td><strong>Data environment</strong></td>
-<td>Instagram Graph API, Meta Marketing API, Shopify; trend inputs (audio, culture)</td>
-</tr>
-<tr>
-<td><strong>Constraints</strong></td>
-<td>Meta API limits &amp; policies; data privacy; small team (time-poor); premium brand (no discount-led content); production budgets; Indian network conditions on set</td>
-</tr>
-<tr>
-<td><strong>Beneficiaries (max benefit)</strong></td>
-<td>Content team (time, clarity), performance marketer (better CPA via diversity), founders (brand control, ROI), makers (clear briefs), audience (better content)</td>
-</tr>
-</tbody>
-</table></div>
+<h3>13.4 Environment &amp; context</h3><div class="tiles">
+  <div class="t"><svg class="i ico"><use href="#i-laptop"/></svg><span class="k">Studio and office</span><h5>Plan and analyse</h5><p>Laptop. Weekly planning, monthly reviews, brief writing.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-cam"/></svg><span class="k">Shoots and stores</span><h5>Capture and execute</h5><p>Phone, on the go, with patchy network on set.</p></div>
+  <div class="t dk"><svg class="i ico"><use href="#i-phone"/></svg><span class="k">Founder, anywhere</span><h5>Review and approve</h5><p>Phone, in short bursts between other work.</p></div>
+</div>
+<figure class="fig"><div class="fig-core"><div class="rhythm">
+  <span></span><span class="wk">W1</span><span class="wk">W2</span><span class="wk">W3</span><span class="wk">W4</span><span class="wk">W5</span><span class="wk">W6</span><span class="wk">W7</span><span class="wk">W8</span>
+  <span class="rl">Weekly planning</span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span><span class="m"></span>
+  <span class="rl">Monthly review</span><span style="grid-column:5" class="m o"></span><span style="grid-column:9" class="m o"></span>
+  <span class="rl">Ad refresh, 2–4 wks</span><span style="grid-column:4" class="m o"></span><span style="grid-column:7" class="m o"></span>
+  <span class="rl">Drop week</span><span class="dw" style="grid-column:6/8">Drop</span>
+</div></div><figcaption class="fig-cap"><b>The team's rhythm, illustrative 8 weeks</b><span>Drop weeks are the high-pressure peak</span></figcaption></figure>
+<div class="grid3">
+  <div class="t"><span class="k">Data</span><div class="chips"><span>Instagram Graph API</span><span>Meta Marketing API</span><span>Shopify</span><span>Trend inputs</span></div></div>
+  <div class="t"><span class="k">Constraints</span><div class="chips"><span>API limits</span><span>Privacy</span><span>Small team</span><span>No discount-led content</span><span>Shoot budgets</span><span>Network on set</span></div></div>
+  <div class="t"><span class="k">Who benefits most</span><div class="chips"><span>Content team: time</span><span>Marketer: cost per sale</span><span>Founders: control</span><span>Makers: clarity</span><span>Audience: better posts</span></div></div>
+</div>
 <h3>13.5 Factors &amp; constraints → fine-tuned brief</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -2602,232 +2089,95 @@ svg text { font-family: var(--body); }
   <div class="opp">Sync the drop calendar</div><div class="opp">Ideas backed by own results</div><div class="opp">Approve with reason and brand-fit</div><div class="opp">Auto brief with shot list</div><div class="opp">Ratio checklist</div><div class="opp">Angle x hook matrix, promote winners</div><div class="opp">Auto insights feed next ideas</div>
 </div></div><figcaption class="fig-cap"><b>Current journey</b><span>Low points in orange are where BLUPRINT steps in</span></figcaption></figure>
 
-<h2>17. Problem Statement</h2>
-<p><strong>How-Might-We / POV format:</strong></p>
-<blockquote>
-<p><strong>Ria, a social media manager at a premium drop-led streetwear brand,</strong> needs a way to <strong>know what type of content to make next for Instagram and Meta ads</strong>, because <strong>today performance data, ideas, briefs and the drop calendar live in separate places, so content decisions are guesswork, wins aren't repeated, and ads run out of fresh creative.</strong></p>
-</blockquote>
-<p><strong>Final problem statement:</strong></p>
-<blockquote>
-<p><em>Content teams at drop-led fashion brands like BLUORNG lack a connected, brand-aware system that turns their own organic and paid performance data into clear, explainable ideas and shootable briefs. This leads to guess-based content, repetitive ads, wasted production and spend, and weak learning between drops.</em></p>
-</blockquote>
-<p><strong>How Might We…</strong></p>
-<ol>
-<li>HMW help the team understand <em>why</em> a piece of content worked, by type, not just by number?</li>
-<li>HMW turn insights into fresh, on-brand ideas for Instagram series/IPs?</li>
-<li>HMW help performance marketers plan diverse ad angles <em>before</em> the shoot?</li>
-<li>HMW make one shoot feed both organic and paid?</li>
-<li>HMW make briefs so clear that makers never need a re-shoot?</li>
-<li>HMW keep AI suggestions on-brand and trustworthy?</li>
-</ol>
+<h2>17. Problem Statement</h2><div class="callout" style="font-size:clamp(20px,2.2vw,30px);padding:34px 38px"><small>Problem statement</small>Content teams at drop-led fashion brands like BLUORNG lack a connected, brand-aware system that turns their own organic and paid results into clear, explainable ideas and shootable briefs. The result: guesswork content, repetitive ads, wasted production and spend, and little learning between drops.</div>
+<p class="chart-t">How might we...</p>
+<div class="tiles">
+  <div class="t"><span class="k">HMW 1</span><p>Help the team see why content worked, by type, not just by number?</p></div>
+  <div class="t"><span class="k">HMW 2</span><p>Turn insights into fresh, on-brand ideas for Instagram series?</p></div>
+  <div class="t"><span class="k">HMW 3</span><p>Help performance marketers plan diverse ad angles before the shoot?</p></div>
+  <div class="t"><span class="k">HMW 4</span><p>Make one shoot feed both organic and paid?</p></div>
+  <div class="t"><span class="k">HMW 5</span><p>Make briefs so clear that makers never need a re-shoot?</p></div>
+  <div class="t dk"><span class="k">HMW 6</span><p>Keep AI suggestions on-brand and trustworthy?</p></div>
+</div>
 
-<h2>18. Defined Design Goals</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>#</th>
-<th>Design goal</th>
-<th>Success metric (to test in usability study)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>G1</td>
-<td><strong>Make performance meaningful:</strong> show what worked by content type, in plain language</td>
-<td>User can name the top-performing IP &amp; why in &lt; 1 min</td>
-</tr>
-<tr>
-<td>G2</td>
-<td><strong>Recommend, don't dictate:</strong> explainable, editable idea suggestions</td>
-<td>≥ 80% of testers understand <em>why</em> an idea was suggested</td>
-</tr>
-<tr>
-<td>G3</td>
-<td><strong>Bridge organic &amp; paid:</strong> one plan, one shoot, both outputs</td>
-<td>Ad variations planned per shoot ↑ (e.g. 3 → 10)</td>
-</tr>
-<tr>
-<td>G4</td>
-<td><strong>Brief in one click:</strong> shot list, hook, ratios, references</td>
-<td>Brief created in &lt; 5 min; makers rate clarity ≥ 4/5</td>
-</tr>
-<tr>
-<td>G5</td>
-<td><strong>Protect the brand:</strong> guardrails and brand-fit scoring</td>
-<td>Founder approves ≥ 70% of suggestions without major edits</td>
-</tr>
-<tr>
-<td>G6</td>
-<td><strong>Plan around drops:</strong> calendar-first view</td>
-<td>Drop plan visible 2+ weeks ahead</td>
-</tr>
-<tr>
-<td>G7</td>
-<td><strong>Learn continuously:</strong> feedback loop from results to ideas</td>
-<td>Insight → idea links visible in the UI</td>
-</tr>
-<tr>
-<td>G8</td>
-<td><strong>Fit the context:</strong> desktop for planning, mobile for set and approvals</td>
-<td>Key tasks doable on mobile</td>
-</tr>
-<tr>
-<td>G9</td>
-<td><strong>Accessible &amp; inclusive:</strong> WCAG 2.2 AA</td>
-<td>Contrast &amp; touch targets pass checks</td>
-</tr>
-</tbody>
-</table></div></div></div></section>
-<section class="band chapter" id="part6"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 06</b></p><div class="sec-head"><div><h2>Ideas to direction</h2><span class="count">8 stages</span></div><div><p>From forty-plus raw ideas to three concepts, then one direction with a reason.</p><div class="stage-chips"><span>Brainstorming</span><span>Brainwriting</span><span>SCAMPER</span><span>Space saturation</span><span>Bullseye</span><span>Priority matrix</span><span>3 concepts</span><span>Final selection</span></div></div></div><div class="doc">
+<h2>18. Defined Design Goals</h2><div class="tiles">
+  <div class="t"><span class="k">G1 Make performance meaningful</span><div class="n">&lt; 1 min</div><p>To name the top series and why it works.</p></div>
+  <div class="t"><span class="k">G2 Recommend, don't dictate</span><div class="n">80%</div><p>Of testers understand why an idea was suggested.</p></div>
+  <div class="t dk"><span class="k">G3 Bridge organic and paid</span><div class="n">3 → 10</div><p>Ad variations planned per shoot.</p></div>
+  <div class="t dk"><span class="k">G4 Brief in one click</span><div class="n">&lt; 5 min</div><p>To create a brief. Makers rate clarity 4/5 or higher.</p></div>
+  <div class="t"><span class="k">G5 Protect the brand</span><div class="n">70%</div><p>Of suggestions approved without major edits.</p></div>
+  <div class="t"><span class="k">G6 Plan around drops</span><div class="n">2+ wks</div><p>Drop plan visible ahead of time.</p></div>
+  <div class="t"><span class="k">G7 Learn continuously</span><div class="n">Linked</div><p>Every idea shows the insight behind it.</p></div>
+  <div class="t"><span class="k">G8 Fit the context</span><div class="n">Mobile</div><p>Key tasks work on a phone.</p></div>
+  <div class="t"><span class="k">G9 Accessible</span><div class="n">AA</div><p>WCAG 2.2 contrast and touch targets.</p></div>
+</div>
+
+</div></div></section>
+<section class="band chapter" id="part6"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 06</b></p><div class="sec-head"><div><h2>Ideas to direction</h2><span class="count">8 stages</span></div><div><p>From 50 raw ideas (35 brainstormed, 7 from SCAMPER, 8 sketches) to three concepts, then one direction with a reason.</p><div class="stage-chips"><span>Brainstorming</span><span>Brainwriting</span><span>SCAMPER</span><span>Space saturation</span><span>Bullseye</span><span>Priority matrix</span><span>3 concepts</span><span>Final selection</span></div></div></div><div class="doc">
 <h2>19. Ideation Techniques</h2>
-<h3>19.1 Brainstorming (HMW-driven, 40+ raw ideas)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>HMW</th>
-<th>Ideas</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>HMW1</strong> understand <em>why</em> content worked</td>
-<td>Auto-tag every post by format/IP/hook/emotion, "Why it worked" cards, Compare to own median, Hook heatmap (retention curve), Weekly AI digest on WhatsApp, Leaderboard of IPs, "Content DNA" fingerprint per post</td>
-</tr>
-<tr>
-<td><strong>HMW2</strong> fresh on-brand organic ideas</td>
-<td>IP/series recommender, Idea bank with tags, Trend radar filtered by brand-fit, "Remix a winner" button, Audience question-mining from comments/DMs, Collab idea generator, Seasonal/culture calendar (festivals, music drops, cricket, fashion weeks), Story Experience builder (polls, quizzes)</td>
-</tr>
-<tr>
-<td><strong>HMW3</strong> diverse ad angles</td>
-<td>Angle × hook matrix, "Missing angles" alert, Fatigue predictor, Variation generator (same footage, new hooks/captions), Competitor ad swipe file, Creator/UGC brief generator</td>
-</tr>
-<tr>
-<td><strong>HMW4</strong> one shoot → both outputs</td>
-<td>Shoot planner that merges organic + ad shots, "Ad-ready" checklist per shot (ratios, hook frames, safe zones), Promote-winner pipeline</td>
-</tr>
-<tr>
-<td><strong>HMW5</strong> clear briefs</td>
-<td>One-click brief, Shot list with reference frames, Mobile "set mode" with checkboxes, Voice-note-to-brief converter, Moodboard auto-pull</td>
-</tr>
-<tr>
-<td><strong>HMW6</strong> on-brand &amp; trustworthy</td>
-<td>Brand DNA setup, Brand-fit score, "Never suggest" list, Explain-why panel, Thumbs up/down learning, Founder approval queue</td>
-</tr>
-</tbody>
-</table></div>
-<h3>19.2 Brainwriting (6-3-5)</h3>
-<p>6 participants (BLUORNG team + design peers) × 3 ideas × 5 rounds of building on each other's ideas. Example chain:</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Round 1</th>
-<th>Round 2 (builds on)</th>
-<th>Round 3 (builds on)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>"Show which Reels worked"</td>
-<td>"…tag them by IP so we compare series, not posts"</td>
-<td>"…and suggest the next episode of the winning series"</td>
-</tr>
-<tr>
-<td>"Ad fatigue warning"</td>
-<td>"…with a suggested replacement from organic winners"</td>
-<td>"…auto-create a brief to shoot new hooks for it"</td>
-</tr>
-<tr>
-<td>"Better briefs"</td>
-<td>"…brief generated from the chosen idea"</td>
-<td>"…with a mobile on-set checklist and ratios"</td>
-</tr>
-</tbody>
-</table></div>
-<h3>19.3 SCAMPER (applied to the current workflow and existing tools)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Letter</th>
-<th>Prompt</th>
-<th>Idea</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>S</strong>ubstitute</td>
-<td>Replace WhatsApp briefs with…?</td>
-<td>Structured mobile brief cards</td>
-</tr>
-<tr>
-<td><strong>C</strong>ombine</td>
-<td>Combine IG Insights + Ads Manager + calendar?</td>
-<td>One "Pulse" board for organic + paid</td>
-</tr>
-<tr>
-<td><strong>A</strong>dapt</td>
-<td>Adapt Spotify's "Discover Weekly"?</td>
-<td><strong>"Ideas Weekly"</strong>: personalised idea drop every Monday</td>
-</tr>
-<tr>
-<td><strong>M</strong>odify / Magnify</td>
-<td>Magnify the hook (first 3 s)?</td>
-<td>Hook library + hook-level performance</td>
-</tr>
-<tr>
-<td><strong>P</strong>ut to other use</td>
-<td>Use organic Reels for ads?</td>
-<td>"Promote winner" → ad variation plan</td>
-</tr>
-<tr>
-<td><strong>E</strong>liminate</td>
-<td>Eliminate manual reporting?</td>
-<td>Auto weekly digest</td>
-</tr>
-<tr>
-<td><strong>R</strong>everse / Rearrange</td>
-<td>Plan ads <em>before</em> the shoot instead of after</td>
-<td>Shoot planner that starts from ad angles</td>
-</tr>
-</tbody>
-</table></div>
-<h3>19.4 Space Saturation &amp; Group (affinity of all ideas)</h3>
-<p>All ideas on sticky notes → grouped into themes:</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Theme cluster</th>
-<th>Ideas grouped</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Insight</strong></td>
-<td>Auto-tagging, why-it-worked, IP leaderboard, hook heatmap, digest</td>
-</tr>
-<tr>
-<td><strong>Ideate</strong></td>
-<td>IP recommender, trend radar, remix a winner, Ideas Weekly, comment mining, collab generator</td>
-</tr>
-<tr>
-<td><strong>Paid creative</strong></td>
-<td>Angle × hook matrix, missing angles, fatigue predictor, variation generator, UGC brief</td>
-</tr>
-<tr>
-<td><strong>Brief &amp; produce</strong></td>
-<td>One-click brief, shot list, set mode, voice-to-brief, moodboard</td>
-</tr>
-<tr>
-<td><strong>Plan</strong></td>
-<td>Drop calendar, culture calendar, shared organic + paid timeline</td>
-</tr>
-<tr>
-<td><strong>Brand &amp; trust</strong></td>
-<td>Brand DNA, brand-fit score, explain-why, feedback loop, approvals</td>
-</tr>
-</tbody>
-</table></div>
-<h3>19.5 Crazy 8s (rapid sketches)</h3>
-<p>8 sketches in 8 minutes for the home screen: (1) feed of idea cards, (2) calendar-first, (3) dashboard-first, (4) chat co-pilot, (5) Tinder-style swipe on ideas, (6) kanban idea → brief → shot → live, (7) "Drop Room" per drop, (8) mobile set mode. <em>Add your hand sketches here.</em></p>
+<h3>19.1 Brainstorming (HMW-driven, 35 ideas)</h3><div class="tiles">
+  <div class="t"><span class="k">HMW 1 / Why it worked</span><div class="n">7</div><div class="chips"><span>Auto-tagging</span><span>Why-it-worked cards</span><span>Vs own median</span><span>Hook heatmap</span><span>Weekly digest</span><span>Series leaderboard</span><span>Content DNA</span></div></div>
+  <div class="t dk"><span class="k">HMW 2 / Organic ideas</span><div class="n">8</div><div class="chips"><span>Series recommender</span><span>Idea bank</span><span>Trend radar</span><span>Remix a winner</span><span>Comment mining</span><span>Collab generator</span><span>Culture calendar</span><span>Story builder</span></div></div>
+  <div class="t"><span class="k">HMW 3 / Ad angles</span><div class="n">6</div><div class="chips"><span>Angle x hook matrix</span><span>Missing angles</span><span>Fatigue predictor</span><span>Variation generator</span><span>Swipe file</span><span>Creator brief</span></div></div>
+  <div class="t"><span class="k">HMW 4 / One shoot</span><div class="n">3</div><div class="chips"><span>Merged shoot plan</span><span>Ad-ready checklist</span><span>Promote winner</span></div></div>
+  <div class="t"><span class="k">HMW 5 / Clear briefs</span><div class="n">5</div><div class="chips"><span>One-click brief</span><span>Shot list with refs</span><span>Set Mode</span><span>Voice note to brief</span><span>Moodboard</span></div></div>
+  <div class="t"><span class="k">HMW 6 / On-brand, trusted</span><div class="n">6</div><div class="chips"><span>Brand DNA</span><span>Brand-fit score</span><span>Never-suggest list</span><span>Explain why</span><span>Thumbs feedback</span><span>Approval queue</span></div></div>
+</div>
+<p class="chart-s">35 ideas from HMW brainstorming. SCAMPER added 7 and Crazy 8s added 8 layouts.</p>
+
+<h3>19.2 Brainwriting (6-3-5)</h3><div class="tiles c4">
+  <div class="t dk"><span class="k">Method 6-3-5</span><div class="n">90</div><p>6 people x 3 ideas x 5 rounds, each round building on the last.</p></div>
+  <div class="t" style="grid-column:span 3"><span class="k">Three idea chains</span>
+    <div class="rail" style="min-width:0;margin-top:6px"><div class="node"><div class="card"><small>ROUND 1</small>Show which Reels worked</div></div><div class="node"><div class="card"><small>ROUND 2</small>Tag them by series to compare series</div></div><div class="node"><div class="card endc"><small>ROUND 3</small>Suggest the next episode of the winner</div></div></div>
+    <div class="rail" style="min-width:0;margin-top:8px"><div class="node"><div class="card"><small>ROUND 1</small>Ad fatigue warning</div></div><div class="node"><div class="card"><small>ROUND 2</small>Suggest a replacement from organic winners</div></div><div class="node"><div class="card endc"><small>ROUND 3</small>Auto-brief to shoot new hooks</div></div></div>
+    <div class="rail" style="min-width:0;margin-top:8px"><div class="node"><div class="card"><small>ROUND 1</small>Better briefs</div></div><div class="node"><div class="card"><small>ROUND 2</small>Brief generated from the chosen idea</div></div><div class="node"><div class="card endc"><small>ROUND 3</small>Mobile on-set checklist with ratios</div></div></div>
+  </div>
+</div>
+
+<h3>19.3 SCAMPER (applied to the current workflow and existing tools)</h3><div class="tiles c4">
+  <div class="t"><div class="n">S</div><span class="k">Substitute</span><p>WhatsApp briefs become structured mobile brief cards.</p></div>
+  <div class="t"><div class="n">C</div><span class="k">Combine</span><p>Insights, Ads Manager and calendar become one Pulse board.</p></div>
+  <div class="t"><div class="n">A</div><span class="k">Adapt</span><p>Spotify's Discover Weekly becomes "Ideas Weekly" every Monday.</p></div>
+  <div class="t"><div class="n">M</div><span class="k">Magnify</span><p>The hook: a hook library with hook-level results.</p></div>
+  <div class="t"><div class="n">P</div><span class="k">Put to other use</span><p>Organic Reels become ads through "Promote winner".</p></div>
+  <div class="t"><div class="n">E</div><span class="k">Eliminate</span><p>Manual reporting, replaced by an automatic digest.</p></div>
+  <div class="t dk"><div class="n">R</div><span class="k">Reverse</span><p>Plan ads before the shoot instead of after it.</p></div>
+  <div class="t dash"><span class="k">Result</span><div class="n">7</div><p>New ideas added to the pool.</p></div>
+</div>
+
+<h3>19.4 Space Saturation &amp; Group (affinity of all ideas)</h3><div class="grid2">
+  <div class="panel">
+    <p class="chart-t">Ideas per cluster after grouping</p>
+    <div class="hb">
+      <div class="hb-row" title="Ideate: 6"><span>Ideate</span><span class="tr"><i style="width:100%"></i></span><b>6</b></div>
+      <div class="hb-row" title="Insight: 5"><span>Insight</span><span class="tr"><i class="g" style="width:83%"></i></span><b>5</b></div>
+      <div class="hb-row" title="Paid creative: 5"><span>Paid creative</span><span class="tr"><i class="g" style="width:83%"></i></span><b>5</b></div>
+      <div class="hb-row" title="Brief and produce: 5"><span>Brief, produce</span><span class="tr"><i class="g" style="width:83%"></i></span><b>5</b></div>
+      <div class="hb-row" title="Brand and trust: 5"><span>Brand, trust</span><span class="tr"><i class="g" style="width:83%"></i></span><b>5</b></div>
+      <div class="hb-row" title="Plan: 3"><span>Plan</span><span class="tr"><i class="g" style="width:50%"></i></span><b>3</b></div>
+    </div>
+    <p class="chart-s">29 distinct ideas once duplicates were merged</p>
+  </div>
+  <div class="tiles c2" style="margin:0">
+    <div class="t"><h5>Insight</h5><p>Auto-tagging, why-it-worked, leaderboard, hook heatmap, digest</p></div>
+    <div class="t dk"><h5>Ideate</h5><p>Series recommender, trend radar, remix, Ideas Weekly, comment mining, collabs</p></div>
+    <div class="t"><h5>Paid creative</h5><p>Angle x hook matrix, missing angles, fatigue, variations, UGC brief</p></div>
+    <div class="t"><h5>Brief and produce</h5><p>One-click brief, shot list, Set Mode, voice to brief, moodboard</p></div>
+    <div class="t"><h5>Plan</h5><p>Drop calendar, culture calendar, shared timeline</p></div>
+    <div class="t"><h5>Brand and trust</h5><p>Brand DNA, brand-fit, explain why, feedback, approvals</p></div>
+  </div>
+</div>
+
+<h3>19.5 Crazy 8s (rapid sketches)</h3><div class="c8">
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="30" y="12" width="100" height="28" class="sk-g"/><rect x="30" y="46" width="100" height="28" class="sk-g"/><rect x="30" y="80" width="100" height="28" class="sk-g"/><rect x="30" y="12" width="4" height="28" class="sk-f"/></svg><div class="cap"><b>1</b>Feed of idea cards</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><g class="sk-g2"><rect x="20" y="15" width="28" height="26"/><rect x="52" y="15" width="28" height="26"/><rect x="84" y="15" width="28" height="26"/><rect x="116" y="15" width="28" height="26"/><rect x="20" y="47" width="28" height="26"/><rect x="84" y="47" width="28" height="26"/><rect x="116" y="47" width="28" height="26"/><rect x="20" y="79" width="28" height="26"/><rect x="52" y="79" width="28" height="26"/><rect x="116" y="79" width="28" height="26"/></g><rect x="52" y="47" width="28" height="26" class="sk-f"/><rect x="84" y="79" width="28" height="26" class="sk-f"/></svg><div class="cap"><b>2</b>Calendar first</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="18" y="14" width="36" height="22" class="sk-g"/><rect x="62" y="14" width="36" height="22" class="sk-g"/><rect x="106" y="14" width="36" height="22" class="sk-g"/><rect x="24" y="74" width="16" height="32" class="sk-f"/><rect x="48" y="58" width="16" height="48" class="sk-f"/><rect x="72" y="84" width="16" height="22" class="sk-f"/><rect x="96" y="50" width="16" height="56" class="sk-f"/><rect x="120" y="66" width="16" height="40" class="sk-f"/></svg><div class="cap"><b>3</b>Dashboard first</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="16" y="12" width="80" height="20" rx="10" class="sk-g"/><rect x="64" y="40" width="80" height="20" rx="10" class="sk-f"/><rect x="16" y="68" width="96" height="20" rx="10" class="sk-g"/><rect x="16" y="96" width="128" height="16" class="sk-l"/></svg><div class="cap"><b>4</b>Chat co-pilot</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="46" y="18" width="68" height="70" class="sk-g2"/><rect x="40" y="12" width="68" height="70" class="sk-g"/><circle cx="56" cy="102" r="10" class="sk-l"/><path d="M52 98l8 8M60 98l-8 8" class="sk-l"/><circle cx="104" cy="102" r="10" class="sk-f"/></svg><div class="cap"><b>5</b>Swipe on ideas</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><g class="sk-g2"><rect x="12" y="12" width="30" height="96"/><rect x="47" y="12" width="30" height="96"/><rect x="82" y="12" width="30" height="96"/><rect x="117" y="12" width="30" height="96"/></g><g class="sk-g"><rect x="16" y="18" width="22" height="14"/><rect x="16" y="36" width="22" height="14"/><rect x="51" y="18" width="22" height="14"/><rect x="86" y="18" width="22" height="14"/></g><rect x="121" y="18" width="22" height="14" class="sk-f"/></svg><div class="cap"><b>6</b>Kanban: idea to live</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="14" y="22" width="40" height="10" class="sk-g"/><rect x="34" y="40" width="54" height="10" class="sk-f"/><rect x="60" y="58" width="40" height="10" class="sk-g"/><rect x="80" y="76" width="50" height="10" class="sk-f"/><line x1="112" y1="12" x2="112" y2="108" stroke="var(--heat)" stroke-width="2"/></svg><div class="cap"><b>7</b>Drop Room timeline</div></div>
+  <div class="frame"><svg viewBox="0 0 160 120"><rect x="56" y="6" width="48" height="108" rx="8" class="sk-l"/><rect x="64" y="24" width="8" height="8" class="sk-f"/><rect x="76" y="26" width="20" height="4" class="sk-g"/><rect x="64" y="42" width="8" height="8" class="sk-l" style="stroke-width:1.5"/><rect x="76" y="44" width="20" height="4" class="sk-g"/><rect x="64" y="60" width="8" height="8" class="sk-l" style="stroke-width:1.5"/><rect x="76" y="62" width="20" height="4" class="sk-g"/></svg><div class="cap"><b>8</b>Mobile Set Mode</div></div>
+</div>
 
 <h2>20. Ideation Filtration</h2>
 <h3>20.1 Bullseye diagram</h3><figure class="fig"><div class="fig-core"><div class="split">
@@ -2923,80 +2273,29 @@ svg text { font-family: var(--body); }
   </article>
 </div>
 
-<h3>21.1 Concept evaluation matrix (score 1–5, weighted)</h3><figure class="fig"><div class="fig-core"><div class="scorebars">
+<h3>21.1 Concept evaluation matrix (score 1–5, weighted)</h3><div class="grid2" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:start">
+  <div class="panel" style="overflow-x:auto">
+    <table class="hm">
+      <tr><th>Criterion</th><th>Weight</th><th style="text-align:center">A. Pulse</th><th style="text-align:center">B. Studio</th><th style="text-align:center">C. Drop Room</th></tr>
+      <tr><td>Solves "what to make"</td><td>25%</td><td class="s s3">3</td><td class="s s5">5</td><td class="s s2">2</td></tr>
+      <tr><td>Uses the brand's own data</td><td>15%</td><td class="s s5">5</td><td class="s s3">3</td><td class="s s2">2</td></tr>
+      <tr><td>Organic and paid bridge</td><td>15%</td><td class="s s3">3</td><td class="s s4">4</td><td class="s s5">5</td></tr>
+      <tr><td>Brief and production help</td><td>10%</td><td class="s s1">1</td><td class="s s5">5</td><td class="s s4">4</td></tr>
+      <tr><td>Brand safety and trust</td><td>10%</td><td class="s s4">4</td><td class="s s3">3</td><td class="s s4">4</td></tr>
+      <tr><td>Fits workflow, adoption</td><td>10%</td><td class="s s2">2</td><td class="s s4">4</td><td class="s s5">5</td></tr>
+      <tr><td>Technical feasibility</td><td>10%</td><td class="s s5">5</td><td class="s s4">4</td><td class="s s5">5</td></tr>
+      <tr><td>Cost and time to build</td><td>5%</td><td class="s s4">4</td><td class="s s3">3</td><td class="s s5">5</td></tr>
+      <tr class="tot"><td>Weighted total</td><td>100%</td><td class="s">3.35</td><td class="s">4.05</td><td class="s">3.60</td></tr>
+    </table></div>
+  </div>
+  <div><figure class="fig"><div class="fig-core"><div class="scorebars">
   <div class="sb"><span>A. Pulse</span><span class="t"><i style="width:67%"></i></span><b>3.35</b></div>
   <div class="sb win"><span>B. Studio</span><span class="t"><i style="width:81%"></i></span><b>4.05</b></div>
   <div class="sb"><span>C. Drop Room</span><span class="t"><i style="width:72%"></i></span><b>3.60</b></div>
 </div></div><figcaption class="fig-cap"><b>Weighted score out of 5</b><span>Draft scores, re-score with mentors</span></figcaption></figure>
 
-
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Criterion (weight)</th>
-<th>A: Pulse</th>
-<th>B: Studio</th>
-<th>C: Drop Room</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Solves "what to make" (25%)</td>
-<td>3</td>
-<td><strong>5</strong></td>
-<td>2</td>
-</tr>
-<tr>
-<td>Uses brand's own data (15%)</td>
-<td><strong>5</strong></td>
-<td>3</td>
-<td>2</td>
-</tr>
-<tr>
-<td>Organic ↔ paid bridge (15%)</td>
-<td>3</td>
-<td>4</td>
-<td><strong>5</strong></td>
-</tr>
-<tr>
-<td>Brief/production help (10%)</td>
-<td>1</td>
-<td><strong>5</strong></td>
-<td>4</td>
-</tr>
-<tr>
-<td>Brand safety &amp; trust (10%)</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td>Fits workflow / adoption (10%)</td>
-<td>2</td>
-<td>4</td>
-<td><strong>5</strong></td>
-</tr>
-<tr>
-<td>Technical feasibility (10%)</td>
-<td><strong>5</strong></td>
-<td>4</td>
-<td><strong>5</strong></td>
-</tr>
-<tr>
-<td>Cost / time to build (5%)</td>
-<td>4</td>
-<td>3</td>
-<td><strong>5</strong></td>
-</tr>
-<tr>
-<td><strong>Weighted total</strong></td>
-<td><strong>3.35</strong></td>
-<td><strong>4.05</strong></td>
-<td><strong>3.60</strong></td>
-</tr>
-</tbody>
-</table></div>
-<p><em>(Re-score this table with your mentors and concept-probe participants. These are draft scores.)</em></p>
+<div class="callout" style="margin-top:0"><small>Result</small>Studio leads on solving "what to make". Pulse and Drop Room each win on data and workflow, so the final concept combines all three.</div></div>
+</div>
 
 <h2>22. Final Concept: BLUPRINT = Studio core + Pulse brain + Drop Room spine</h2><figure class="fig"><div class="fig-core">
   <svg class="svg-fluid" viewBox="0 0 560 420" role="img" aria-label="Final concept combines Studio, Pulse and Drop Room" style="max-width:620px;margin:0 auto">
@@ -3036,104 +2335,36 @@ svg text { font-family: var(--body); }
 <li>Test with 3 team members using 3 tasks (see Part 7, Task Analysis).</li>
 </ul></div></div></section>
 <section class="band chapter" id="part7"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 07</b></p><div class="sec-head"><div><h2>Scenarios and flows</h2><span class="count">6 stages</span></div><div><p>How each person moves through BLUPRINT, step by step.</p><div class="stage-chips"><span>User scenarios</span><span>Storyboards</span><span>User flows</span><span>Task flows</span><span>Task analysis</span><span>Feature mapping</span></div></div></div><div class="doc">
-<h2>23. User Scenarios</h2>
-<h3>Scenario 1: Ria plans organic content for a drop (primary)</h3>
-<p><em>Monday, 10 AM. The "Winter Capsule" drops in 12 days.</em> Ria opens BLUPRINT on her laptop. The <strong>Drop Room</strong> already shows the drop date, synced from the design team. She opens <strong>Ideas → Organic</strong>. BLUPRINT suggests <em>"ASMR: Embroidery Close-ups, Ep. 4"</em>, with the reason: "Your ASMR series averages <strong>2.6× saves</strong> vs your median; last episode was 5 weeks ago." It also suggests a <strong>Story Experience: "Pick the colourway"</strong> poll for T-7. She tweaks the hook, sees a <strong>Brand-fit 92%</strong> badge, and adds both to the drop plan. Then she clicks <strong>Create brief</strong>.</p>
-<h3>Scenario 2: Arjun plans ad variations before the shoot</h3>
-<p>Arjun opens the same Drop Room → <strong>Paid</strong>. The <strong>Angle × Hook matrix</strong> shows that last drop used only <em>Lookbook</em> and <em>Scarcity</em> angles. <strong>Craft/Detail</strong> and <strong>Creator try-on</strong> are flagged as "missing angles". BLUPRINT also spots that Ria's ASMR Reel is an organic winner and suggests "Promote as ad + shoot 3 alternate hooks". Arjun adds 4 angles × 3 hooks = 12 variations to the <strong>shoot plan</strong>, so Kabir shoots for them on the same day.</p>
-<h3>Scenario 3: Kabir on set</h3>
-<p>On shoot day, Kabir opens BLUPRINT on his phone in <strong>Set Mode</strong>. He sees one merged shot list (organic + ads) with hooks, ratios (9:16, 4:5), safe zones and reference frames. He ticks off shots as he goes. A note pops: "Shot 7 needs a 2-sec close-up for Hook B".</p>
-<h3>Scenario 4: Founder approval</h3>
-<p>Siddharth gets a notification: "Winter Capsule plan ready: 9 organic, 12 ad variations." He swipes through cards on mobile. Each shows the idea, the <em>why</em>, a reference and the brand-fit score. He approves 8, comments "make the tone less meme-y" on one, and rejects one. BLUPRINT learns from the rejection.</p>
-<h3>Scenario 5: Review &amp; learn (post-drop)</h3>
-<p>At T+7, BLUPRINT's <strong>Pulse</strong> digest says: "Creator try-on ads had <strong>38% lower CPA (indexed)</strong> than lookbook ads; ASMR Ep. 4 is your top-saved post this month." It suggests next steps: "Make ASMR a bi-weekly IP" and "Brief 2 more creators for the next drop."</p>
+<h2>23. User Scenarios</h2><div class="tiles c5">
+  <div class="t"><div class="mono-av" style="width:44px;height:44px;font-size:14px">RM</div><span class="k">Ria / Monday / Laptop</span><h5>Plans a drop</h5><p>Drop Room suggests ASMR Ep. 4 (2.6x saves) and a T-7 colourway poll. Brand-fit 92. She creates the brief.</p></div>
+  <div class="t"><div class="mono-av" style="width:44px;height:44px;font-size:14px">AM</div><span class="k">Arjun / Pre-shoot / Laptop</span><h5>Plans 12 ads</h5><p>The matrix flags Craft and Creator as missing angles. He adds 4 angles x 3 hooks to the shoot plan.</p></div>
+  <div class="t"><div class="mono-av alt" style="width:44px;height:44px;font-size:14px">KS</div><span class="k">Kabir / Shoot day / Phone</span><h5>Shoots from Set Mode</h5><p>One merged shot list with hooks, ratios and safe zones. A nudge: shot 7 needs a 2s close-up.</p></div>
+  <div class="t"><div class="mono-av out" style="width:44px;height:44px;font-size:14px">SK</div><span class="k">Founder / Anywhere / Phone</span><h5>Approves in minutes</h5><p>Swipes 9 organic and 12 ad ideas. Approves 8, comments on 1, rejects 1, and BLUPRINT learns.</p></div>
+  <div class="t dk"><div class="mono-av out" style="width:44px;height:44px;font-size:14px;background:#f4f4f4;color:#0b0b0b">P</div><span class="k">Team / T+7 / Digest</span><h5>Learns</h5><p>Creator ads beat lookbook ads on cost per sale (indexed). Next: make ASMR bi-weekly, brief 2 more creators.</p></div>
+</div>
 
-<h2>24. Storyboards</h2>
-<p><em>Draw these as 6-frame comic strips (pen sketches are fine for jury).</em></p>
-<p><strong>Storyboard 1: "From idea block to drop plan" (Ria)</strong></p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Frame</th>
-<th>Visual</th>
-<th>Caption</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Ria staring at a blank Notion page, phone buzzing with "drop in 12 days"</td>
-<td>Idea block before a drop</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Ria scrolling competitors, frustrated</td>
-<td>Trend-chasing feels off-brand</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Opens BLUPRINT → Drop Room</td>
-<td>Everything for the drop in one place</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Idea card: "ASMR Ep. 4: 2.6× saves" with <em>why</em></td>
-<td>Ideas based on what works for <em>us</em></td>
-</tr>
-<tr>
-<td>5</td>
-<td>Taps "Create brief" → brief appears</td>
-<td>Brief in one click</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Ria relaxed; founder replies "Approved "</td>
-<td>Confident, fast, on-brand</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Storyboard 2: "One shoot, twelve ads" (Arjun + Kabir)</strong></p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Frame</th>
-<th>Visual</th>
-<th>Caption</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Arjun looking at 3 near-identical ads, frequency 4.2</td>
-<td>Creative fatigue</td>
-</tr>
-<tr>
-<td>2</td>
-<td>BLUPRINT matrix highlights "missing angles"</td>
-<td>See the gaps</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Arjun adds angles + hooks to shoot plan</td>
-<td>Plan ads before the shoot</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Kabir on set, phone in Set Mode, ticking shots</td>
-<td>Clear shot list on set</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Ads Manager with 12 varied ads</td>
-<td>Real diversity</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Pulse: CPA down, Arjun smiling</td>
-<td>Learn and repeat</td>
-</tr>
-</tbody>
-</table></div>
+<h2>24. Storyboards</h2><p class="chart-t">Storyboard 1: from idea block to drop plan (Ria)</p>
+<div class="strip">
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="30" y="20" width="110" height="72" class="sk-l"/><path d="M20 102h130" class="sk-l"/><rect x="44" y="34" width="50" height="4" class="sk-g"/><rect x="148" y="52" width="30" height="54" rx="5" class="sk-f"/><rect x="152" y="62" width="22" height="12" fill="var(--heat)"/></svg><div class="cap"><b>01</b>Blank page, drop in 12 days</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="72" y="10" width="56" height="110" rx="8" class="sk-l"/><g class="sk-g"><rect x="80" y="24" width="18" height="18"/><rect x="102" y="24" width="18" height="18"/><rect x="80" y="46" width="18" height="18"/><rect x="102" y="46" width="18" height="18"/><rect x="80" y="68" width="18" height="18"/><rect x="102" y="68" width="18" height="18"/></g><text x="150" y="44" font-size="26" font-weight="800" class="sv-ink">?</text><text x="40" y="70" font-size="20" font-weight="800" class="sv-ink">?</text></svg><div class="cap"><b>02</b>Trend-chasing feels off-brand</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="30" y="16" width="140" height="84" class="sk-l"/><rect x="30" y="16" width="30" height="84" class="sk-g2"/><rect x="70" y="30" width="40" height="8" class="sk-f"/><rect x="88" y="46" width="50" height="8" class="sk-g"/><rect x="110" y="62" width="44" height="8" class="sk-f"/><path d="M20 110h160" class="sk-l"/></svg><div class="cap"><b>03</b>Opens the Drop Room</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="24" y="16" width="152" height="98" class="sk-l"/><rect x="36" y="30" width="70" height="6" class="sk-f"/><rect x="36" y="44" width="90" height="4" class="sk-g"/><rect x="36" y="54" width="80" height="4" class="sk-g"/><circle cx="150" cy="44" r="16" class="sk-l"/><text x="150" y="49" text-anchor="middle" font-size="12" font-weight="800" class="sv-ink">92</text><rect x="36" y="74" width="128" height="26" class="sk-g2"/><text x="44" y="92" font-size="12" font-weight="700" class="sv-ink">2.6x saves</text></svg><div class="cap"><b>04</b>An idea with a reason</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="62" y="10" width="76" height="110" class="sk-l"/><g><rect x="72" y="26" width="9" height="9" class="sk-f"/><rect x="86" y="28" width="42" height="5" class="sk-g"/><rect x="72" y="44" width="9" height="9" class="sk-f"/><rect x="86" y="46" width="42" height="5" class="sk-g"/><rect x="72" y="62" width="9" height="9" class="sk-l" style="stroke-width:1.5"/><rect x="86" y="64" width="42" height="5" class="sk-g"/><rect x="72" y="80" width="9" height="9" class="sk-l" style="stroke-width:1.5"/><rect x="86" y="82" width="42" height="5" class="sk-g"/></g></svg><div class="cap"><b>05</b>Brief in one click</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="70" y="8" width="60" height="114" rx="8" class="sk-l"/><rect x="78" y="30" width="44" height="12" rx="6" class="sk-g"/><rect x="80" y="50" width="42" height="18" rx="9" class="sk-f"/><text x="101" y="62" text-anchor="middle" font-size="8" font-weight="800" fill="#fff">APPROVED</text></svg><div class="cap"><b>06</b>Founder approves fast</div></div>
+</div>
+
+
+<p class="chart-t">Storyboard 2: one shoot, twelve ads (Arjun and Kabir)</p>
+<div class="strip">
+  <div class="frame"><svg viewBox="0 0 200 130"><g class="sk-g"><rect x="22" y="24" width="46" height="70"/><rect x="77" y="24" width="46" height="70"/><rect x="132" y="24" width="46" height="70"/></g><g class="sk-f"><circle cx="45" cy="52" r="10"/><circle cx="100" cy="52" r="10"/><circle cx="155" cy="52" r="10"/></g><text x="100" y="116" text-anchor="middle" font-size="13" font-weight="800" class="sv-heat">FREQ 4.2</text></svg><div class="cap"><b>01</b>Three near-identical ads</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><g><rect x="40" y="16" width="36" height="22" class="sk-f"/><rect x="82" y="16" width="36" height="22" class="sk-f"/><rect x="124" y="16" width="36" height="22" class="sk-g"/><rect x="40" y="44" width="36" height="22" class="sk-f"/><rect x="82" y="44" width="36" height="22" class="sk-g"/><rect x="124" y="44" width="36" height="22" class="sk-f"/><rect x="40" y="72" width="36" height="22" class="sk-r"/><rect x="82" y="72" width="36" height="22" class="sk-g"/><rect x="124" y="72" width="36" height="22" class="sk-r"/><rect x="40" y="100" width="36" height="22" class="sk-r"/><rect x="82" y="100" width="36" height="22" class="sk-r"/><rect x="124" y="100" width="36" height="22" class="sk-g"/></g></svg><div class="cap"><b>02</b>Matrix shows missing angles</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><g><text x="40" y="34" font-size="16" font-weight="800" class="sv-ink">+</text><rect x="56" y="24" width="100" height="10" class="sk-g"/><text x="40" y="60" font-size="16" font-weight="800" class="sv-ink">+</text><rect x="56" y="50" width="86" height="10" class="sk-g"/><text x="40" y="86" font-size="16" font-weight="800" class="sv-ink">+</text><rect x="56" y="76" width="110" height="10" class="sk-f"/><text x="40" y="112" font-size="16" font-weight="800" class="sv-ink">+</text><rect x="56" y="102" width="70" height="10" class="sk-f"/></g></svg><div class="cap"><b>03</b>Angles added to the shoot plan</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><rect x="20" y="44" width="80" height="54" rx="6" class="sk-f"/><circle cx="60" cy="71" r="16" fill="#fff"/><circle cx="60" cy="71" r="9" class="sk-f"/><rect x="40" y="34" width="22" height="12" class="sk-f"/><rect x="128" y="16" width="50" height="100" rx="8" class="sk-l"/><rect x="136" y="34" width="8" height="8" class="sk-f"/><rect x="148" y="36" width="22" height="4" class="sk-g"/><rect x="136" y="52" width="8" height="8" class="sk-l" style="stroke-width:1.5"/><rect x="148" y="54" width="22" height="4" class="sk-g"/></svg><div class="cap"><b>04</b>Set Mode on the shoot</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><g><rect x="26" y="14" width="30" height="30" class="sk-f"/><rect x="62" y="14" width="30" height="30" class="sk-g"/><circle cx="123" cy="29" r="15" class="sk-f"/><rect x="144" y="14" width="30" height="30" class="sk-g2"/><rect x="26" y="50" width="30" height="30" class="sk-g"/><circle cx="77" cy="65" r="15" class="sk-g"/><rect x="108" y="50" width="30" height="30" class="sk-f"/><rect x="144" y="50" width="30" height="30" class="sk-g"/><circle cx="41" cy="101" r="15" class="sk-g"/><rect x="62" y="86" width="30" height="30" class="sk-f"/><rect x="108" y="86" width="30" height="30" class="sk-g2"/><circle cx="159" cy="101" r="15" class="sk-f"/></g></svg><div class="cap"><b>05</b>Twelve varied ads</div></div>
+  <div class="frame"><svg viewBox="0 0 200 130"><path d="M30 14v96h150" class="sk-l"/><path d="M38 30 L70 40 L100 62 L130 74 L170 96" class="sk-l" style="stroke-width:3"/><circle cx="170" cy="96" r="5" class="sk-f"/><text x="44" y="22" font-size="11" font-weight="800" class="sv-ink">COST PER SALE</text></svg><div class="cap"><b>06</b>Cost down, learning saved</div></div>
+</div>
+
+
 
 <h2>25. User Flows &amp; Task Flows</h2>
 <h3>25.1 Primary user flow: get an idea → brief → plan</h3>
@@ -3225,357 +2456,81 @@ svg text { font-family: var(--body); }
 
 Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </code></pre>
-<h3>26.2 Task table (for usability testing later)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Task</th>
-<th>User</th>
-<th>Frequency</th>
-<th>Current time (est.)</th>
-<th>Target time</th>
-<th>Key screen</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Find which content type worked best last month</td>
-<td>Ria, founder</td>
-<td>Weekly</td>
-<td>30–60 min (manual)</td>
-<td>&lt; 1 min</td>
-<td>Pulse</td>
-</tr>
-<tr>
-<td>Get 5 organic ideas for a drop</td>
-<td>Ria</td>
-<td>Weekly</td>
-<td>1–2 hrs</td>
-<td>&lt; 10 min</td>
-<td>Ideas → Organic</td>
-</tr>
-<tr>
-<td>Plan 10 ad variations</td>
-<td>Arjun</td>
-<td>Per drop / bi-weekly</td>
-<td>1 hr + waiting</td>
-<td>&lt; 15 min</td>
-<td>Paid matrix</td>
-</tr>
-<tr>
-<td>Create a brief</td>
-<td>Ria/Arjun</td>
-<td>5–10× per drop</td>
-<td>20–30 min</td>
-<td>&lt; 5 min</td>
-<td>Brief builder</td>
-</tr>
-<tr>
-<td>Use brief on set</td>
-<td>Kabir</td>
-<td>Shoot days</td>
-<td>–</td>
-<td>Glanceable</td>
-<td>Set Mode (mobile)</td>
-</tr>
-<tr>
-<td>Approve a plan</td>
-<td>Founder</td>
-<td>Per drop</td>
-<td>Days (WhatsApp)</td>
-<td>&lt; 10 min</td>
-<td>Approval queue (mobile)</td>
-</tr>
-</tbody>
-</table></div>
-<p><em>Current times are estimates. Replace them with times observed during shadowing.</em></p>
+<h3>26.2 Task table (for usability testing later)</h3><div class="panel" style="margin:20px 0 14px">
+  <p class="chart-t">Minutes per task: today vs target</p>
+  <div class="hb">
+    <div class="hb-row" style="grid-template-columns:minmax(150px,220px) minmax(0,1fr) 120px" title="Today 60 to 120 min, target under 10"><span>Get 5 organic ideas<br><small style="color:var(--muted)">Ria, weekly</small></span><span class="tr"><i class="g" style="left:50%;width:50%;border-radius:3px"></i><i style="left:7.5%;width:6px;border-radius:50%;height:14px"></i></span><b>60–120 → 10</b></div>
+    <div class="hb-row" style="grid-template-columns:minmax(150px,220px) minmax(0,1fr) 120px" title="Today 60 min plus waiting, target under 15"><span>Plan 10 ad variations<br><small style="color:var(--muted)">Arjun, per drop</small></span><span class="tr"><i class="g" style="left:50%;width:50%;border-radius:3px;opacity:.6"></i><i style="left:11.5%;width:6px;border-radius:50%"></i></span><b>60+ → 15</b></div>
+    <div class="hb-row" style="grid-template-columns:minmax(150px,220px) minmax(0,1fr) 120px" title="Today 30 to 60 min, target under 1"><span>Find what worked<br><small style="color:var(--muted)">Ria, founder, weekly</small></span><span class="tr"><i class="g" style="left:25%;width:25%;border-radius:3px"></i><i style="left:0.4%;width:6px;border-radius:50%"></i></span><b>30–60 → 1</b></div>
+    <div class="hb-row" style="grid-template-columns:minmax(150px,220px) minmax(0,1fr) 120px" title="Today 20 to 30 min, target under 5"><span>Create a brief<br><small style="color:var(--muted)">5 to 10 per drop</small></span><span class="tr"><i class="g" style="left:16.7%;width:8.3%;border-radius:3px"></i><i style="left:3.7%;width:6px;border-radius:50%"></i></span><b>20–30 → 5</b></div>
+    <div class="hb-row" style="grid-template-columns:minmax(150px,220px) minmax(0,1fr) 120px" title="Today takes days over WhatsApp, target under 10 min"><span>Approve a plan<br><small style="color:var(--muted)">Founder, per drop</small></span><span class="tr"><i class="g" style="left:60%;width:40%;border-radius:3px;background:repeating-linear-gradient(90deg,#9d9d9d 0 8px,transparent 8px 12px)"></i><i style="left:7.5%;width:6px;border-radius:50%"></i></span><b>days → 10</b></div>
+  </div>
+  <div class="legend-row"><span><i class="fl" style="background:#9d9d9d;border-color:#9d9d9d"></i>Today, estimate</span><span><i class="fl" style="width:10px;border-radius:50%"></i>Target</span><span>Scale 0 to 120 min</span></div>
+  <p class="chart-s">Today's times are in-house estimates. Replace them with timings from shadowing.</p>
+</div>
 
-<h2>27. Feature Mapping</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>User need (from research)</th>
-<th>Persona</th>
-<th>Design goal</th>
-<th>Priority</th>
-<th>Module</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Auto-tagging (format, IP, hook, emotion, goal)</td>
-<td>Know what works by type</td>
-<td>Ria, Arjun</td>
-<td>G1</td>
-<td>Must</td>
-<td>Pulse</td>
-</tr>
-<tr>
-<td>"Why it worked" cards</td>
-<td>Meaning, not numbers</td>
-<td>Ria, Founder</td>
-<td>G1, G2</td>
-<td>Must</td>
-<td>Pulse</td>
-</tr>
-<tr>
-<td>IP leaderboard</td>
-<td>Compare series</td>
-<td>Ria</td>
-<td>G1</td>
-<td>Must</td>
-<td>Pulse</td>
-</tr>
-<tr>
-<td>Weekly digest</td>
-<td>No manual reports</td>
-<td>Ria, Founder</td>
-<td>G7</td>
-<td>Should</td>
-<td>Pulse</td>
-</tr>
-<tr>
-<td>Organic idea recommender (IPs, formats, stories)</td>
-<td>Idea block</td>
-<td>Ria</td>
-<td>G2</td>
-<td>Must</td>
-<td>Ideas</td>
-</tr>
-<tr>
-<td>Story Experience builder</td>
-<td>Interactive stories</td>
-<td>Ria</td>
-<td>G2</td>
-<td>Should</td>
-<td>Ideas</td>
-</tr>
-<tr>
-<td>Angle × Hook matrix + missing angles</td>
-<td>Ad diversity</td>
-<td>Arjun</td>
-<td>G3</td>
-<td>Must</td>
-<td>Ideas → Paid</td>
-</tr>
-<tr>
-<td>Fatigue alerts</td>
-<td>Late detection</td>
-<td>Arjun</td>
-<td>G3, G7</td>
-<td>Should</td>
-<td>Pulse → Paid</td>
-</tr>
-<tr>
-<td>Promote winner</td>
-<td>Organic → paid</td>
-<td>Arjun</td>
-<td>G3</td>
-<td>Must</td>
-<td>Pulse/Ideas</td>
-</tr>
-<tr>
-<td>Explain-why + edit + feedback</td>
-<td>Trust</td>
-<td>All</td>
-<td>G2, G7</td>
-<td>Must</td>
-<td>All</td>
-</tr>
-<tr>
-<td>One-click brief + shot list</td>
-<td>Clear briefs</td>
-<td>Ria, Kabir</td>
-<td>G4</td>
-<td>Must</td>
-<td>Briefs</td>
-</tr>
-<tr>
-<td>Set Mode (mobile)</td>
-<td>On-set use</td>
-<td>Kabir</td>
-<td>G4, G8</td>
-<td>Should</td>
-<td>Briefs</td>
-</tr>
-<tr>
-<td>Drop Room + timeline</td>
-<td>Plan around drops</td>
-<td>Ria, Arjun</td>
-<td>G6</td>
-<td>Must</td>
-<td>Plan</td>
-</tr>
-<tr>
-<td>Approval queue (mobile)</td>
-<td>Fast approvals</td>
-<td>Founder</td>
-<td>G5, G8</td>
-<td>Should</td>
-<td>Plan</td>
-</tr>
-<tr>
-<td>Brand DNA + brand-fit score</td>
-<td>Protect the cool</td>
-<td>Founder</td>
-<td>G5</td>
-<td>Must</td>
-<td>Brand DNA</td>
-</tr>
-<tr>
-<td>Trend radar (brand-filtered)</td>
-<td>Trends without losing brand</td>
-<td>Ria</td>
-<td>G2, G5</td>
-<td>Could</td>
-<td>Ideas</td>
-</tr>
-<tr>
-<td>Comment/DM question mining</td>
-<td>Audience voice</td>
-<td>Ria</td>
-<td>G2</td>
-<td>Could</td>
-<td>Pulse</td>
-</tr>
-</tbody>
-</table></div></div></div></section>
+<h2>27. Feature Mapping</h2><figure class="fig"><div class="fig-core"><div class="fb">
+  <div class="col"><h6>Pulse</h6><div class="ft">Auto-tagging by type<small>RIA, ARJUN / G1</small></div><div class="ft">Why-it-worked cards<small>RIA, FOUNDER / G1 G2</small></div><div class="ft">Series leaderboard<small>RIA / G1</small></div><div class="ft sh">Weekly digest<small>RIA, FOUNDER / G7</small></div><div class="ft sh">Fatigue alerts<small>ARJUN / G3 G7</small></div><div class="ft co">Comment and DM mining<small>RIA / G2</small></div></div>
+  <div class="col"><h6>Ideas</h6><div class="ft">Organic series recommender<small>RIA / G2</small></div><div class="ft">Angle x hook matrix<small>ARJUN / G3</small></div><div class="ft">Promote winner<small>ARJUN / G3</small></div><div class="ft">Explain why, edit, feedback<small>ALL / G2 G7</small></div><div class="ft sh">Story Experience builder<small>RIA / G2</small></div><div class="ft co">Trend radar<small>RIA / G2 G5</small></div></div>
+  <div class="col"><h6>Briefs</h6><div class="ft">One-click brief and shot list<small>RIA, KABIR / G4</small></div><div class="ft sh">Set Mode, mobile<small>KABIR / G4 G8</small></div></div>
+  <div class="col"><h6>Plan</h6><div class="ft">Drop Room and timeline<small>RIA, ARJUN / G6</small></div><div class="ft sh">Approval queue, mobile<small>FOUNDER / G5 G8</small></div></div>
+  <div class="col"><h6>Brand DNA</h6><div class="ft">Brand DNA and brand-fit score<small>FOUNDER / G5</small></div></div>
+</div>
+<div class="legend-row"><span><i></i>Must have, 10</span><span><i class="sh"></i>Should have, 5</span><span><i class="co"></i>Could have, 2</span></div>
+</div><figcaption class="fig-cap"><b>17 features mapped to modules, personas and goals</b><span>Must-haves ship first</span></figcaption></figure>
+
+</div></div></section>
 <section class="band chapter" id="part8"><div class="wrap"><p class="crumbs-store">Home / The collection / <b>Part 08</b></p><div class="sec-head"><div><h2>Information architecture</h2><span class="count">6 stages</span></div><div><p>How the product is organised, named and navigated, and the final proposal.</p><div class="stage-chips"><span>Content strategy</span><span>Organisation</span><span>Sitemap</span><span>Navigation</span><span>Labeling</span><span>Proposed solution</span></div></div></div><div class="doc">
 <h2>28. Content Strategy &amp; Analysis</h2>
-<h3>28.1 Content goals of the product</h3>
-<ol>
-<li><strong>Answer one question fast:</strong> <em>"What should we make next, and why?"</em></li>
-<li>Turn data into <strong>plain-language guidance</strong> (no analytics jargon for makers and founders).</li>
-<li>Keep <strong>brand voice</strong> visible everywhere (BLUORNG tone, not generic AI tone).</li>
-</ol>
-<h3>28.2 Content inventory (what information lives in BLUPRINT)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Content object</th>
-<th>Contains</th>
-<th>Source</th>
-<th>Updated</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Post / Ad</strong></td>
-<td>Media, caption, date, metrics, tags</td>
-<td>IG Graph API, Meta Marketing API</td>
-<td>Daily</td>
-</tr>
-<tr>
-<td><strong>Tag set</strong></td>
-<td>Format, IP/series, hook type, emotion, goal, angle</td>
-<td>Auto + manual</td>
-<td>On import</td>
-</tr>
-<tr>
-<td><strong>Insight</strong></td>
-<td>Finding + evidence + comparison to median</td>
-<td>Pulse engine</td>
-<td>Weekly / on demand</td>
-</tr>
-<tr>
-<td><strong>Idea</strong></td>
-<td>Title, format, IP, hook, why, brand-fit score, refs, goal</td>
-<td>Ideas engine + team</td>
-<td>Weekly + on request</td>
-</tr>
-<tr>
-<td><strong>Brief</strong></td>
-<td>Objective, idea, shot list, ratios, refs, caption draft, owner, deadline, usage rights</td>
-<td>Generated + edited</td>
-<td>Per idea</td>
-</tr>
-<tr>
-<td><strong>Drop</strong></td>
-<td>Name, date, products, goals, timeline, linked ideas/briefs</td>
-<td>Design team / manual</td>
-<td>Per drop</td>
-</tr>
-<tr>
-<td><strong>Brand DNA</strong></td>
-<td>Tone words, do's &amp; don'ts, visual refs, banned words/topics, colour &amp; type rules</td>
-<td>Founder + team</td>
-<td>Rarely</td>
-</tr>
-<tr>
-<td><strong>Approval</strong></td>
-<td>Status, comments, approver</td>
-<td>Team</td>
-<td>Per idea/plan</td>
-</tr>
-</tbody>
-</table></div>
-<h3>28.3 Content types for recommendations (taxonomy used across the product)</h3>
-<ul>
-<li><strong>Organic formats:</strong> Reel, Carousel, Static, Story, Story Experience (interactive), Collab post, Broadcast message</li>
-<li><strong>Organic IPs (series):</strong> Drop Countdown, Lookbook / Campaign Film, ASMR, Studio Diaries, One Piece Three Ways, Fit Check, Collab Universe, Culture Drop, Founder POV, UGC Wall</li>
-<li><strong>Paid angles:</strong> Scarcity/Drop, Craft &amp; Quality, Social Proof, Creator / UGC, Lookbook Carousel, Retargeting/DPA, Store Footfall, Collab Announce</li>
-<li><strong>Hook types:</strong> Visual shock, Close-up detail, Question, Text overlay claim, Sound-led (ASMR), POV, Behind-the-scenes reveal, Countdown</li>
-<li><strong>Goals:</strong> Hype, Reach, Saves, Shares, Sales, Footfall, Recall</li>
-</ul>
-<h3>28.4 Voice &amp; tone of the UI</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Do</th>
-<th>Don't</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Short, confident, culture-aware ("This one hit. Make more.")</td>
-<td>Corporate ("Engagement metrics indicate…")</td>
-</tr>
-<tr>
-<td>Explain with evidence ("2.6× your median saves")</td>
-<td>Vague ("Performing well")</td>
-</tr>
-<tr>
-<td>Suggest ("Try…", "Consider…")</td>
-<td>Command ("You must post…")</td>
-</tr>
-</tbody>
-</table></div>
+<h3>28.1 Content goals of the product</h3><div class="tiles">
+  <div class="t dk"><span class="k">Goal 1</span><h5>Answer one question fast</h5><p>"What should we make next, and why?"</p></div>
+  <div class="t"><span class="k">Goal 2</span><h5>Plain language</h5><p>Turn data into guidance makers and founders understand, no analytics jargon.</p></div>
+  <div class="t"><span class="k">Goal 3</span><h5>Brand voice everywhere</h5><p>BLUORNG's tone, not a generic AI tone.</p></div>
+</div>
+
+<h3>28.2 Content inventory (what information lives in BLUPRINT)</h3><figure class="fig"><div class="fig-core">
+  <div class="objm">
+    <div class="ob"><h6>Post / Ad</h6><span>Media, caption, date, metrics, tags</span><small>IG and Meta APIs / daily</small></div>
+    <div class="ob"><h6>Tag set</h6><span>Format, series, hook, emotion, goal, angle</span><small>Auto + manual / on import</small></div>
+    <div class="ob"><h6>Insight</h6><span>Finding, evidence, vs own median</span><small>Pulse / weekly</small></div>
+    <div class="ob" style="background:var(--ink);color:var(--bg)"><h6 style="color:var(--bg)">Idea</h6><span>Format, series, hook, why, brand-fit, refs</span><small>Ideas + team / weekly</small></div>
+    <div class="ob"><h6>Brief</h6><span>Objective, shots, ratios, refs, caption, owner, deadline, rights</span><small>Generated + edited</small></div>
+    <div class="ob"><h6>Drop</h6><span>Name, date, products, goals, linked ideas and briefs</span><small>Design team / per drop</small></div>
+  </div>
+  <div class="side-obj">
+    <div class="box"><h5>Brand DNA, feeds every idea</h5><ul><li>Tone words, do's and don'ts, visual refs, banned topics, colour and type rules. Set by founders, rarely changes.</li></ul></div>
+    <div class="box"><h5>Approval, sits on ideas and briefs</h5><ul><li>Status, comments, approver. Created per idea or plan.</li></ul></div>
+  </div>
+</div><figcaption class="fig-cap"><b>Content object model</b><span>8 objects, one chain from post to drop</span></figcaption></figure>
+
+<h3>28.3 Content types for recommendations (taxonomy used across the product)</h3><div class="grid2">
+  <div class="t"><span class="k">Organic formats, 7</span><div class="chips"><span>Reel</span><span>Carousel</span><span>Static</span><span>Story</span><span>Story Experience</span><span>Collab post</span><span>Broadcast</span></div></div>
+  <div class="t"><span class="k">Organic series, 10</span><div class="chips"><span>Drop Countdown</span><span>Lookbook</span><span>ASMR</span><span>Studio Diaries</span><span>One Piece 3 Ways</span><span>Fit Check</span><span>Collab Universe</span><span>Culture Drop</span><span>Founder POV</span><span>UGC Wall</span></div></div>
+  <div class="t"><span class="k">Paid angles, 8</span><div class="chips"><span>Scarcity</span><span>Craft</span><span>Social proof</span><span>Creator</span><span>Lookbook carousel</span><span>Retargeting</span><span>Footfall</span><span>Collab</span></div></div>
+  <div class="t"><span class="k">Hooks, 8</span><div class="chips"><span>Visual shock</span><span>Close-up</span><span>Question</span><span>Text claim</span><span>Sound-led</span><span>POV</span><span>BTS reveal</span><span>Countdown</span></div></div>
+  <div class="t dk" style="grid-column:1/-1"><span class="k">Goals, 7</span><div class="chips"><span>Hype</span><span>Reach</span><span>Saves</span><span>Shares</span><span>Sales</span><span>Footfall</span><span>Recall</span></div></div>
+</div>
+
+<h3>28.4 Voice &amp; tone of the UI</h3><div class="grid2">
+  <div class="t dk"><span class="k">Do</span><h5>"This one hit. Make more."</h5><p>Short, confident, culture-aware.</p><h5 style="margin-top:8px">"2.6x your median saves"</h5><p>Explain with evidence.</p><h5 style="margin-top:8px">"Try a close-up hook"</h5><p>Suggest.</p></div>
+  <div class="t dash"><span class="k">Don't</span><h5 style="text-decoration:line-through;color:var(--muted)">"Engagement metrics indicate..."</h5><p>Corporate.</p><h5 style="text-decoration:line-through;color:var(--muted);margin-top:8px">"Performing well"</h5><p>Vague.</p><h5 style="text-decoration:line-through;color:var(--muted);margin-top:8px">"You must post..."</h5><p>Commanding.</p></div>
+</div>
 
 <h2>29. Organisation</h2>
-<h3>29.1 Organisation schemes</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Scheme</th>
-<th>Used for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Task-based</strong> (primary)</td>
-<td>Top-level navigation: Pulse → Ideas → Briefs → Plan</td>
-</tr>
-<tr>
-<td><strong>Time-based</strong></td>
-<td>Drop timeline (T-14 … T+14), calendar</td>
-</tr>
-<tr>
-<td><strong>Topic-based</strong></td>
-<td>Content type / IP / angle filters</td>
-</tr>
-<tr>
-<td><strong>Audience-based</strong></td>
-<td>Organic vs Paid tabs</td>
-</tr>
-</tbody>
-</table></div>
-<h3>29.2 Card sorting plan (to validate labels and groups)</h3>
-<ul>
-<li><strong>Open card sort</strong> with 6–8 team/practitioners: 30 cards (e.g. "IP leaderboard", "Fatigue alert", "Shot list", "Brand-fit score"). Let them group and name the groups.</li>
-<li><strong>Closed card sort</strong> with 10+ to confirm the final top-level groups.</li>
-<li>Tools: Optimal Workshop, Maze or paper cards. Output: similarity matrix → confirm the sitemap.</li>
-</ul>
+<h3>29.1 Organisation schemes</h3><div class="tiles c4">
+  <div class="t dk"><span class="k">Primary</span><h5>Task-based</h5><p>Top navigation: Pulse, Ideas, Briefs, Plan.</p></div>
+  <div class="t"><span class="k">Time-based</span><h5>Drop timeline</h5><p>T-14 to T+14, and the calendar.</p></div>
+  <div class="t"><span class="k">Topic-based</span><h5>Content type</h5><p>Filters by format, series and angle.</p></div>
+  <div class="t"><span class="k">Audience-based</span><h5>Organic vs paid</h5><p>Tabs inside Ideas and Drop Rooms.</p></div>
+</div>
+
+<h3>29.2 Card sorting plan (to validate labels and groups)</h3><div class="rail" style="min-width:0">
+  <div class="node"><div class="card"><small>STEP 1</small>Open card sort: 6 to 8 people group and name 30 cards</div></div>
+  <div class="node"><div class="card"><small>STEP 2</small>Closed card sort: 10+ people confirm the top-level groups</div></div>
+  <div class="node"><div class="card"><small>STEP 3</small>Similarity matrix from the results</div></div>
+  <div class="node"><div class="card endc"><small>OUTPUT</small>Confirmed sitemap and labels</div></div>
+</div>
+<div class="chips" style="margin-top:14px"><span>Optimal Workshop</span><span>Maze</span><span>Paper cards</span></div>
 
 <h2>30. Structuring: Sitemap</h2>
 <figure class="fig"><div class="fig-core"><div class="sitemap">
@@ -3675,98 +2630,17 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </table></div>
 <p><strong>Navigation principles:</strong> max 7 top-level items, every insight links to an action, drop context is always visible, ≤ 3 clicks from Home to a brief.</p>
 
-<h2>32. Labeling</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Label</th>
-<th>Meaning</th>
-<th>Alternatives considered</th>
-<th>Why chosen</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pulse</strong></td>
-<td>Performance insights</td>
-<td>Analytics, Dashboard, Insights</td>
-<td>Short, energetic, feels "alive", less intimidating for makers. <em>Test vs "Insights"</em></td>
-</tr>
-<tr>
-<td><strong>Ideas</strong></td>
-<td>Recommendations</td>
-<td>Suggestions, Recommendations, Studio</td>
-<td>Plain and action-oriented</td>
-</tr>
-<tr>
-<td><strong>Briefs</strong></td>
-<td>Shootable briefs &amp; shot lists</td>
-<td>Tasks, Production, Jobs</td>
-<td>The team already says "brief"</td>
-</tr>
-<tr>
-<td><strong>Plan</strong></td>
-<td>Calendar + drops + approvals</td>
-<td>Calendar, Schedule</td>
-<td>Covers more than dates</td>
-</tr>
-<tr>
-<td><strong>Drop Room</strong></td>
-<td>Workspace per drop</td>
-<td>Campaign, Project</td>
-<td>Matches streetwear culture ("drops")</td>
-</tr>
-<tr>
-<td><strong>Brand DNA</strong></td>
-<td>Brand guardrails</td>
-<td>Brand guide, Rules</td>
-<td>Memorable; signals identity</td>
-</tr>
-<tr>
-<td><strong>IP / Series</strong></td>
-<td>Recurring content format</td>
-<td>Show, Segment, Pillar</td>
-<td>"IP" is used in-house; tooltip: "a repeatable series"</td>
-</tr>
-<tr>
-<td><strong>Angle</strong></td>
-<td>Ad message strategy</td>
-<td>Concept, Theme</td>
-<td>Standard performance-marketing term</td>
-</tr>
-<tr>
-<td><strong>Hook</strong></td>
-<td>First 1–3 seconds</td>
-<td>Opener, Intro</td>
-<td>Industry standard</td>
-</tr>
-<tr>
-<td><strong>Brand-fit</strong></td>
-<td>How on-brand an idea is (0–100)</td>
-<td>Brand score, Vibe check</td>
-<td>Clear; "Vibe check" kept as a playful tooltip</td>
-</tr>
-<tr>
-<td><strong>Why this?</strong></td>
-<td>Explanation of a recommendation</td>
-<td>Reason, Rationale</td>
-<td>Conversational and inviting</td>
-</tr>
-<tr>
-<td><strong>Promote</strong></td>
-<td>Turn organic into ad</td>
-<td>Boost, Amplify</td>
-<td>"Boost" means a specific Meta feature, so we avoid confusion</td>
-</tr>
-<tr>
-<td><strong>Set Mode</strong></td>
-<td>On-set mobile view</td>
-<td>Shoot view, Checklist</td>
-<td>Short; set = film set</td>
-</tr>
-</tbody>
-</table></div>
-<p><em>Labels to validate in card sorting and first-click tests: Pulse vs Insights, IP vs Series.</em></p>
+<h2>32. Labeling</h2><div class="tiles c4">
+  <div class="t dk"><div class="n" style="font-size:26px">Pulse</div><p>Performance insights. Short and alive, less scary than "Analytics".</p><div class="chips"><span class="d">Analytics</span><span class="d">Dashboard</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Ideas</div><p>Recommendations. Plain and action-led.</p><div class="chips"><span class="d">Suggestions</span><span class="d">Studio</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Briefs</div><p>Briefs and shot lists. The word the team already uses.</p><div class="chips"><span class="d">Tasks</span><span class="d">Jobs</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Plan</div><p>Calendar, drops and approvals. Covers more than dates.</p><div class="chips"><span class="d">Calendar</span><span class="d">Schedule</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Drop Room</div><p>A workspace per drop. Streetwear language.</p><div class="chips"><span class="d">Campaign</span><span class="d">Project</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Brand DNA</div><p>Brand guardrails. Signals identity.</p><div class="chips"><span class="d">Brand guide</span><span class="d">Rules</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Brand-fit</div><p>How on-brand an idea is, 0 to 100.</p><div class="chips"><span class="d">Vibe check</span></div></div>
+  <div class="t"><div class="n" style="font-size:26px">Promote</div><p>Turn organic into an ad. Avoids Meta's own "Boost".</p><div class="chips"><span class="d">Boost</span><span class="d">Amplify</span></div></div>
+</div>
+<p class="chart-s">Also: IP / Series, Angle, Hook, Why this?, Set Mode. To test in card sorts: Pulse vs Insights, IP vs Series.</p>
 
 <h2>33. Proposed Solution: BLUPRINT</h2>
 <h3>33.1 One-liner</h3>
@@ -3823,93 +2697,40 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
   </svg>
 </div><figcaption class="fig-cap"><b>How BLUPRINT works</b><span>Seven steps, repeated every drop</span></figcaption></figure>
 
-<h3>33.3 Core modules</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Module</th>
-<th>What it does</th>
-<th>Organic</th>
-<th>Paid</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pulse</strong></td>
-<td>Shows what worked &amp; why, by content type</td>
-<td>IP leaderboard, format/hook performance, saves/shares</td>
-<td>Angle/hook CPA (indexed), fatigue, winners</td>
-</tr>
-<tr>
-<td><strong>Ideas</strong></td>
-<td>Explainable, brand-fit recommendations</td>
-<td>IPs (ASMR, Story Experience, Studio Diaries…), formats, hooks, culture moments</td>
-<td>Angle × Hook matrix, missing angles, variation plans, promote-winner</td>
-</tr>
-<tr>
-<td><strong>Briefs</strong></td>
-<td>Brief + shot list + Set Mode</td>
-<td>Reels/carousel/story briefs</td>
-<td>Variation shot list, ratios, safe zones, creator briefs</td>
-</tr>
-<tr>
-<td><strong>Plan</strong></td>
-<td>Drop Rooms, calendar, approvals</td>
-<td>Content timeline</td>
-<td>Ad flighting &amp; refresh dates</td>
-</tr>
-<tr>
-<td><strong>Brand DNA</strong></td>
-<td>Guardrails for every suggestion</td>
-<td>Tone, visual refs, never-suggest</td>
-<td>No discount-led ads, premium tone</td>
-</tr>
-</tbody>
-</table></div>
-<h3>33.4 Platforms</h3>
-<ul>
-<li><strong>Web app (desktop-first):</strong> planning, analysis, ideation.</li>
-<li><strong>Mobile companion (iOS/Android):</strong> approvals, Set Mode, quick idea capture, digest.</li>
-</ul>
-<h3>33.5 Value summary</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Stakeholder</th>
-<th>Before</th>
-<th>After (target)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Social media manager</td>
-<td>Guessing, idea block, manual reports</td>
-<td>Data-backed ideas weekly, auto digest</td>
-</tr>
-<tr>
-<td>Performance marketer</td>
-<td>3 similar ads per drop, late fatigue</td>
-<td>10+ planned variations, early alerts</td>
-</tr>
-<tr>
-<td>Maker</td>
-<td>WhatsApp voice-note briefs</td>
-<td>Clear shot list on phone</td>
-</tr>
-<tr>
-<td>Founder</td>
-<td>Approvals scattered, brand risk</td>
-<td>One queue, brand-fit score, rationale</td>
-</tr>
-<tr>
-<td>Business</td>
-<td>Spend on guesswork</td>
-<td>More repeatable wins, better CPA, stronger recall</td>
-</tr>
-</tbody>
-</table></div>
-<h3>33.6 Next stages (after this document)</h3>
-<p>Wireframes → paper prototype test → design system (colour, type, icons) → style guide &amp; interaction patterns → accessibility (WCAG 2.2 AA, iOS HIG, Material 3) → grids → wireflows &amp; digital prototype → usability testing (2 rounds).</p></div></div></section>
+<h3>33.3 Core modules</h3><div class="tiles c5">
+  <div class="t"><svg class="i ico"><use href="#i-pulse"/></svg><h5>Pulse</h5><p>What worked and why.</p><span class="k">Organic</span><p>Series leaderboard, format and hook results</p><span class="k">Paid</span><p>Angle and hook cost, fatigue, winners</p></div>
+  <div class="t dk"><svg class="i ico"><use href="#i-bulb"/></svg><h5>Ideas</h5><p>Explainable, on-brand suggestions.</p><span class="k">Organic</span><p>Series, formats, hooks, culture moments</p><span class="k">Paid</span><p>Matrix, missing angles, promote-winner</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-doc"/></svg><h5>Briefs</h5><p>Brief, shot list, Set Mode.</p><span class="k">Organic</span><p>Reel, carousel and story briefs</p><span class="k">Paid</span><p>Variation shots, ratios, creator briefs</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-cal"/></svg><h5>Plan</h5><p>Drop Rooms, calendar, approvals.</p><span class="k">Organic</span><p>Content timeline</p><span class="k">Paid</span><p>Ad flighting and refresh dates</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-dna"/></svg><h5>Brand DNA</h5><p>Guardrails for every idea.</p><span class="k">Organic</span><p>Tone, visual refs, never-suggest</p><span class="k">Paid</span><p>Premium tone, no discount-led ads</p></div>
+</div>
+
+<h3>33.4 Platforms</h3><div class="tiles c2">
+  <div class="t dk"><svg class="i ico"><use href="#i-laptop"/></svg><h5>Web app, desktop first</h5><p>Planning, analysis and ideation.</p></div>
+  <div class="t"><svg class="i ico"><use href="#i-phone"/></svg><h5>Mobile companion, iOS and Android</h5><p>Approvals, Set Mode, quick idea capture, the digest.</p></div>
+</div>
+
+<h3>33.5 Value summary</h3><div class="mx" style="grid-template-columns:minmax(160px,1fr) minmax(220px,1.5fr) 40px minmax(220px,1.5fr);min-width:640px">
+  <div class="h">Who</div><div class="h">Before</div><div class="h"></div><div class="h">After, target</div>
+  <div class="nm">Social media manager</div><div>Guessing, idea block, manual reports</div><div class="c">→</div><div class="nm">Ideas backed by data every week, auto digest</div>
+  <div class="nm">Performance marketer</div><div>3 similar ads per drop, late fatigue</div><div class="c">→</div><div class="nm">10+ planned variations, early alerts</div>
+  <div class="nm">Maker</div><div>WhatsApp voice-note briefs</div><div class="c">→</div><div class="nm">A clear shot list on the phone</div>
+  <div class="nm">Founder</div><div>Scattered approvals, brand risk</div><div class="c">→</div><div class="nm">One queue, brand-fit score, the reason</div>
+  <div class="nm">Business</div><div>Spend on guesswork</div><div class="c">→</div><div class="nm">Repeatable wins, better cost per sale, stronger recall</div>
+</div>
+
+<h3>33.6 Next stages (after this document)</h3><div class="rail" style="min-width:0">
+  <div class="node"><div class="card"><small>NEXT 1</small>Wireframes</div></div>
+  <div class="node"><div class="card"><small>NEXT 2</small>Paper prototype test</div></div>
+  <div class="node"><div class="card"><small>NEXT 3</small>Design system: colour, type, icons</div></div>
+  <div class="node"><div class="card"><small>NEXT 4</small>Style guide and interaction patterns</div></div>
+  <div class="node"><div class="card"><small>NEXT 5</small>Accessibility: WCAG 2.2 AA, iOS, Material 3</div></div>
+  <div class="node"><div class="card"><small>NEXT 6</small>Grids for devices</div></div>
+  <div class="node"><div class="card"><small>NEXT 7</small>Wireflows and digital prototype</div></div>
+  <div class="node"><div class="card endc"><small>NEXT 8</small>Usability testing, 2 rounds</div></div>
+</div>
+
+</div></div></section>
 
 <footer>
   <div class="wrap foot-top">
