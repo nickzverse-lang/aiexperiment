@@ -15,6 +15,9 @@
 | [07 — Scenarios, Flows & Tasks](docs/07-scenarios-flows-tasks.md) | User Scenarios · Storyboarding · User Flows · Task Flows · Task Analysis · Feature Mapping |
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
+## Project book
+- [`docs/bluprint-project-book.html`](docs/bluprint-project-book.html): all 8 parts on one page with rendered diagrams.
+
 ## Tools
 - [`research/chart-builder.html`](research/chart-builder.html): open it in a browser and paste your Google Forms CSV export to get a bar chart per question (for the research report).
 

@@ -72,25 +72,25 @@ quadrantChart
     quadrant-2 Quick wins
     quadrant-3 Fill-ins
     quadrant-4 Money pits
-    One-click brief: [0.25, 0.80]
-    Brand DNA + fit score: [0.35, 0.78]
+    One-click brief: [0.20, 0.84]
+    Brand DNA + fit score: [0.38, 0.72]
     Why-it-worked insights: [0.55, 0.90]
-    Organic IP recommender: [0.62, 0.88]
+    Organic IP recommender: [0.70, 0.80]
     Angle x hook matrix: [0.40, 0.85]
     Promote winner: [0.20, 0.70]
     Drop calendar: [0.30, 0.65]
-    Fatigue alerts: [0.50, 0.70]
-    Mobile set mode: [0.35, 0.55]
+    Fatigue alerts: [0.60, 0.66]
+    Mobile set mode: [0.30, 0.42]
     Trend radar: [0.75, 0.55]
-    Comment mining: [0.70, 0.40]
+    Comment mining: [0.40, 0.30]
     Auto-posting: [0.60, 0.20]
-    AI final video gen: [0.92, 0.35]
+    AI final video gen: [0.82, 0.30]
 ```
 
 | Quadrant | Ideas |
 |---|---|
 | **Quick wins** (high impact, low effort) | One-click brief, promote winner, angle × hook matrix, brand DNA, drop calendar |
-| **Big bets** (high impact, high effort) | Why-it-worked insights, organic IP recommender, fatigue alerts |
+| **Big bets** (high impact, high effort) | Why-it-worked insights, organic IP recommender, fatigue alerts, trend radar (later phase) |
 | **Fill-ins** | Mobile set mode, comment mining |
 | **Money pits** (avoid) | Auto-posting, AI final video generation |
 
