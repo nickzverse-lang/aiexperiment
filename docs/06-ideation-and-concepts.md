@@ -84,7 +84,7 @@ quadrantChart
     Trend radar: [0.75, 0.55]
     Comment mining: [0.40, 0.30]
     Auto-posting: [0.60, 0.20]
-    AI final video gen: [0.82, 0.30]
+    AI final video gen: [0.86, 0.36]
 ```
 
 | Quadrant | Ideas |

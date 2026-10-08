@@ -16,7 +16,8 @@
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
 ## Project book
-- [`docs/bluprint-project-book.html`](docs/bluprint-project-book.html): all 8 parts on one page with rendered diagrams.
+- [`docs/bluprint-project-book.html`](docs/bluprint-project-book.html): all 8 parts on one designed page with product screens and drawn figures.
+- Rebuild it after editing the Markdown: `pip install markdown && python3 tools/build_book.py` (layout in `tools/book/template.html`, figures in `tools/book/graphics.html`).
 
 ## Tools
 - [`research/chart-builder.html`](research/chart-builder.html): open it in a browser and paste your Google Forms CSV export to get a bar chart per question (for the research report).

@@ -1,126 +1,780 @@
 <title>BLUPRINT Project Book</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: sticky stage index on the left (top strip on phones), one reading column of project parts on the right. */
+/* Layout: blueprint-grid hero with a live product mockup, a three-screen product bento, then eight chapters.
+   Each chapter opens with a title spread, shows its drawn figures in double-bezel frames, then the full written stage work. */
 :root {
-  --bg: #f3f5f9;
-  --surface: #ffffff;
-  --ink: #111726;
-  --muted: #5a6478;
-  --line: #d9dee8;
-  --blu: #1a3fd1;
-  --orng: #d45a14;
-  --tint: #e7ecfb;
-  --note: #fff2e8;
+  --bg: #0a0c12;
+  --bg-2: #0e1119;
+  --surface: #131722;
+  --surface-2: #191e2b;
+  --line: #262c3b;
+  --line-soft: #1b2030;
+  --ink: #eceef4;
+  --ink-2: #b9bfcd;
+  --muted: #7f889c;
+  --accent: #6c88ff;
+  --accent-strong: #93a8ff;
+  --accent-soft: #19213f;
+  --on-accent: #0a0c12;
+  --heat: #ff7b42;
+  --heat-soft: #2a1810;
+  --good: #49c28c;
+  --shadow: rgba(0, 0, 0, 0.45);
   --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
-  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --body: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --r-lg: 22px; --r-md: 14px; --r-sm: 8px;
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d111a; --surface: #151b27; --ink: #e8ecf4; --muted: #9aa4b8; --line: #263043;
-    --blu: #7f9cff; --orng: #ff8a4c; --tint: #1b2440; --note: #2a1c12; color-scheme: dark;
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f3f4f8; --bg-2: #eceef4; --surface: #ffffff; --surface-2: #f6f7fb; --line: #d9dee8; --line-soft: #e6e9f0;
+    --ink: #0d111b; --ink-2: #333a4b; --muted: #626b80; --accent: #2747e3; --accent-strong: #1b35b5; --accent-soft: #e3e8fe;
+    --on-accent: #ffffff; --heat: #d2531a; --heat-soft: #fcebe0; --good: #17885a; --shadow: rgba(22, 34, 90, 0.10);
+    color-scheme: light;
   }
 }
-:root[data-theme="dark"] {
-  --bg: #0d111a; --surface: #151b27; --ink: #e8ecf4; --muted: #9aa4b8; --line: #263043;
-  --blu: #7f9cff; --orng: #ff8a4c; --tint: #1b2440; --note: #2a1c12; color-scheme: dark;
+:root[data-theme="light"] {
+  --bg: #f3f4f8; --bg-2: #eceef4; --surface: #ffffff; --surface-2: #f6f7fb; --line: #d9dee8; --line-soft: #e6e9f0;
+  --ink: #0d111b; --ink-2: #333a4b; --muted: #626b80; --accent: #2747e3; --accent-strong: #1b35b5; --accent-soft: #e3e8fe;
+  --on-accent: #ffffff; --heat: #d2531a; --heat-soft: #fcebe0; --good: #17885a; --shadow: rgba(22, 34, 90, 0.10);
+  color-scheme: light;
 }
+
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body); }
-a { color: var(--blu); }
-a:focus-visible { outline: 2px solid var(--orng); outline-offset: 2px; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+a { color: var(--accent-strong); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.mono { font-family: var(--mono); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 48px); }
 
-.shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); max-width: 1320px; margin: 0 auto; }
-.side { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh; overflow-y: auto;
-  padding: 32px 20px 32px 24px; border-right: 1px solid var(--line); }
-.wordmark { font: 900 32px/0.9 var(--display); font-stretch: 70%; letter-spacing: -0.01em; text-transform: uppercase; margin: 0; }
-.wordmark .blu { color: var(--blu); } .wordmark .print { color: var(--orng); }
-.side .sub { font: 500 12px/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 10px 0 28px; }
-.side nav { display: flex; flex-direction: column; gap: 2px; }
-.side nav a { display: grid; grid-template-columns: 30px 1fr; gap: 6px; padding: 8px 10px; border-radius: 6px;
-  text-decoration: none; color: var(--ink); font-size: 14px; line-height: 1.35; }
-.side nav a:hover { background: var(--tint); }
-.side nav a.on { background: var(--tint); color: var(--blu); font-weight: 600; }
-.side .num { font: 600 12px/1.6 var(--mono); color: var(--orng); }
-
-main { padding: 40px clamp(16px, 4vw, 64px) 96px; min-width: 0; }
-.cover { padding-block: 8px 40px; border-bottom: 2px solid var(--ink); margin-bottom: 8px; }
-.cover .kicker { font: 600 12px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
-.cover h1 { font: 900 clamp(48px, 9vw, 112px)/0.86 var(--display); font-stretch: 62%; text-transform: uppercase; margin: 0; letter-spacing: -0.01em; }
-.cover h1 .blu { color: var(--blu); } .cover h1 .print { color: var(--orng); }
-.cover .lede { font-size: clamp(18px, 2.2vw, 22px); line-height: 1.45; max-width: 46ch; margin: 20px 0 24px; text-wrap: pretty; }
-.facts { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 500 13px/1.4 var(--mono); color: var(--muted); }
-.facts b { color: var(--ink); font-weight: 600; }
-.callout { background: var(--note); border-left: 3px solid var(--orng); padding: 14px 18px; margin-top: 28px; max-width: 72ch; font-size: 15px; }
-
-.part { padding-block: 56px 16px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
-.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--orng); margin: 0 0 10px; }
-.part h1 { font: 800 clamp(34px, 5vw, 56px)/0.95 var(--display); font-stretch: 75%; text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
-.part h2 { font: 800 28px/1.1 var(--display); font-stretch: 85%; margin: 48px 0 12px; padding-top: 20px; border-top: 1px solid var(--line); text-wrap: balance; }
-.part h3 { font: 700 19px/1.3 var(--display); font-stretch: 100%; margin: 28px 0 8px; color: var(--blu); }
-.part p, .part li { max-width: 72ch; }
-.part blockquote { margin: 16px 0; padding: 12px 18px; background: var(--tint); border-radius: 4px; max-width: 72ch; }
-.part blockquote p { margin: 0.3em 0; }
-.part code { font: 13px var(--mono); background: var(--tint); padding: 1px 5px; border-radius: 3px; }
-.part pre:not(.mermaid) { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; overflow-x: auto; font: 13px/1.55 var(--mono); }
-.part pre:not(.mermaid) code { background: none; padding: 0; }
-
-.table-wrap { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.45; }
-th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); min-width: 110px; }
-th { font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: var(--tint); }
-tr:last-child td { border-bottom: 0; }
-td strong { color: var(--ink); }
-
-.diagram { overflow-x: auto; margin: 20px 0; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
-.diagram pre.mermaid { margin: 0; background: none; border: 0; }
-
-@media (max-width: 860px) {
-  .shell { grid-template-columns: minmax(0, 1fr); }
-  .side { position: sticky; height: auto; border-right: 0; border-bottom: 1px solid var(--line); background: var(--bg);
-    padding: 12px 16px; z-index: 5; }
-  .side .wordmark, .side .sub { display: none; }
-  .side nav { flex-direction: row; overflow-x: auto; gap: 4px; }
-  .side nav a { grid-template-columns: auto auto; white-space: nowrap; font-size: 13px; }
-  main { padding-top: 24px; }
+/* ---------- top bar ---------- */
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
+.top-in { display: flex; align-items: center; gap: 24px; height: 60px; }
+.mark { font: 900 21px/1 var(--display); font-stretch: 72%; letter-spacing: -0.01em; text-decoration: none; color: var(--ink); flex: none; }
+.mark b { color: var(--accent); font-weight: 900; }
+.top nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.top nav::-webkit-scrollbar { display: none; }
+.top nav a { padding: 7px 12px; border-radius: 999px; font: 500 13px/1 var(--body); color: var(--muted); text-decoration: none; white-space: nowrap; transition: color .2s, background-color .2s; }
+.top nav a.on { color: var(--ink); background: var(--surface-2); }
+@media (hover: hover) and (pointer: fine) { .top nav a:hover { color: var(--ink); } }
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
+@supports (animation-timeline: scroll()) {
+  .progress { animation: grow linear both; animation-timeline: scroll(root); }
+  @keyframes grow { to { transform: scaleX(1); } }
 }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding-top: calc(60px + env(safe-area-inset-top, 0px)); overflow: hidden; border-bottom: 1px solid var(--line-soft); }
+.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, #000 30%, transparent 75%); }
+.hero::after { content: ""; position: absolute; width: 900px; height: 700px; right: -260px; top: -120px; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent); filter: blur(10px); }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding-block: clamp(48px, 7vw, 96px) clamp(56px, 7vw, 104px); }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 500 12px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 26px; }
+.kicker .rule { width: 28px; height: 1px; background: var(--accent); }
+.hero h1 { font: 800 clamp(48px, 6.6vw, 92px)/0.92 var(--display); font-stretch: 68%; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lede { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.55; color: var(--ink-2); max-width: 34ch; margin: 24px 0 34px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.pill { display: inline-flex; align-items: center; gap: 12px; padding: 6px 6px 6px 20px; border-radius: 999px; font: 600 14px/1 var(--body); text-decoration: none; transition: transform .16s var(--ease-out), background-color .2s; }
+.pill:active { transform: scale(0.97); }
+.pill .dot { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; transition: transform .25s var(--ease-out); }
+.pill-primary { background: var(--accent); color: var(--on-accent); }
+.pill-primary .dot { background: color-mix(in srgb, var(--on-accent) 16%, transparent); }
+.pill-ghost { color: var(--ink); border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.pill-ghost .dot { background: var(--surface-2); }
+@media (hover: hover) and (pointer: fine) { .pill:hover .dot { transform: translate(2px, -2px); } }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line-soft); max-width: 460px; }
+.hero-meta div { font-size: 13px; color: var(--muted); }
+.hero-meta b { display: block; font: 600 14px/1.3 var(--body); color: var(--ink); margin-bottom: 2px; }
+
+/* ---------- app mockup ---------- */
+.shell { padding: 7px; border-radius: var(--r-lg); background: color-mix(in srgb, var(--surface) 55%, transparent); border: 1px solid var(--line); box-shadow: 0 40px 80px -30px var(--shadow), 0 0 0 1px color-mix(in srgb, var(--bg) 40%, transparent) inset; }
+.app { border-radius: calc(var(--r-lg) - 7px); background: var(--bg-2); overflow: hidden; border: 1px solid var(--line-soft); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent); font-size: 12px; }
+.app-bar { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 14px; border-bottom: 1px solid var(--line-soft); background: var(--surface); }
+.crumbs { color: var(--muted); font: 500 12px/1 var(--body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.crumbs b { color: var(--ink); font-weight: 600; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 999px; font: 500 11px/1.1 var(--mono); letter-spacing: 0.02em; white-space: nowrap; }
+.chip-heat { color: var(--heat); background: var(--heat-soft); }
+.chip-acc { color: var(--accent-strong); background: var(--accent-soft); }
+.chip-mute { color: var(--muted); background: var(--surface-2); }
+.bar-end { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.av { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: 600 10px/1 var(--body); color: var(--ink); background: var(--surface-2); border: 1.5px solid var(--surface); }
+.av + .av { margin-left: -12px; }
+.app-body { display: grid; grid-template-columns: 136px minmax(0, 1fr) 206px; min-height: 400px; }
+.app-side { border-right: 1px solid var(--line-soft); padding: 12px 8px; display: flex; flex-direction: column; gap: 2px; }
+.nav-i { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; color: var(--muted); font-weight: 500; }
+.nav-i.on { color: var(--ink); background: var(--surface-2); }
+.nav-i.on .i { color: var(--accent); }
+.app-main { padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.main-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.main-head h4 { margin: 0; font: 700 16px/1.2 var(--display); font-stretch: 90%; }
+.seg { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-soft); }
+.seg span { padding: 4px 11px; border-radius: 999px; color: var(--muted); font-weight: 500; }
+.seg span.on { background: var(--surface-2); color: var(--ink); box-shadow: 0 1px 2px var(--shadow); }
+.idea { border-radius: 12px; background: var(--surface); border: 1px solid var(--line-soft); padding: 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 14px; }
+.idea.feat { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent); }
+.idea .lab { font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong); }
+.idea h5 { margin: 6px 0 0; font: 700 15px/1.25 var(--body); color: var(--ink); }
+.idea .hook { margin: 6px 0 0; color: var(--ink-2); line-height: 1.45; }
+.why { grid-column: 1 / -1; display: flex; gap: 9px; padding: 10px 12px; border-radius: 9px; background: var(--accent-soft); color: var(--ink-2); line-height: 1.45; }
+.why b { color: var(--ink); }
+.why .i { color: var(--accent); margin-top: 1px; }
+.idea .acts { grid-column: 1 / -1; display: flex; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; font: 600 12px/1 var(--body); border: 1px solid var(--line); color: var(--ink); background: transparent; }
+.btn-acc { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.ring { position: relative; width: 58px; height: 58px; }
+.ring svg { width: 58px; height: 58px; transform: rotate(-90deg); }
+.ring .trk { fill: none; stroke: var(--line); stroke-width: 5; }
+.ring .val { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; }
+.ring span { position: absolute; inset: 0; display: grid; place-items: center; font: 700 15px/1 var(--display); color: var(--ink); }
+.ring-cap { font: 500 9px/1 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: center; margin-top: 4px; }
+.idea.small { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.mini-fit { font: 700 13px/1 var(--display); color: var(--ink); padding: 8px 10px; border-radius: 10px; background: var(--surface-2); }
+.app-right { border-left: 1px solid var(--line-soft); padding: 16px 14px; display: flex; flex-direction: column; gap: 18px; }
+.panel-t { font: 500 10px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.matrix { display: grid; grid-template-columns: 62px repeat(3, 1fr); gap: 4px; align-items: center; }
+.matrix .h { font: 500 9px/1.1 var(--mono); color: var(--muted); text-align: center; }
+.matrix .r { font: 500 10.5px/1.1 var(--body); color: var(--ink-2); }
+.cell { height: 20px; border-radius: 5px; }
+.c-used { background: var(--accent); }
+.c-plan { border: 1.5px solid var(--accent); background: var(--accent-soft); }
+.c-miss { border: 1.5px dashed var(--heat); background: var(--heat-soft); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; font-size: 10.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+.spark { width: 100%; height: 64px; display: block; }
+.spark .area { fill: color-mix(in srgb, var(--accent) 18%, transparent); }
+.spark .ln { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.spark .gl { stroke: var(--line-soft); stroke-width: 1; }
+.spark .end { fill: var(--accent); stroke: var(--bg-2); stroke-width: 2; }
+.note-sm { font-size: 11px; color: var(--muted); line-height: 1.4; margin: 6px 0 0; }
+.mock-cap { margin: 14px 4px 0; font: 500 11px/1.4 var(--mono); color: var(--muted); letter-spacing: .02em; }
+
+/* hero load sequence */
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise .9s var(--ease-out) both; }
+  .d1 { animation-delay: .08s; } .d2 { animation-delay: .16s; } .d3 { animation-delay: .24s; } .d4 { animation-delay: .36s; } .d5 { animation-delay: .48s; } .d6 { animation-delay: .6s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px) scale(.98); filter: blur(6px); } }
+  .ring .val { animation: dash 1.4s .5s var(--ease-out) both; }
+  @keyframes dash { from { stroke-dashoffset: 163; } }
+}
+
+/* ---------- facts band ---------- */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line-soft); }
+.fact { padding: 34px 28px 30px; border-left: 1px solid var(--line-soft); }
+.fact:first-child { border-left: 0; padding-left: 0; }
+.fact .big { font: 800 clamp(34px, 3.6vw, 48px)/1 var(--display); font-stretch: 72%; letter-spacing: -0.02em; color: var(--ink); }
+.fact .big small { font-size: .5em; color: var(--muted); font-weight: 600; letter-spacing: 0; }
+.fact p { margin: 12px 0 8px; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.fact .src { font: 500 11px/1.3 var(--mono); color: var(--muted); }
+
+/* ---------- section scaffolding ---------- */
+.band { padding-block: clamp(72px, 9vw, 128px); border-bottom: 1px solid var(--line-soft); scroll-margin-top: 60px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-strong); margin: 0 0 18px; }
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+.band-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 24px 64px; align-items: end; margin-bottom: clamp(36px, 5vw, 56px); }
+.band-head h2 { font: 800 clamp(40px, 5.4vw, 76px)/0.95 var(--display); font-stretch: 70%; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.band-head p { margin: 0; color: var(--ink-2); font-size: 17px; max-width: 46ch; }
+.stage-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.stage-chips span { font: 500 12px/1 var(--body); padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); }
+
+/* figure frames: double bezel */
+.fig { margin: 28px 0 36px; padding: 7px; border-radius: var(--r-lg); background: color-mix(in srgb, var(--surface) 50%, transparent); border: 1px solid var(--line-soft); }
+.fig-core { border-radius: calc(var(--r-lg) - 7px); background: var(--bg-2); border: 1px solid var(--line-soft); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 5%, transparent); padding: clamp(18px, 3vw, 32px); overflow-x: auto; }
+.fig-cap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 10px 5px; font: 500 11.5px/1.4 var(--mono); color: var(--muted); }
+.fig-cap b { color: var(--ink-2); font-weight: 500; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fig, .persona, .concept { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+    @keyframes reveal { from { opacity: .001; transform: translateY(24px); } }
+  }
+}
+svg text { font-family: var(--body); }
+.sv-ink { fill: var(--ink); } .sv-ink2 { fill: var(--ink-2); } .sv-mute { fill: var(--muted); } .sv-acc { fill: var(--accent); } .sv-accs { fill: var(--accent-strong); } .sv-heat { fill: var(--heat); }
+.sv-mono { font-family: var(--mono); letter-spacing: .06em; }
+.sv-line { stroke: var(--line); fill: none; } .sv-soft { stroke: var(--line-soft); fill: none; }
+.sv-bg { fill: var(--bg-2); } .sv-surf { fill: var(--surface); } .sv-surf2 { fill: var(--surface-2); } .sv-accsoft { fill: var(--accent-soft); } .sv-heatsoft { fill: var(--heat-soft); }
+.svg-fluid { width: 100%; height: auto; display: block; }
+
+/* ---------- chapter written content ---------- */
+.doc { max-width: 1040px; }
+.doc h2 { font: 800 clamp(26px, 2.8vw, 34px)/1.1 var(--display); font-stretch: 82%; letter-spacing: -0.01em; margin: 72px 0 16px; padding-top: 28px; border-top: 1px solid var(--line-soft); text-wrap: balance; }
+.doc > h2:first-child { margin-top: 0; }
+.doc h3 { font: 600 18px/1.35 var(--body); margin: 36px 0 10px; color: var(--ink); }
+.doc h4 { font: 600 15px/1.4 var(--body); margin: 24px 0 8px; color: var(--ink-2); }
+.doc p, .doc li { color: var(--ink-2); max-width: 70ch; }
+.doc strong { color: var(--ink); font-weight: 600; }
+.doc em { color: var(--ink); }
+.doc ul, .doc ol { padding-left: 22px; }
+.doc li { margin: 6px 0; }
+.doc li::marker { color: var(--accent); }
+.doc .box ul, .doc .p-grid ul { margin: 0; } .doc .box li, .doc .p-grid li, .doc .sm-col li { margin: 0; max-width: none; }
+.doc .box ul { padding-left: 0; }
+.doc blockquote { margin: 22px 0; padding: 18px 22px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line-soft); }
+.doc blockquote p { margin: .3em 0; color: var(--ink); }
+.doc code { font: 13px var(--mono); background: var(--surface-2); padding: 2px 6px; border-radius: 5px; color: var(--ink); }
+.doc pre { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 20px; overflow-x: auto; font: 13px/1.6 var(--mono); color: var(--ink-2); }
+.doc pre code { background: none; padding: 0; color: inherit; }
+.table-wrap { overflow-x: auto; margin: 20px 0 28px; border-radius: var(--r-md); border: 1px solid var(--line-soft); background: var(--surface); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.5; }
+.doc th, .doc td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line-soft); min-width: 120px; }
+.doc th { font: 500 11px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); background: var(--surface-2); }
+.doc td { color: var(--ink-2); }
+.doc td:first-child { color: var(--ink); font-weight: 500; }
+.doc tr:last-child td { border-bottom: 0; }
+.ok { color: var(--good); font-weight: 600; } .no { color: var(--muted); }
+
+/* ---------- product bento ---------- */
+.bento { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.tile { border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line-soft); padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0; overflow: hidden; }
+.tile-head h3 { margin: 0; font: 700 20px/1.2 var(--display); font-stretch: 85%; }
+.tile-head p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.screen { border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line-soft); padding: 16px; font-size: 12px; flex: 1; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.kpi { padding: 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-soft); min-width: 0; }
+.kpi .k { font: 500 9.5px/1.2 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.kpi .v { font: 700 16px/1.2 var(--body); color: var(--ink); margin-top: 6px; }
+.kpi .v.heat { color: var(--heat); }
+.lb { margin-top: 14px; display: grid; gap: 8px; }
+.lb-row { display: grid; grid-template-columns: 128px minmax(0, 1fr) 42px; gap: 10px; align-items: center; }
+.lb-row .n { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-row .t { height: 10px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.lb-row .f { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--accent); }
+.lb-row .f.dim { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+.lb-row .x { font: 600 12px/1 var(--mono); color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.alerts { margin-top: 14px; display: grid; gap: 8px; }
+.alert { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-soft); color: var(--muted); line-height: 1.4; }
+.alert b { display: block; color: var(--ink); font-weight: 600; }
+.alert .dotw { width: 8px; height: 8px; border-radius: 50%; background: var(--heat); }
+.why-card { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--ink-2); line-height: 1.45; }
+.why-card b { color: var(--ink); }
+.phone { width: 100%; max-width: 270px; margin: 0 auto; aspect-ratio: 9 / 18.5; border-radius: 38px; padding: 9px; background: var(--surface-2); border: 1px solid var(--line); box-shadow: 0 30px 60px -30px var(--shadow); }
+.phone-in { height: 100%; border-radius: 30px; background: var(--bg-2); border: 1px solid var(--line-soft); overflow: hidden; display: flex; flex-direction: column; font-size: 11.5px; position: relative; }
+.island { width: 76px; height: 22px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line-soft); margin: 9px auto 6px; flex: none; }
+.ph-head { padding: 4px 16px 10px; }
+.ph-head .k { font: 500 9.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ph-head h5 { margin: 5px 0 0; font: 700 16px/1.2 var(--display); font-stretch: 88%; color: var(--ink); }
+.prog { display: flex; align-items: center; gap: 8px; margin-top: 9px; color: var(--muted); font: 500 10px/1 var(--mono); }
+.prog .t { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.prog .t i { display: block; height: 100%; width: 58%; background: var(--accent); border-radius: 4px; }
+.frame916 { margin: 0 16px; border-radius: 12px; height: 104px; position: relative; background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 30%, var(--surface)), var(--surface)); overflow: hidden; }
+.frame916::before { content: ""; position: absolute; inset: 12px 18px; border: 1px dashed color-mix(in srgb, var(--ink) 45%, transparent); border-radius: 6px; }
+.frame916 span { position: absolute; left: 24px; top: 17px; font: 500 8.5px/1 var(--mono); letter-spacing: .1em; color: var(--ink); opacity: .8; }
+.frame916 em { position: absolute; right: 24px; bottom: 17px; font: 600 9px/1 var(--mono); font-style: normal; color: var(--ink); }
+.shots { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.shot { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 9px; align-items: start; padding: 9px 10px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-soft); }
+.shot .cb { width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid var(--line); display: grid; place-items: center; }
+.shot.done .cb { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.shot.done .cb .i { width: 12px; height: 12px; stroke-width: 2.5; }
+.shot .tt { color: var(--ink); font-weight: 500; line-height: 1.3; }
+.shot.done .tt { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent); }
+.shot .sub { color: var(--muted); font-size: 10.5px; margin-top: 2px; }
+.shot .warn { color: var(--heat); font-size: 10.5px; margin-top: 3px; }
+.shot .ratio { font: 500 9.5px/1 var(--mono); color: var(--muted); padding: 4px 6px; border-radius: 5px; background: var(--surface-2); }
+.stack { position: relative; margin: 6px 16px 0; height: 262px; }
+.acard { position: absolute; inset: 0; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+.acard.back2 { transform: translateY(16px) scale(.9); opacity: .5; }
+.acard.back1 { transform: translateY(8px) scale(.95); opacity: .8; }
+.acard.front { box-shadow: 0 20px 40px -20px var(--shadow); }
+.acard .ph { height: 92px; border-radius: 10px; background: linear-gradient(140deg, var(--surface-2), color-mix(in srgb, var(--heat) 22%, var(--surface-2))); position: relative; }
+.acard .ph span { position: absolute; left: 10px; bottom: 9px; font: 500 9px/1 var(--mono); letter-spacing: .08em; color: var(--ink); }
+.acard h6 { margin: 0; font: 600 13.5px/1.3 var(--body); color: var(--ink); }
+.acard .meta { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 10.5px; }
+.acard .meta b { font: 700 13px/1 var(--display); color: var(--ink); }
+.acard .why-s { font-size: 10.5px; line-height: 1.45; color: var(--ink-2); padding: 8px 9px; border-radius: 8px; background: var(--accent-soft); }
+.decide { display: flex; justify-content: center; gap: 16px; margin-top: auto; padding: 16px 0 22px; }
+.decide span { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: var(--ink-2); background: var(--surface); }
+.decide span.yes { background: var(--accent); border-color: var(--accent); color: var(--on-accent); width: 54px; height: 54px; margin-top: -4px; }
+.decide .i { width: 18px; height: 18px; }
+.bento-cap { margin-top: 18px; font: 500 12px/1.4 var(--mono); color: var(--muted); }
+
+/* ---------- reusable figure parts ---------- */
+.cols { display: grid; gap: 14px; }
+.box { border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--line-soft); padding: 16px; min-width: 0; }
+.box h5 { margin: 0 0 10px; font: 500 10.5px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.box ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.box li { font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+.box.acc { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
+.box.acc h5 { color: var(--accent-strong); }
+.box.heat { background: var(--heat-soft); border-color: color-mix(in srgb, var(--heat) 35%, transparent); }
+.box.heat h5 { color: var(--heat); }
+.legend-list { display: grid; gap: 14px; }
+.lg-row { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 12px; }
+.lg-row i { width: 14px; height: 14px; border-radius: 50%; margin-top: 3px; }
+.lg-row b { display: block; font: 600 14px/1.3 var(--body); color: var(--ink); }
+.lg-row span { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center; }
+.arrow-r { display: grid; place-items: center; color: var(--muted); }
+
+/* gantt */
+.gantt { min-width: 780px; display: grid; grid-template-columns: 190px repeat(20, minmax(0, 1fr)); row-gap: 7px; align-items: center; }
+.gantt .wk { font: 500 10px/1 var(--mono); color: var(--muted); text-align: center; padding-bottom: 8px; border-bottom: 1px solid var(--line-soft); }
+.gantt .ph-label { grid-column: 1 / -1; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-strong); margin-top: 14px; }
+.gantt .tl { font-size: 13px; color: var(--ink-2); padding-right: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gantt .bar { height: 22px; border-radius: 6px; background: var(--accent); }
+.gantt .bar.p2 { background: color-mix(in srgb, var(--accent) 72%, var(--bg-2)); }
+.gantt .bar.p3 { background: color-mix(in srgb, var(--accent) 50%, var(--bg-2)); }
+.gantt .bar.p4 { background: color-mix(in srgb, var(--accent) 32%, var(--bg-2)); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); }
+.gantt .ms { display: flex; align-items: center; gap: 6px; font: 600 11px/1 var(--body); color: var(--heat); white-space: nowrap; }
+.gantt .ms::before { content: ""; width: 10px; height: 10px; background: var(--heat); transform: rotate(45deg); flex: none; }
+
+/* system flow */
+.flow5 { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 0; min-width: 860px; position: relative; }
+.flow5 .stage { padding: 0 10px; position: relative; }
+.flow5 .stage + .stage::before { content: ""; position: absolute; left: -7px; top: 22px; width: 14px; height: 14px; border-top: 1.5px solid var(--muted); border-right: 1.5px solid var(--muted); transform: rotate(45deg); }
+.flow5 .st { font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); height: 30px; display: flex; align-items: center; gap: 8px; }
+.flow5 .st b { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); color: var(--ink); font-weight: 600; letter-spacing: 0; }
+.flow5 .box { margin-top: 10px; }
+.broken { margin-top: 22px; min-width: 860px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px 18px; border-radius: var(--r-md); border: 1.5px dashed var(--heat); background: var(--heat-soft); color: var(--ink-2); font-size: 14px; }
+.broken svg { width: 26px; height: 26px; color: var(--heat); }
+.broken b { color: var(--heat); }
+
+/* to-be */
+.tobe { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 14px; align-items: center; min-width: 820px; }
+.engine { aspect-ratio: 1; width: 210px; border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 24px; position: relative;
+  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--accent) 32%, var(--surface)), var(--surface) 70%); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 7%, transparent), 0 0 0 22px color-mix(in srgb, var(--accent) 4%, transparent); }
+.engine b { display: block; font: 800 22px/1 var(--display); font-stretch: 75%; color: var(--ink); }
+.engine span { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; display: block; margin-top: 8px; }
+.src-chip { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-soft); font-size: 13px; color: var(--ink-2); }
+.src-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+.loopline { margin-top: 26px; min-width: 820px; display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+.loopline .s { flex: 1; text-align: center; padding: 11px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font: 500 13px/1.2 var(--body); color: var(--ink); }
+.loopline .s.l { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.loopline .ar { color: var(--muted); flex: none; }
+
+/* problem tree */
+.tree { display: grid; gap: 0; min-width: 760px; }
+.tier-l { font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.effects { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.eff { padding: 12px; border-radius: 10px; background: var(--heat-soft); border: 1px solid color-mix(in srgb, var(--heat) 30%, transparent); font-size: 13px; color: var(--ink); line-height: 1.4; }
+.trunk { height: 34px; width: 2px; background: linear-gradient(var(--heat), var(--accent)); margin: 0 auto; }
+.core { padding: 22px 26px; border-radius: var(--r-md); text-align: center; background: var(--ink); color: var(--bg); }
+.core small { display: block; font: 500 10.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; opacity: .65; margin-bottom: 8px; }
+.core b { font: 800 clamp(20px, 2.2vw, 26px)/1.15 var(--display); font-stretch: 80%; display: block; max-width: 34ch; margin: 0 auto; }
+.roots { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.root { padding: 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-soft); font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+.root b { display: block; font: 500 10px/1 var(--mono); color: var(--accent-strong); letter-spacing: .08em; margin-bottom: 7px; }
+
+/* journey */
+.journey { min-width: 980px; display: grid; grid-template-columns: 116px repeat(7, minmax(0, 1fr)); }
+.journey > div { padding: 12px 10px; border-bottom: 1px solid var(--line-soft); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
+.journey .rl { font: 500 10px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-left: 0; }
+.journey .sh { font: 700 14px/1.2 var(--display); font-stretch: 88%; color: var(--ink); border-bottom-color: var(--line); }
+.journey .sh small { display: block; font: 500 10px/1 var(--mono); color: var(--accent-strong); margin-bottom: 6px; letter-spacing: .08em; }
+.journey .curve { grid-column: 2 / -1; padding: 0; }
+.journey .curve svg { display: block; width: 100%; height: 150px; }
+.journey .pain { color: var(--heat); }
+.journey .opp { color: var(--ink); }
+.journey .opp::before { content: ""; display: block; width: 14px; height: 2px; background: var(--accent); margin-bottom: 7px; }
+.journey .think { font-style: italic; color: var(--ink); }
+
+
+.jd { position: absolute; width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg-2); transform: translate(-50%, -50%); }
+.jd.low { background: var(--heat); }
+.jd em { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); white-space: nowrap; font: 500 10.5px/1.2 var(--mono); font-style: normal; color: var(--heat); background: var(--bg-2); padding: 3px 7px; border-radius: 5px; border: 1px solid var(--line-soft); }
+.jd.high em { color: var(--accent-strong); }
+
+/* personas */
+.personas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 28px 0 40px; }
+.persona { padding: 7px; border-radius: var(--r-lg); background: color-mix(in srgb, var(--surface) 50%, transparent); border: 1px solid var(--line-soft); }
+.persona-in { border-radius: calc(var(--r-lg) - 7px); background: var(--bg-2); border: 1px solid var(--line-soft); padding: 22px; height: 100%; display: flex; flex-direction: column; gap: 16px; }
+.p-top { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 16px; align-items: center; }
+.mono-av { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; font: 800 24px/1 var(--display); font-stretch: 80%; color: var(--on-accent); background: var(--accent); }
+.mono-av.alt { background: var(--ink); color: var(--bg); }
+.mono-av.out { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
+.p-top h4 { margin: 0; font: 700 20px/1.15 var(--display); font-stretch: 85%; color: var(--ink); }
+.p-top p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.p-quote { font: 600 17px/1.4 var(--body); color: var(--ink); margin: 0; padding-left: 14px; border-left: 2px solid var(--accent); text-wrap: pretty; }
+.p-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.p-grid h6 { margin: 0 0 8px; font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.p-grid ul { margin: 0; padding-left: 16px; display: grid; gap: 5px; }
+.p-grid li { font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.p-grid .fr li::marker { color: var(--heat); }
+.p-grid .gl li::marker { color: var(--accent); }
+.p-foot { margin-top: auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.tools { display: flex; flex-wrap: wrap; gap: 5px; }
+.tools span { font: 500 10.5px/1 var(--mono); padding: 5px 7px; border-radius: 6px; background: var(--surface-2); color: var(--ink-2); }
+.meter { display: flex; align-items: center; gap: 8px; font: 500 10px/1 var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.meter i { width: 14px; height: 6px; border-radius: 2px; background: var(--surface-2); }
+.meter i.on { background: var(--accent); }
+
+/* empathy */
+.emp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 28px 0 40px; }
+.emp { border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line-soft); padding: 18px; }
+.emp-h { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.emp-h .mono-av { width: 38px; height: 38px; border-radius: 11px; font-size: 15px; }
+.emp-h b { font: 700 16px/1.2 var(--display); font-stretch: 88%; }
+.emp-h span { display: block; font-size: 12px; color: var(--muted); }
+.quad { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-soft); border-radius: 12px; overflow: hidden; border: 1px solid var(--line-soft); }
+.quad > div { background: var(--bg-2); padding: 12px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
+.quad h6 { margin: 0 0 6px; font: 500 10px/1 var(--mono); letter-spacing: .1em; color: var(--accent-strong); }
+.pg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.pg > div { padding: 11px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
+.pg h6 { margin: 0 0 5px; font: 500 10px/1 var(--mono); letter-spacing: .1em; }
+.pg .pa { background: var(--heat-soft); } .pg .pa h6 { color: var(--heat); }
+.pg .ga { background: var(--accent-soft); } .pg .ga h6 { color: var(--accent-strong); }
+
+/* concepts */
+.concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 28px 0 24px; }
+.concept { border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line-soft); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.concept.win { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent); }
+.wf { height: 168px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line-soft); padding: 12px; display: grid; gap: 7px; }
+.wf .r { display: flex; gap: 7px; } .wf .b { border-radius: 5px; background: var(--surface-2); }
+.wf .a { background: var(--accent); } .wf .as { background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); }
+.c-label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.c-label small { font: 500 10.5px/1 var(--mono); letter-spacing: .1em; color: var(--muted); }
+.c-label .score { font: 800 26px/1 var(--display); font-stretch: 75%; color: var(--ink); }
+.c-label .score span { font-size: 13px; color: var(--muted); font-weight: 600; }
+.concept h4 { margin: -6px 0 0; font: 800 26px/1 var(--display); font-stretch: 72%; letter-spacing: -.01em; }
+.concept p { margin: 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.pc { display: grid; gap: 6px; font-size: 13px; line-height: 1.4; }
+.pc div { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 8px; color: var(--ink-2); }
+.pc .plus { color: var(--good); font-weight: 700; } .pc .minus { color: var(--heat); font-weight: 700; }
+.badge-win { align-self: flex-start; font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; background: var(--accent); color: var(--on-accent); }
+.scorebars { display: grid; gap: 12px; }
+.sb { display: grid; grid-template-columns: 120px minmax(0, 1fr) 48px; gap: 14px; align-items: center; font-size: 13.5px; color: var(--ink-2); }
+.sb .t { height: 14px; border-radius: 5px; background: var(--surface-2); position: relative; overflow: hidden; }
+.sb .t i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+.sb.win .t i { background: var(--accent); }
+.sb b { font: 700 15px/1 var(--mono); color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* flows */
+.rail { display: flex; align-items: stretch; gap: 0; min-width: 900px; }
+.node { flex: 1; min-width: 0; position: relative; padding: 0 6px; }
+.node .card { padding: 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line-soft); font-size: 12.5px; line-height: 1.4; color: var(--ink); height: 100%; }
+.node .card small { display: block; font: 500 9.5px/1 var(--mono); letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+.node .card.dec { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.node .card.dec small { color: var(--accent-strong); }
+.node .card.endc { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.node .card.endc small { color: color-mix(in srgb, var(--on-accent) 70%, transparent); }
+.node + .node::before { content: ""; position: absolute; left: -5px; top: 50%; width: 10px; height: 10px; border-top: 1.5px solid var(--muted); border-right: 1.5px solid var(--muted); transform: translateY(-50%) rotate(45deg); }
+.branches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; min-width: 900px; }
+.branch { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px 14px; border-radius: 12px; border: 1px dashed var(--line); font-size: 13px; color: var(--ink-2); line-height: 1.45; }
+.branch b { color: var(--ink); }
+.branch .dia { width: 14px; height: 14px; margin-top: 3px; transform: rotate(45deg); border: 1.5px solid var(--accent); background: var(--accent-soft); }
+.tf { display: grid; gap: 22px; }
+.tf-t { font: 600 14px/1.3 var(--body); color: var(--ink); margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+.tf-t small { font: 500 10.5px/1 var(--mono); color: var(--muted); letter-spacing: .06em; }
+
+/* sitemap */
+.sitemap { min-width: 980px; }
+.sm-root { width: 200px; margin: 0 auto; padding: 14px; border-radius: 14px; text-align: center; background: var(--accent); color: var(--on-accent); font: 800 20px/1 var(--display); font-stretch: 72%; }
+.sm-stem { width: 1.5px; height: 22px; background: var(--line); margin: 0 auto; }
+.sm-cols { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; position: relative; padding-top: 22px; }
+.sm-cols::before { content: ""; position: absolute; top: 0; left: calc(100% / 14); right: calc(100% / 14); height: 1.5px; background: var(--line); }
+.sm-col { position: relative; }
+.sm-col::before { content: ""; position: absolute; top: -22px; left: 50%; width: 1.5px; height: 22px; background: var(--line); }
+.sm-h { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); font: 600 13.5px/1.2 var(--body); color: var(--ink); }
+.sm-h .i { color: var(--accent); }
+.sm-col ul { list-style: none; margin: 8px 0 0; padding: 0 0 0 12px; border-left: 1.5px solid var(--line-soft); margin-left: 14px; display: grid; gap: 6px; }
+.sm-col li { font-size: 12px; line-height: 1.35; color: var(--ink-2); padding: 7px 9px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line-soft); }
+.sm-col li.sub { margin-left: 10px; color: var(--muted); }
+
+/* nav mock */
+.navmock { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 20px; align-items: end; }
+.laptop { border-radius: 14px; background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.laptop .lb { display: grid; grid-template-columns: 150px minmax(0, 1fr); min-height: 250px; }
+.laptop .sd { border-right: 1px solid var(--line-soft); padding: 12px 8px; display: grid; align-content: start; gap: 2px; font-size: 12px; }
+.laptop .sd .drop { margin: 0 2px 10px; padding: 8px 10px; border-radius: 8px; background: var(--heat-soft); color: var(--heat); font: 500 10.5px/1.2 var(--mono); }
+.laptop .ct { padding: 14px; display: grid; gap: 10px; align-content: start; }
+.bc { font: 500 11px/1 var(--mono); color: var(--muted); }
+.bc b { color: var(--ink); font-weight: 500; }
+.tabs { display: flex; gap: 16px; border-bottom: 1px solid var(--line-soft); font-size: 12px; }
+.tabs span { padding: 6px 0; color: var(--muted); }
+.tabs span.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+.ph-ct { height: 130px; border-radius: 10px; background: repeating-linear-gradient(90deg, var(--surface-2) 0 60px, transparent 60px 72px); opacity: .7; }
+.status { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; font: 500 10px/1 var(--mono); color: var(--muted); }
+.status span { padding: 5px 7px; border-radius: 6px; background: var(--surface-2); }
+.status span.on { background: var(--accent); color: var(--on-accent); }
+.mob { max-width: 230px; margin: 0 auto; width: 100%; border-radius: 30px; background: var(--surface-2); border: 1px solid var(--line); padding: 7px; }
+.mob-in { border-radius: 24px; background: var(--bg-2); border: 1px solid var(--line-soft); height: 300px; display: flex; flex-direction: column; overflow: hidden; }
+.mob-in .ph-ct { margin: 34px 12px 0; height: 150px; }
+.tabbar { margin-top: auto; display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 4px 14px; border-top: 1px solid var(--line-soft); background: var(--surface); }
+.tabbar span { display: grid; justify-items: center; gap: 4px; font: 500 8.5px/1 var(--body); color: var(--muted); }
+.tabbar span.on { color: var(--accent); }
+.tabbar .plus { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; margin-top: -6px; }
+
+/* footer */
+footer { padding-block: 64px 80px; }
+.foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; }
+.foot .mark { font-size: clamp(56px, 10vw, 140px); line-height: .85; letter-spacing: -0.02em; }
+.foot p { margin: 0; color: var(--muted); font-size: 13px; max-width: 46ch; text-align: right; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .app-right { display: none; }
+  .app-body { grid-template-columns: 120px minmax(0, 1fr); }
+  .bento { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .bento .tile:first-child { grid-column: 1 / -1; }
+  .concepts { grid-template-columns: minmax(0, 1fr); }
+  .emp-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .band-head { grid-template-columns: minmax(0, 1fr); }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact:nth-child(3) { border-left: 0; padding-left: 0; }
+  .fact { border-top: 1px solid var(--line-soft); }
+  .fact:nth-child(-n+2) { border-top: 0; }
+  .personas { grid-template-columns: minmax(0, 1fr); }
+  .split, .navmock { grid-template-columns: minmax(0, 1fr); }
+  .foot { grid-template-columns: minmax(0, 1fr); }
+  .foot p { text-align: left; }
+  .top .mark { display: none; }
+}
+@media (max-width: 620px) {
+  .app-side { display: none; }
+  .app-body { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .bento { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: minmax(0, 1fr); }
+  .lb-row { grid-template-columns: 100px minmax(0, 1fr) 38px; }
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .fact { border-left: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--line-soft) !important; }
+  .fact:first-child { border-top: 0 !important; }
+  .p-grid { grid-template-columns: minmax(0, 1fr); }
+  .p-top { grid-template-columns: 52px minmax(0, 1fr); }
+  .p-top .mono-av { width: 52px; height: 52px; }
+  .p-top .ring-wrap { grid-column: 1 / -1; }
+  .idea .ringbox { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 
-<div class="shell">
-  <aside class="side">
-    <p class="wordmark"><span class="blu">BLU</span><span class="print">PRINT</span></p>
-    <p class="sub">Project book · Proposal → IA</p>
-    <nav id="toc">
-<a href="#part1"><span class="num">01</span><span>Project Proposal &amp; Timeline</span></a>
-<a href="#part2"><span class="num">02</span><span>Domain Study &amp; Literature Review (Secondary Research)</span></a>
-<a href="#part3"><span class="num">03</span><span>Stakeholders, System Mapping, Problem Mapping &amp; Target Users</span></a>
-<a href="#part4"><span class="num">04</span><span>Primary Research: Plan, User Study, Instruments, Report &amp; Inferences</span></a>
-<a href="#part5"><span class="num">05</span><span>Personas, Empathy Maps, Journey Map, Problem Statement &amp; Design Goals</span></a>
-<a href="#part6"><span class="num">06</span><span>Ideation, Filtration, 3 Concepts &amp; Final Selection</span></a>
-<a href="#part7"><span class="num">07</span><span>User Scenarios, Storyboards, User &amp; Task Flows, Task Analysis, Feature Mapping</span></a>
-<a href="#part8"><span class="num">08</span><span>Information Architecture &amp; Proposed Solution</span></a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2,12 6,12 9,5 15,19 18,12 22,12"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dna" viewBox="0 0 24 24"><path d="M7 3c0 7 10 5 10 12 0 3-1.5 4.5-2 6M17 3c0 7-10 5-10 12 0 3 1.5 4.5 2 6M8.5 7h7M8.5 17h7"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol>
+  <symbol id="i-break" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13-6.2M20 12a8 8 0 0 1-13 6.2"/><path d="M11 9l2 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="11" rx="2"/><path d="M16 11l5-3v9l-5-3"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="#top">BLU<b>PRINT</b></a>
+    <nav id="toc" aria-label="Chapters">
+      <a href="#product">Product</a>
+      <a href="#part1">Brief</a>
+      <a href="#part2">Research</a>
+      <a href="#part3">Systems</a>
+      <a href="#part4">Fieldwork</a>
+      <a href="#part5">Synthesis</a>
+      <a href="#part6">Ideation</a>
+      <a href="#part7">Flows</a>
+      <a href="#part8">IA</a>
     </nav>
-  </aside>
-  <main>
-    <header class="cover">
-      <p class="kicker">UI/UX Graduation Project · Industry partner: BLUORNG</p>
-      <h1><span class="blu">BLU</span><span class="print">PRINT</span></h1>
-      <p class="lede">A content intelligence and ideation platform that tells BLUORNG's team what to make next for Instagram and Meta ads, explains why, and turns the idea into a brief they can shoot.</p>
-      <div class="facts">
-        <span><b>Stages</b> Proposal → Labeling &amp; Proposed Solution</span>
-        <span><b>Users</b> Content team · Performance marketer · Makers · Founders</span>
-        <span><b>Method</b> Double Diamond</span>
+  </div>
+  <div class="progress" aria-hidden="true"></div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker rise"><span class="rule"></span>UI/UX graduation project with BLUORNG</p>
+      <h1 class="rise d1">What should BLUORNG <em>make next?</em></h1>
+      <p class="lede rise d2">BLUPRINT reads the brand's Instagram and Meta ads results, suggests what to make next, and turns each idea into a brief the team can shoot.</p>
+      <div class="ctas rise d3">
+        <a class="pill pill-primary" href="#part1">Read the case study <span class="dot"><svg class="i"><use href="#i-down"/></svg></span></a>
+        <a class="pill pill-ghost" href="#product">See the product <span class="dot"><svg class="i"><use href="#i-arrow"/></svg></span></a>
       </div>
-      <p class="callout"><b>Primary research slots are empty on purpose.</b> Part 04 holds the questionnaires, interview guides and hypotheses. Fill the findings tables with your own survey, interview and shadowing data before you present.</p>
-    </header>
-<section id="part1" class="part"><p class="eyebrow">Part 01</p><h1>Project Proposal &amp; Timeline</h1>
+      <div class="hero-meta rise d4">
+        <div><b>8 chapters</b>Proposal to information architecture</div>
+        <div><b>4 user roles</b>Strategist, optimiser, maker, approver</div>
+        <div><b>2 channels</b>Instagram organic and Meta ads</div>
+      </div>
+    </div>
+
+    <div class="rise d3">
+      <div class="shell">
+        <div class="app" role="img" aria-label="BLUPRINT concept screen showing idea suggestions for the Winter Capsule drop">
+          <div class="app-bar">
+            <span class="crumbs">Plan / Drop Rooms / <b>Winter Capsule</b></span>
+            <span class="bar-end">
+              <span class="chip chip-heat">Drops in 12 days</span>
+              <span class="av">RM</span><span class="av">AM</span><span class="av">KS</span>
+            </span>
+          </div>
+          <div class="app-body">
+            <div class="app-side">
+              <div class="nav-i"><svg class="i"><use href="#i-home"/></svg>Home</div>
+              <div class="nav-i"><svg class="i"><use href="#i-pulse"/></svg>Pulse</div>
+              <div class="nav-i on"><svg class="i"><use href="#i-bulb"/></svg>Ideas</div>
+              <div class="nav-i"><svg class="i"><use href="#i-doc"/></svg>Briefs</div>
+              <div class="nav-i"><svg class="i"><use href="#i-cal"/></svg>Plan</div>
+              <div class="nav-i"><svg class="i"><use href="#i-dna"/></svg>Brand DNA</div>
+            </div>
+            <div class="app-main">
+              <div class="main-head">
+                <h4>Ideas for this drop</h4>
+                <span class="seg"><span class="on">Organic</span><span>Paid</span></span>
+              </div>
+              <div class="idea feat rise d4">
+                <div>
+                  <div class="lab">ASMR series / Reel / Ep. 4</div>
+                  <h5>Embroidery close-ups</h5>
+                  <p class="hook">Hook: two-second macro of the needle pulling cobalt thread. Room sound only, no music.</p>
+                </div>
+                <div class="ringbox">
+                  <div class="ring"><svg viewBox="0 0 58 58"><circle class="trk" cx="29" cy="29" r="26"/><circle class="val" cx="29" cy="29" r="26" stroke-dasharray="163.4" stroke-dashoffset="13"/></svg><span>92</span></div>
+                  <div class="ring-cap">Brand-fit</div>
+                </div>
+                <div class="why"><svg class="i"><use href="#i-spark"/></svg><span><b>Why this?</b> Your ASMR posts get 2.6x your median saves, and the last episode went out 5 weeks ago.</span></div>
+                <div class="acts"><span class="btn btn-acc"><svg class="i"><use href="#i-doc"/></svg>Create brief</span><span class="btn">Edit idea</span></div>
+              </div>
+              <div class="idea small rise d5">
+                <div>
+                  <div class="lab">Story experience / T-7</div>
+                  <h5>Pick the colourway poll</h5>
+                </div>
+                <span class="mini-fit">88</span>
+              </div>
+              <div class="idea small rise d6">
+                <div>
+                  <div class="lab">Studio diaries / Carousel</div>
+                  <h5>From sketch to sample, 6 frames</h5>
+                </div>
+                <span class="mini-fit">85</span>
+              </div>
+            </div>
+            <div class="app-right">
+              <div>
+                <p class="panel-t">Ad angle x hook</p>
+                <div class="matrix">
+                  <span></span><span class="h">Detail</span><span class="h">Question</span><span class="h">POV</span>
+                  <span class="r">Scarcity</span><span class="cell c-used"></span><span class="cell c-used"></span><span class="cell c-plan"></span>
+                  <span class="r">Lookbook</span><span class="cell c-used"></span><span class="cell c-plan"></span><span class="cell c-used"></span>
+                  <span class="r">Craft</span><span class="cell c-miss"></span><span class="cell c-plan"></span><span class="cell c-miss"></span>
+                  <span class="r">Creator</span><span class="cell c-miss"></span><span class="cell c-miss"></span><span class="cell c-plan"></span>
+                </div>
+                <div class="legend"><span><i class="c-used"></i>Ran</span><span><i class="c-plan"></i>Planned</span><span><i class="c-miss"></i>Missing</span></div>
+              </div>
+              <div>
+                <p class="panel-t">Saves, ASMR series</p>
+                <svg class="spark" viewBox="0 0 180 64" preserveAspectRatio="none">
+                  <line class="gl" x1="0" y1="16" x2="180" y2="16"/><line class="gl" x1="0" y1="40" x2="180" y2="40"/>
+                  <path class="area" d="M0 50 L25 46 L50 48 L75 36 L100 38 L125 26 L150 22 L176 12 L176 64 L0 64 Z"/>
+                  <path class="ln" d="M0 50 L25 46 L50 48 L75 36 L100 38 L125 26 L150 22 L176 12"/>
+                  <circle class="end" cx="176" cy="12" r="4"/>
+                </svg>
+                <p class="note-sm">Each episode is saved more than the one before.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="mock-cap">Concept screen. All numbers are example data.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-label="Key facts from secondary research">
+  <div class="facts">
+    <div class="fact"><div class="big">$23.1<small>bn</small></div><p>Estimated size of India's streetwear market in 2025, growing about 7% a year.</p><span class="src">Deep Market Insights, estimate</span></div>
+    <div class="fact"><div class="big">1.9<small>% vs</small> 0.8<small>%</small></div><p>Engagement on Reels compared with carousels and single images for fashion brands.</p><span class="src">Dash Social via NetInfluencer</span></div>
+    <div class="fact"><div class="big">32<small>%</small></div><p>Best-case improvement in cost per acquisition when ad creative is varied rather than similar.</p><span class="src">Meta via B&amp;T</span></div>
+    <div class="fact"><div class="big">0<small> of 8</small></div><p>Tool groups reviewed that plan organic and paid content together using the brand's own results.</p><span class="src">Our tool review, Part 2</span></div>
+  </div>
+</section>
+
+<section class="band" id="product">
+  <div class="wrap">
+    <div class="band-head">
+      <div>
+        <p class="eyebrow">The proposed product</p>
+        <h2>One loop from insight to shoot</h2>
+      </div>
+      <p>Pulse explains what worked. Ideas suggests what to make next for organic and paid. Briefs carries it onto set. Approvals keeps the founders in the loop without WhatsApp.</p>
+    </div>
+    <div class="bento">
+      <article class="tile">
+        <div class="tile-head"><h3>Pulse</h3><p>Results grouped by type of content, so the team sees which series work, and why.</p></div>
+        <div class="screen">
+          <div class="kpis">
+            <div class="kpi"><div class="k">Top series</div><div class="v">ASMR</div></div>
+            <div class="kpi"><div class="k">Best ad angle</div><div class="v">Creator try-on</div></div>
+            <div class="kpi"><div class="k">Fatigue alerts</div><div class="v heat">2 ads</div></div>
+          </div>
+          <div class="lb">
+            <p class="panel-t" style="margin:0">Saves vs your median, last 90 days</p>
+            <div class="lb-row"><span class="n">ASMR</span><span class="t"><i class="f" style="width:100%"></i></span><span class="x">2.6x</span></div>
+            <div class="lb-row"><span class="n">Studio diaries</span><span class="t"><i class="f" style="width:73%"></i></span><span class="x">1.9x</span></div>
+            <div class="lb-row"><span class="n">One piece, 3 ways</span><span class="t"><i class="f" style="width:65%"></i></span><span class="x">1.7x</span></div>
+            <div class="lb-row"><span class="n">Drop countdown</span><span class="t"><i class="f dim" style="width:46%"></i></span><span class="x">1.2x</span></div>
+            <div class="lb-row"><span class="n">Lookbook</span><span class="t"><i class="f dim" style="width:38%"></i></span><span class="x">1.0x</span></div>
+            <div class="lb-row"><span class="n">Memes</span><span class="t"><i class="f dim" style="width:27%"></i></span><span class="x">0.7x</span></div>
+          </div>
+          <div class="why-card"><span><b>Why ASMR works:</b> the first frame is the product, there is no music, and quality-focused followers save it to look at later.</span><span class="btn btn-acc">Promote</span></div>
+          <div class="alerts">
+            <p class="panel-t" style="margin:0">Fatigue alerts</p>
+            <div class="alert"><span class="dotw"></span><span><b>Lookbook carousel 03</b> Frequency 4.2, click rate down for 9 days</span><span class="btn">Refresh</span></div>
+            <div class="alert"><span class="dotw"></span><span><b>Drop countdown 01</b> Same opening as 2 other ads</span><span class="btn">New hook</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tile-head"><h3>Set Mode</h3><p>The merged shot list for organic and ads, on the cinematographer's phone.</p></div>
+        <div class="phone"><div class="phone-in">
+          <div class="island"></div>
+          <div class="ph-head"><div class="k">Shoot day 1</div><h5>Winter Capsule</h5><div class="prog"><span class="t"><i></i></span>7 / 12</div></div>
+          <div class="frame916"><span>9:16 SAFE ZONE</span><em>4:5 also</em></div>
+          <div class="shots">
+            <div class="shot done"><span class="cb"><svg class="i"><use href="#i-check"/></svg></span><div><div class="tt">Macro: needle through thread</div><div class="sub">Hook A, organic + ad</div></div><span class="ratio">9:16</span></div>
+            <div class="shot"><span class="cb"></span><div><div class="tt">Creator walk-in fit check</div><div class="warn">Needs a 2s close-up for Hook B</div></div><span class="ratio">9:16</span></div>
+            <div class="shot"><span class="cb"></span><div><div class="tt">Packing an order, top-down</div><div class="sub">ASMR, sound only</div></div><span class="ratio">4:5</span></div>
+          </div>
+        </div></div>
+      </article>
+      <article class="tile">
+        <div class="tile-head"><h3>Approvals</h3><p>Founders swipe through the plan with the reason and brand-fit on every card.</p></div>
+        <div class="phone"><div class="phone-in">
+          <div class="island"></div>
+          <div class="ph-head"><div class="k">Plan for review</div><h5>9 organic, 12 ads</h5></div>
+          <div class="stack">
+            <div class="acard back2"></div>
+            <div class="acard back1"></div>
+            <div class="acard front">
+              <div class="ph"><span>AD / CREATOR TRY-ON</span></div>
+              <h6>Creator styles the cobalt overshirt, POV hook</h6>
+              <div class="meta"><span>Brand-fit</span><b>90</b></div>
+              <div class="why-s">Creator ads had the lowest cost per sale last drop. This angle was missing from 2 of 3 drops.</div>
+            </div>
+          </div>
+          <div class="decide"><span aria-label="Reject"><svg class="i"><use href="#i-x"/></svg></span><span class="yes" aria-label="Approve"><svg class="i"><use href="#i-check"/></svg></span><span aria-label="Comment"><svg class="i"><use href="#i-chat"/></svg></span></div>
+        </div></div>
+      </article>
+    </div>
+    <p class="bento-cap">Concept screens. All numbers are example data, to be replaced with BLUORNG's own results.</p>
+  </div>
+</section>
+
+<section class="band chapter" id="part1"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 1 of 8</p><h2>The brief</h2></div><div><p>What we&#x27;re building, who it&#x27;s for, and the 20-week plan to get there.</p><div class="stage-chips"><span>Project proposal</span><span>Project timeline</span></div></div></div><div class="doc">
 <h2>1. Project Proposal</h2>
 <h3>1.1 Working title</h3>
-<p><strong>BLUPRINT — a content intelligence and ideation platform that helps BLUORNG decide what to make for Instagram (organic) and Meta Ads (paid).</strong></p>
+<p><strong>BLUPRINT: a content intelligence and ideation platform that helps BLUORNG decide what to make for Instagram (organic) and Meta Ads (paid).</strong></p>
 <blockquote>
 <p><em>Name logic:</em> "BLU" (from BLUORNG) + "PRINT" (blueprint): a blueprint for every piece of content before a camera is switched on.</p>
 </blockquote>
@@ -131,7 +785,7 @@ td strong { color: var(--ink); }
 <li><strong>Mentors:</strong> Industry mentor (BLUORNG brand/marketing lead) + University guide.</li>
 </ul>
 <blockquote>
-<p>⚠️ <strong>Confidentiality:</strong> Any internal data (Instagram Insights, Meta Ads Manager numbers, sales figures, internal docs) must only be used with the written OK of the industry mentor. Anonymise or index numbers (e.g. "Reel A = 100, Reel B = 240") where needed.</p>
+<p><strong>Confidentiality:</strong> Any internal data (Instagram Insights, Meta Ads Manager numbers, sales figures, internal docs) must only be used with the written OK of the industry mentor. Anonymise or index numbers (e.g. "Reel A = 100, Reel B = 240") where needed.</p>
 </blockquote>
 <h3>1.3 Background</h3>
 <p>BLUORNG grew from an Instagram-first niche label into a fast-rising fashion brand. Its content is a mix of:
@@ -224,7 +878,7 @@ td strong { color: var(--ink); }
 <td>1</td>
 <td>Kick-off</td>
 <td>Project proposal, timeline, mentor sign-off, confidentiality agreement</td>
-<td>✅ Proposal approved</td>
+<td>Proposal approved</td>
 </tr>
 <tr>
 <td>2–3</td>
@@ -254,7 +908,7 @@ td strong { color: var(--ink); }
 <td>7</td>
 <td>Define</td>
 <td>Primary research report, data charts, inferences, <strong>redefined brief</strong></td>
-<td>🎤 <strong>Presentation 1</strong></td>
+<td><strong>Presentation 1</strong></td>
 </tr>
 <tr>
 <td>8</td>
@@ -284,7 +938,7 @@ td strong { color: var(--ink); }
 <td>12</td>
 <td>Develop</td>
 <td>Information architecture: content strategy, sitemap, navigation, labeling</td>
-<td>🎤 <strong>Presentation 2</strong></td>
+<td><strong>Presentation 2</strong></td>
 </tr>
 <tr>
 <td>13–14</td>
@@ -314,35 +968,42 @@ td strong { color: var(--ink); }
 <td>20</td>
 <td>Final</td>
 <td>Documentation, final presentation, jury</td>
-<td>🎓 <strong>Final jury</strong></td>
+<td><strong>Final jury</strong></td>
 </tr>
 </tbody>
 </table></div>
-<div class="diagram"><pre class="mermaid">gantt
-    title BLUPRINT — Graduation Project Timeline (edit start date)
-    dateFormat  YYYY-MM-DD
-    axisFormat  W%W
-    section Discover
-    Proposal &amp; timeline        :a1, 2026-07-06, 7d
-    Secondary research         :a2, after a1, 14d
-    System &amp; problem mapping   :a3, after a1, 21d
-    Primary research plan+pilot:a4, after a3, 7d
-    Primary research fieldwork :a5, after a4, 14d
-    section Define
-    Research report (Pres. 1)  :b1, after a5, 7d
-    Personas, journey, goals   :b2, after b1, 7d
-    section Develop
-    Ideation + 3 concepts      :c1, after b2, 14d
-    Scenarios, flows, tasks    :c2, after c1, 7d
-    Information architecture   :c3, after c2, 7d
-    Wireframes + paper proto   :c4, after c3, 14d
-    section Deliver
-    Visual design system       :d1, after c4, 14d
-    Digital prototype          :d2, after d1, 14d
-    Usability testing          :d3, after d2, 7d
-    Final documentation        :d4, after d3, 7d
-</pre></div></section>
-<section id="part2" class="part"><p class="eyebrow">Part 02</p><h1>Domain Study &amp; Literature Review (Secondary Research)</h1><blockquote>
+<figure class="fig"><div class="fig-core">
+  <div class="gantt">
+    <span></span><span class="wk">1</span><span class="wk">2</span><span class="wk">3</span><span class="wk">4</span><span class="wk">5</span><span class="wk">6</span><span class="wk">7</span><span class="wk">8</span><span class="wk">9</span><span class="wk">10</span><span class="wk">11</span><span class="wk">12</span><span class="wk">13</span><span class="wk">14</span><span class="wk">15</span><span class="wk">16</span><span class="wk">17</span><span class="wk">18</span><span class="wk">19</span><span class="wk">20</span>
+    <span class="ph-label">Discover</span>
+    <span class="tl">Proposal and timeline</span><span class="bar" style="grid-column:2/3"></span>
+    <span class="tl">Secondary research</span><span class="bar" style="grid-column:3/5"></span>
+    <span class="tl">System and problem mapping</span><span class="bar" style="grid-column:4/6"></span>
+    <span class="tl">Research plan and pilot</span><span class="bar" style="grid-column:5/6"></span>
+    <span class="tl">Fieldwork</span><span class="bar" style="grid-column:6/8"></span>
+    <span class="ph-label">Define</span>
+    <span class="tl">Research report</span><span class="bar p2" style="grid-column:8/9"></span>
+    <span class="tl">Personas, journey, goals</span><span class="bar p2" style="grid-column:9/10"></span>
+    <span class="ph-label">Develop</span>
+    <span class="tl">Ideation</span><span class="bar p3" style="grid-column:10/11"></span>
+    <span class="tl">Three concepts, selection</span><span class="bar p3" style="grid-column:11/12"></span>
+    <span class="tl">Scenarios and flows</span><span class="bar p3" style="grid-column:12/13"></span>
+    <span class="tl">Information architecture</span><span class="bar p3" style="grid-column:13/14"></span>
+    <span class="tl">Wireframes, paper prototype</span><span class="bar p3" style="grid-column:14/16"></span>
+    <span class="ph-label">Deliver</span>
+    <span class="tl">Design system and UI</span><span class="bar p4" style="grid-column:16/18"></span>
+    <span class="tl">Digital prototype</span><span class="bar p4" style="grid-column:18/20"></span>
+    <span class="tl">Usability testing</span><span class="bar p4" style="grid-column:20/21"></span>
+    <span class="tl">Final documentation</span><span class="bar p4" style="grid-column:21/22"></span>
+    <span class="ph-label">Reviews</span>
+    <span class="tl">Presentation 1</span><span class="ms" style="grid-column:8/9"></span>
+    <span class="tl">Presentation 2</span><span class="ms" style="grid-column:13/14"></span>
+    <span class="tl">Final jury</span><span class="ms" style="grid-column:21/22"></span>
+  </div>
+</div><figcaption class="fig-cap"><b>20-week plan, Double Diamond</b><span>Shift the weeks to match the college calendar</span></figcaption></figure>
+
+</div></div></section>
+<section class="band chapter" id="part2"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 2 of 8</p><h2>Secondary research</h2></div><div><p>The brand, the market, the platforms, the existing tools, and twelve sources that shape the design.</p><div class="stage-chips"><span>Domain study</span><span>Tool review</span><span>Literature review</span></div></div></div><div class="doc"><blockquote>
 <p>Sources are listed at the end of this file. Figures from market-research firms and ad-tech vendors are <strong>estimates</strong>. Present them as "industry estimates", not facts, and cross-check before your final document.</p>
 </blockquote>
 
@@ -391,7 +1052,7 @@ td strong { color: var(--ink); }
 </tbody>
 </table></div>
 <blockquote>
-<p>📝 <em>Add from inside:</em> follower count, posting frequency, team size, monthly content volume, typical shoot cost, ad budget band (indexed if confidential).</p>
+<p><em>Add from inside:</em> follower count, posting frequency, team size, monthly content volume, typical shoot cost, ad budget band (indexed if confidential).</p>
 </blockquote>
 <h3>3.2 The market</h3>
 <ul>
@@ -433,7 +1094,7 @@ td strong { color: var(--ink); }
 - Engagement is <strong>declining year on year</strong> across formats (Socialinsider).
 - Meta reports <strong>diversified creative can improve CPA by up to 32%</strong> and incremental reach by 9% compared with similar-looking creative (via B&amp;T / AdNews).
 - UGC-style ads often beat polished brand ads on CTR/CVR for D2C (vendor data, figures vary by source).</p>
-<p>➡️ <strong>Inference:</strong> No single format "wins". It depends on the brand, account size and goal. That is exactly why BLUORNG needs a tool that learns from <strong>its own</strong> data, not generic rules.</p>
+<p><strong>Inference:</strong> No single format "wins". It depends on the brand, account size and goal. That is exactly why BLUORNG needs a tool that learns from <strong>its own</strong> data, not generic rules.</p>
 <h3>3.4 Content taxonomy (working vocabulary for the project)</h3>
 <p><strong>Organic formats &amp; IPs (recurring series):</strong>
 | IP / format | Description | Typical goal |
@@ -476,64 +1137,64 @@ td strong { color: var(--ink); }
 <tr>
 <td>Meta Business Suite / IG Insights</td>
 <td>Native analytics</td>
-<td>✅</td>
+<td><span class="ok">Yes</span></td>
 <td>partial</td>
-<td>❌</td>
-<td>❌</td>
+<td><span class="no">No</span></td>
+<td><span class="no">No</span></td>
 <td>Data only, no "so what"</td>
 </tr>
 <tr>
 <td>Meta Ads Manager / Ads Library</td>
 <td>Ads + competitor ads</td>
-<td>❌</td>
-<td>✅</td>
-<td>❌</td>
-<td>❌</td>
+<td><span class="no">No</span></td>
+<td><span class="ok">Yes</span></td>
+<td><span class="no">No</span></td>
+<td><span class="no">No</span></td>
 <td>Not built for creative ideation</td>
 </tr>
 <tr>
 <td>Later / Hootsuite / Sprout / Iconosquare</td>
 <td>Scheduling + analytics</td>
-<td>✅</td>
+<td><span class="ok">Yes</span></td>
 <td>partial</td>
 <td>Limited (best time to post)</td>
-<td>❌</td>
+<td><span class="no">No</span></td>
 <td>Scheduling-centric</td>
 </tr>
 <tr>
 <td>Motion</td>
 <td>Creative analytics</td>
-<td>❌</td>
-<td>✅</td>
+<td><span class="no">No</span></td>
+<td><span class="ok">Yes</span></td>
 <td>Partial (which hooks work)</td>
-<td>✅</td>
+<td><span class="ok">Yes</span></td>
 <td>Paid-only, expensive, no organic IPs</td>
 </tr>
 <tr>
 <td>Foreplay</td>
 <td>Ad swipe file / research</td>
-<td>❌</td>
-<td>✅</td>
+<td><span class="no">No</span></td>
+<td><span class="ok">Yes</span></td>
 <td>Inspiration only</td>
-<td>❌</td>
+<td><span class="no">No</span></td>
 <td>Competitor-focused</td>
 </tr>
 <tr>
 <td>Atria / Superscale / Segwise</td>
 <td>Analytics → briefs → generation</td>
-<td>❌</td>
-<td>✅</td>
-<td>✅</td>
+<td><span class="no">No</span></td>
+<td><span class="ok">Yes</span></td>
+<td><span class="ok">Yes</span></td>
 <td>partial</td>
 <td>Paid-only, generic, not drop-culture aware</td>
 </tr>
 <tr>
 <td>ChatGPT / generic AI</td>
 <td>Text ideation</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅ (generic)</td>
-<td>❌</td>
+<td><span class="ok">Yes</span></td>
+<td><span class="ok">Yes</span></td>
+<td><span class="ok">Yes</span> (generic)</td>
+<td><span class="no">No</span></td>
 <td>No data, no brand memory, off-brand ideas</td>
 </tr>
 <tr>
@@ -541,13 +1202,13 @@ td strong { color: var(--ink); }
 <td>Planning</td>
 <td>manual</td>
 <td>manual</td>
-<td>❌</td>
-<td>❌</td>
+<td><span class="no">No</span></td>
+<td><span class="no">No</span></td>
 <td>Where planning actually happens today</td>
 </tr>
 </tbody>
 </table></div>
-<p>➡️ <strong>Opportunity gap:</strong> No tool <strong>joins organic + paid</strong>, learns from a <strong>brand's own performance</strong>, protects <strong>brand identity</strong>, understands <strong>drop calendars</strong>, and outputs <strong>shootable briefs</strong> for a small creative team.</p>
+<p><strong>Opportunity gap:</strong> No tool <strong>joins organic + paid</strong>, learns from a <strong>brand's own performance</strong>, protects <strong>brand identity</strong>, understands <strong>drop calendars</strong>, and outputs <strong>shootable briefs</strong> for a small creative team.</p>
 
 <h2>4. Literature Review</h2>
 <div class="table-wrap"><table>
@@ -598,7 +1259,7 @@ td strong { color: var(--ink); }
 </tr>
 <tr>
 <td>7</td>
-<td>Cialdini (1984/2021), <em>Influence</em> — Scarcity principle</td>
+<td>Cialdini (1984/2021), <em>Influence</em>: Scarcity principle</td>
 <td>Limited availability increases perceived value</td>
 <td>Drop model: scarcity content must be timed and not overused (fatigue)</td>
 </tr>
@@ -646,71 +1307,70 @@ td strong { color: var(--ink); }
 <h3>Sources</h3>
 <ul>
 <li>Indian Retailer, Business News This Week, Fibre2Fashion, Mediainfoline: BLUORNG background, Mumbai store, collabs</li>
-<li>Deep Market Insights — India Streetwear Market Outlook 2026–2034</li>
-<li>Entrepreneur India — <em>India's Fashion Reset and the Growth Playbook for 2026</em></li>
-<li>Fibre2Fashion — <em>Fast Fashion to Slow Luxury: India's $50 billion Style Shift</em></li>
-<li>NetInfluencer / Dash Social — fashion brand Instagram benchmarks; Dash Social H2 2025 Instagram benchmark</li>
-<li>Socialinsider — 2026 Instagram Organic Benchmarks</li>
-<li>B&amp;T / AdNews — <em>Creative is the new targeting</em> (Meta)</li>
-<li>Jon Loomer — <em>Creative Fatigue: What It Is and How to Prevent It</em></li>
-<li>Atria, Segwise, Foreplay comparison pages (tool landscape — vendor sources)</li>
-<li>HAV Strategy — <em>Marketing Strategies of Bluorng</em> (agency case study; promotional)</li>
-</ul></section>
-<section id="part3" class="part"><p class="eyebrow">Part 03</p><h1>Stakeholders, System Mapping, Problem Mapping &amp; Target Users</h1>
+<li>Deep Market Insights: India Streetwear Market Outlook 2026–2034</li>
+<li>Entrepreneur India: <em>India's Fashion Reset and the Growth Playbook for 2026</em></li>
+<li>Fibre2Fashion: <em>Fast Fashion to Slow Luxury: India's $50 billion Style Shift</em></li>
+<li>NetInfluencer / Dash Social: fashion brand Instagram benchmarks; Dash Social H2 2025 Instagram benchmark</li>
+<li>Socialinsider: 2026 Instagram Organic Benchmarks</li>
+<li>B&amp;T / AdNews: <em>Creative is the new targeting</em> (Meta)</li>
+<li>Jon Loomer: <em>Creative Fatigue: What It Is and How to Prevent It</em></li>
+<li>Atria, Segwise, Foreplay comparison pages (tool landscape: vendor sources)</li>
+<li>HAV Strategy: <em>Marketing Strategies of Bluorng</em> (agency case study; promotional)</li>
+</ul></div></div></section>
+<section class="band chapter" id="part3"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 3 of 8</p><h2>Systems and problems</h2></div><div><p>Who is involved, how content moves today, and exactly where it breaks.</p><div class="stage-chips"><span>Stakeholders map</span><span>System mapping</span><span>Problem mapping</span><span>Target users</span></div></div></div><div class="doc">
 <h2>5. Stakeholders Map</h2>
-<h3>5.1 Onion map (core → outer)</h3>
-<div class="diagram"><pre class="mermaid">flowchart TB
-    subgraph L4[&quot;🌍 WIDER ECOSYSTEM&quot;]
-        direction TB
-        subgraph L3[&quot;🤝 EXTERNAL PARTNERS&quot;]
-            direction TB
-            subgraph L2[&quot;🏢 INTERNAL SECONDARY&quot;]
-                direction TB
-                subgraph L1[&quot;🎯 CORE USERS: who would use BLUPRINT daily&quot;]
-                    A1[Social Media Manager]
-                    A2[Content Strategist / Creative Lead]
-                    A3[Cinematographer / Photographer / Editor]
-                    A4[Performance Marketer - Meta Ads]
-                end
-                B1[Founders / Brand Head: approvers]
-                B2[Design &amp; Product team: drop calendar]
-                B3[E-commerce / Website team]
-                B4[Retail store team]
-            end
-            C1[Creators, models &amp; talent]
-            C2[Agencies &amp; freelancers]
-            C3[Collab partner brands]
-            C4[Production crew &amp; stylists]
-        end
-        D1[Audience: Gen Z / millennial streetwear fans]
-        D2[Meta / Instagram platform &amp; algorithm]
-        D3[Competitor brands]
-        D4[Resellers &amp; fan pages]
-    end
-</pre></div>
-<h3>5.2 Power–Interest grid</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th><strong>Low interest</strong></th>
-<th><strong>High interest</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>High power</strong></td>
-<td>Meta (platform rules, algorithm, ad policy) · Collab partners</td>
-<td><strong>Founders / Brand head</strong> (approve budget &amp; brand) · <strong>Performance marketer</strong> (controls spend)</td>
-</tr>
-<tr>
-<td><strong>Low power</strong></td>
-<td>Resellers, fan pages · Competitors</td>
-<td><strong>Social media manager, content strategist, cinematographer/editor</strong> (daily users) · Creators/talent · Audience</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Strategy:</strong> <em>Manage closely</em> → founders and performance marketer (show ROI, brand safety). <em>Keep informed/involve</em> → content team (co-design with them). <em>Keep satisfied</em> → Meta (comply with API &amp; ad policies). <em>Monitor</em> → competitors.</p>
+<h3>5.1 Onion map (core → outer)</h3><figure class="fig"><div class="fig-core"><div class="split">
+  <svg class="svg-fluid" viewBox="0 0 520 520" role="img" aria-label="Stakeholder onion map with four rings">
+    <circle cx="260" cy="260" r="250" style="fill:color-mix(in srgb, var(--accent) 6%, transparent)" class="sv-line"/>
+    <circle cx="260" cy="260" r="190" style="fill:color-mix(in srgb, var(--accent) 12%, transparent)" class="sv-line"/>
+    <circle cx="260" cy="260" r="130" style="fill:color-mix(in srgb, var(--accent) 24%, transparent)" class="sv-line"/>
+    <circle cx="260" cy="260" r="70" class="sv-acc"/>
+    <text x="260" y="40" text-anchor="middle" font-size="11" class="sv-mute sv-mono">WIDER ECOSYSTEM</text>
+    <text x="260" y="100" text-anchor="middle" font-size="11" class="sv-ink2 sv-mono">EXTERNAL PARTNERS</text>
+    <text x="260" y="160" text-anchor="middle" font-size="11" class="sv-ink sv-mono">INTERNAL TEAM</text>
+    <text x="260" y="256" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--on-accent)">Core users</text>
+    <text x="260" y="276" text-anchor="middle" font-size="12" style="fill:var(--on-accent);opacity:.75">4 roles</text>
+    <text x="260" y="480" text-anchor="middle" font-size="11" class="sv-mute sv-mono">AUDIENCE, META, COMPETITORS</text>
+    <text x="260" y="424" text-anchor="middle" font-size="11" class="sv-ink2 sv-mono">CREATORS, AGENCIES, COLLABS</text>
+    <text x="260" y="366" text-anchor="middle" font-size="11" class="sv-ink sv-mono">FOUNDERS, DESIGN, RETAIL</text>
+  </svg>
+  <div class="legend-list">
+    <div class="lg-row"><i style="background:var(--accent)"></i><div><b>Core users</b><span>Social media manager, content strategist, cinematographer and editor, performance marketer. They decide what gets made every week.</span></div></div>
+    <div class="lg-row"><i style="background:color-mix(in srgb, var(--accent) 45%, var(--surface))"></i><div><b>Internal team</b><span>Founders and brand head who approve, the design team who own the drop calendar, e-commerce and retail stores.</span></div></div>
+    <div class="lg-row"><i style="background:color-mix(in srgb, var(--accent) 22%, var(--surface))"></i><div><b>External partners</b><span>Creators and models, agencies and freelancers, collab brands, production crew and stylists.</span></div></div>
+    <div class="lg-row"><i style="background:color-mix(in srgb, var(--accent) 8%, var(--surface)); border:1px solid var(--line)"></i><div><b>Wider ecosystem</b><span>The audience, Instagram and Meta's rules and algorithm, competitor brands, resellers and fan pages.</span></div></div>
+  </div>
+</div></div><figcaption class="fig-cap"><b>Stakeholder onion</b><span>Closer to the centre means closer to daily use</span></figcaption></figure>
+
+<h3>5.2 Power–Interest grid</h3><figure class="fig"><div class="fig-core">
+  <svg class="svg-fluid" viewBox="0 0 640 430" role="img" aria-label="Power and interest grid of stakeholders" style="min-width:560px">
+    <rect x="320" y="20" width="260" height="180" style="fill:color-mix(in srgb, var(--accent) 10%, transparent)"/>
+    <rect x="60" y="20" width="520" height="360" class="sv-line" stroke-width="1"/>
+    <line x1="320" y1="20" x2="320" y2="380" class="sv-line" stroke-dasharray="4 4"/>
+    <line x1="60" y1="200" x2="580" y2="200" class="sv-line" stroke-dasharray="4 4"/>
+    <text x="72" y="40" font-size="11" class="sv-mute sv-mono">KEEP SATISFIED</text>
+    <text x="568" y="40" font-size="11" text-anchor="end" class="sv-accs sv-mono">MANAGE CLOSELY</text>
+    <text x="72" y="370" font-size="11" class="sv-mute sv-mono">MONITOR</text>
+    <text x="568" y="370" font-size="11" text-anchor="end" class="sv-mute sv-mono">KEEP INFORMED, CO-DESIGN</text>
+    <text x="320" y="410" text-anchor="middle" font-size="12" class="sv-mute">Interest in content decisions →</text>
+    <text x="0" y="0" transform="translate(32 200) rotate(-90)" text-anchor="middle" font-size="12" class="sv-mute">Power over content →</text>
+    <g font-size="12.5">
+      <circle cx="190" cy="63" r="6" class="sv-mute"/><text x="200" y="67" class="sv-ink2">Meta platform</text>
+      <circle cx="232" cy="142" r="6" class="sv-mute"/><text x="242" y="146" class="sv-ink2">Collab partners</text>
+      <circle cx="507" cy="49" r="7" class="sv-ink"/><text x="497" y="53" text-anchor="end" class="sv-ink" font-weight="600">Founders</text>
+      <circle cx="445" cy="99" r="7" class="sv-acc"/><text x="435" y="103" text-anchor="end" class="sv-ink" font-weight="600">Performance marketer</text>
+      <circle cx="528" cy="236" r="7" class="sv-acc"/><text x="518" y="240" text-anchor="end" class="sv-ink" font-weight="600">Social media manager</text>
+      <circle cx="476" cy="272" r="7" class="sv-acc"/><text x="466" y="276" text-anchor="end" class="sv-ink" font-weight="600">Content strategist</text>
+      <circle cx="414" cy="308" r="7" class="sv-acc"/><text x="424" y="312" class="sv-ink" font-weight="600">Cinematographer, editor</text>
+      <circle cx="362" cy="250" r="6" class="sv-mute"/><text x="352" y="254" text-anchor="end" class="sv-ink2">Creators</text>
+      <circle cx="382" cy="344" r="6" class="sv-mute"/><text x="392" y="348" class="sv-ink2">Audience</text>
+      <circle cx="122" cy="330" r="6" class="sv-mute"/><text x="132" y="334" class="sv-ink2">Resellers, fan pages</text>
+      <circle cx="164" cy="265" r="6" class="sv-mute"/><text x="174" y="269" class="sv-ink2">Competitors</text>
+    </g>
+  </svg>
+</div><figcaption class="fig-cap"><b>Power and interest</b><span>Blue dots are the product's daily users</span></figcaption></figure>
+<p><strong>Strategy:</strong> manage the founders and the performance marketer closely by showing return and brand safety. Co-design with the content team. Keep Meta satisfied by staying inside its API and ad policies. Monitor competitors.</p>
+
 <h3>5.3 Stakeholder needs table</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -769,42 +1429,18 @@ td strong { color: var(--ink); }
 
 <h2>6. Understanding the System (System Mapping)</h2>
 <h3>6.1 Current-state content system ("AS-IS")</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    subgraph INPUTS
-        I1[Drop calendar / new collection]
-        I2[Trends: audio, memes, culture]
-        I3[Competitor &amp; global brand content]
-        I4[Founder / team intuition]
-        I5[Last month's numbers - if anyone checks]
-    end
-    subgraph IDEATE[&quot;IDEATE (WhatsApp, meetings, Pinterest)&quot;]
-        P1[Brainstorm ideas]
-        P2[Pick ideas - gut + founder approval]
-    end
-    subgraph PRODUCE
-        P3[Brief - often verbal / chat]
-        P4[Shoot - cinematographer, models, stylist]
-        P5[Edit - multiple aspect ratios]
-    end
-    subgraph DISTRIBUTE
-        O1[Instagram organic: Reels, posts, stories]
-        O2[Meta Ads: perf. marketer picks assets]
-    end
-    subgraph MEASURE
-        M1[IG Insights]
-        M2[Meta Ads Manager]
-        M3[Shopify / store sales]
-    end
-    I1 &amp; I2 &amp; I3 &amp; I4 --&gt; P1 --&gt; P2 --&gt; P3 --&gt; P4 --&gt; P5
-    P5 --&gt; O1
-    P5 --&gt; O2
-    O1 --&gt; M1
-    O2 --&gt; M2
-    O1 -.-&gt; M3
-    O2 --&gt; M3
-    M1 -. &quot;❌ weak loop: insights rarely reach ideation&quot; .-&gt; P1
-    M2 -. &quot;❌ siloed with perf. marketer&quot; .-&gt; P1
-</pre></div>
+<figure class="fig"><div class="fig-core">
+  <div class="flow5">
+    <div class="stage"><div class="st"><b>1</b>Inputs</div><div class="box"><ul><li>Drop calendar</li><li>Trends and audio</li><li>Competitor posts</li><li>Founder and team instinct</li><li>Last month's numbers, if anyone checks</li></ul></div></div>
+    <div class="stage"><div class="st"><b>2</b>Ideate</div><div class="box"><ul><li>WhatsApp threads and meetings</li><li>Pinterest and screenshots</li><li>Founder picks by taste</li></ul></div></div>
+    <div class="stage"><div class="st"><b>3</b>Produce</div><div class="box"><ul><li>Brief as a voice note</li><li>One shoot day</li><li>Edits in several ratios</li></ul></div></div>
+    <div class="stage"><div class="st"><b>4</b>Distribute</div><div class="box"><ul><li>Reels, posts, stories</li><li>Meta ads cut from leftover clips</li></ul></div></div>
+    <div class="stage"><div class="st"><b>5</b>Measure</div><div class="box"><ul><li>Instagram Insights</li><li>Ads Manager</li><li>Shopify and store sales</li></ul></div></div>
+  </div>
+  <div class="broken"><svg class="i"><use href="#i-break"/></svg><span><b>The loop is broken.</b> Results stay inside Insights and Ads Manager. They rarely reach the next brainstorm, and the organic and paid sides read different numbers.</span></div>
+</div><figcaption class="fig-cap"><b>How content moves today</b><span>Based on in-house observation, to be confirmed by shadowing</span></figcaption></figure>
+
+
 <p><strong>Observations:</strong>
 1. <strong>Broken feedback loop:</strong> measurement data rarely flows back into ideation in a structured way.
 2. <strong>Organic ↔ paid silo:</strong> the organic team and the performance marketer use different tools and metrics, and organic winners are rarely promoted systematically.
@@ -812,42 +1448,59 @@ td strong { color: var(--ink); }
 4. <strong>Memory loss:</strong> what worked last drop lives in people's heads and chat history.
 5. <strong>Production is expensive:</strong> every shoot day matters, so wrong ideas are costly.</p>
 <h3>6.2 Future-state system ("TO-BE" with BLUPRINT)</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    D1[(IG Insights API)] --&gt; E
-    D2[(Meta Marketing API)] --&gt; E
-    D3[(Shopify / sales)] --&gt; E
-    D4[(Drop calendar)] --&gt; E
-    D5[(Trend signals)] --&gt; E
-    D6[(Brand DNA: tone, do's &amp; don'ts)] --&gt; E
-    E{{BLUPRINT engine: tags, learns, recommends}}
-    E --&gt; R1[Organic recommendations: formats, IPs, hooks]
-    E --&gt; R2[Paid recommendations: angles, variations, fatigue]
-    R1 &amp; R2 --&gt; B[Brief builder: shot list, refs, ratios]
-    B --&gt; A[Approval: founder/brand head]
-    A --&gt; P[Shoot &amp; edit]
-    P --&gt; PUB[Publish / run ads]
-    PUB --&gt; D1
-    PUB --&gt; D2
-    PUB --&gt; L[Learning loop: team rates outcome]
-    L --&gt; E
-</pre></div>
+<figure class="fig"><div class="fig-core">
+  <div class="tobe">
+    <div class="cols">
+      <div class="src-chip"><i></i>Instagram results</div>
+      <div class="src-chip"><i></i>Meta ads results</div>
+      <div class="src-chip"><i></i>Shopify sales</div>
+      <div class="src-chip"><i></i>Drop calendar</div>
+      <div class="src-chip"><i></i>Trend signals</div>
+      <div class="src-chip"><i></i>Brand DNA rules</div>
+    </div>
+    <div class="arrow-r"><svg class="i" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg></div>
+    <div class="engine"><div><b>BLUPRINT</b><span>Tags every post and ad, learns what works, suggests what to make</span></div></div>
+    <div class="arrow-r"><svg class="i" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg></div>
+    <div class="cols">
+      <div class="box acc"><h5>Organic ideas</h5><ul><li>Series to continue or start</li><li>Formats and hooks</li><li>Story experiences</li></ul></div>
+      <div class="box acc"><h5>Paid ideas</h5><ul><li>Missing ad angles</li><li>Hook variations</li><li>Fatigue alerts</li></ul></div>
+    </div>
+  </div>
+  <div class="loopline">
+    <span class="s">Brief</span><svg class="i ar" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg>
+    <span class="s">Approve</span><svg class="i ar" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg>
+    <span class="s">Shoot</span><svg class="i ar" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg>
+    <span class="s">Publish</span><svg class="i ar" style="transform:rotate(45deg)"><use href="#i-arrow"/></svg>
+    <span class="s l">Learn, back to the engine</span><svg class="i ar"><use href="#i-loop"/></svg>
+  </div>
+</div><figcaption class="fig-cap"><b>How content moves with BLUPRINT</b><span>Every result feeds the next set of ideas</span></figcaption></figure>
+
+
 
 <h2>7. Problem Identification &amp; Analysis (Problems Mapping)</h2>
-<h3>7.1 Problem tree</h3>
-<div class="diagram"><pre class="mermaid">flowchart TB
-    CORE[&quot;🔴 CORE PROBLEM&lt;br/&gt;Content decisions at BLUORNG are not evidence-based or connected across organic &amp; paid&quot;]
-    C1[Cause: data scattered across IG, Ads Manager, Shopify] --&gt; CORE
-    C2[Cause: no shared content taxonomy - no way to compare 'types' of content] --&gt; CORE
-    C3[Cause: organic &amp; paid teams work in silos] --&gt; CORE
-    C4[Cause: ideation is gut + trend-chasing, under drop-deadline pressure] --&gt; CORE
-    C5[Cause: briefs live in WhatsApp; no memory of what worked] --&gt; CORE
-    C6[Cause: generic tools don't understand drop culture or brand DNA] --&gt; CORE
-    CORE --&gt; E1[Effect: wasted shoot days &amp; ad spend]
-    CORE --&gt; E2[Effect: creative fatigue &amp; repetitive ads]
-    CORE --&gt; E3[Effect: wins not repeated, low brand recall]
-    CORE --&gt; E4[Effect: IG engagement not converting to sales]
-    CORE --&gt; E5[Effect: team burnout, idea block]
-</pre></div>
+<h3>7.1 Problem tree</h3><figure class="fig"><div class="fig-core"><div class="tree">
+  <div class="tier-l">Effects</div>
+  <div class="effects">
+    <div class="eff">Wasted shoot days and ad spend</div>
+    <div class="eff">Creative fatigue and repetitive ads</div>
+    <div class="eff">Wins are not repeated, low brand recall</div>
+    <div class="eff">Instagram engagement doesn't turn into sales</div>
+    <div class="eff">Team burnout and idea block</div>
+  </div>
+  <div class="trunk"></div>
+  <div class="core"><small>Core problem</small><b>Content decisions are not based on evidence, and organic and paid are not connected</b></div>
+  <div class="trunk"></div>
+  <div class="tier-l">Root causes</div>
+  <div class="roots">
+    <div class="root"><b>DATA</b>Results scattered across Instagram, Ads Manager and Shopify</div>
+    <div class="root"><b>LANGUAGE</b>No shared way to name types of content and compare them</div>
+    <div class="root"><b>TEAMS</b>Organic and paid teams work in separate silos</div>
+    <div class="root"><b>PRESSURE</b>Ideas come from instinct and trends under drop deadlines</div>
+    <div class="root"><b>MEMORY</b>Briefs live in WhatsApp, so nobody remembers what worked</div>
+    <div class="root"><b>TOOLS</b>Generic tools don't understand drops or the brand</div>
+  </div>
+</div></div><figcaption class="fig-cap"><b>Problem tree</b><span>Causes at the roots, effects in the branches</span></figcaption></figure>
+
 <h3>7.2 Problem clusters (affinity)</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -950,8 +1603,8 @@ td strong { color: var(--ink); }
 <td>Shows the product's viability beyond one client</td>
 </tr>
 </tbody>
-</table></div></section>
-<section id="part4" class="part"><p class="eyebrow">Part 04</p><h1>Primary Research: Plan, User Study, Instruments, Report &amp; Inferences</h1><blockquote>
+</table></div></div></div></section>
+<section class="band chapter" id="part4"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 4 of 8</p><h2>Primary research</h2></div><div><p>How we learn from the team and the audience, the instruments, and what we expect to find.</p><div class="stage-chips"><span>Research plan</span><span>Segmentation</span><span>Questionnaires</span><span>Interviews</span><span>Focus group</span><span>Ethnography</span><span>Report</span><span>Inferences</span></div></div></div><div class="doc"><blockquote>
 <p><strong>Read this first:</strong> This part gives you the research <strong>plan, instruments, analysis method and report structure</strong>, filled with <strong>hypotheses</strong> where the results will go. You must run the research yourself; the jury will check that the data is real. Every <code>[ ]</code> / <code>▢</code> cell is a slot for your real findings. Hypotheses (H1–H10) are what we <em>expect</em> to find. Your data will confirm or reject them, and a rejected hypothesis is a good finding too.</p>
 </blockquote>
 
@@ -1187,10 +1840,10 @@ td strong { color: var(--ink); }
 3. Team size? <em>(1–3 / 4–10 / 11–25 / 25+)</em>
 4. Years of experience? <em>(&lt;1 / 1–3 / 3–5 / 5+)</em></p>
 <p><strong>Section 2: How you decide content</strong>
-5. How do you mainly decide what content to make? <em>(multi-select: Gut/experience · Trends/audio · Competitors · Past performance data · Founder/manager decides · Agency suggests · Audience comments/DMs)</em>
+5. How do you mainly decide what content to make? <em>(multi-select: Gut/experience, Trends/audio, Competitors, Past performance data, Founder/manager decides, Agency suggests, Audience comments/DMs)</em>
 6. How often do you look at content performance data? <em>(Daily / Weekly / Monthly / Rarely / Never)</em>
 7. When you look at data, do you use it to plan the next content? <em>(Always / Often / Sometimes / Rarely / Never)</em>
-8. Which tools do you use? <em>(IG Insights · Meta Ads Manager · Meta Business Suite · Later/Hootsuite/Sprout · Notion · Google Sheets · WhatsApp · ChatGPT · Motion/Foreplay · Other)</em>
+8. Which tools do you use? <em>(IG Insights, Meta Ads Manager, Meta Business Suite, Later/Hootsuite/Sprout, Notion, Google Sheets, WhatsApp, ChatGPT, Motion/Foreplay, Other)</em>
 9. Rate (1–5): "I know clearly which <em>type</em> of content works best for our brand."
 10. Rate (1–5): "Coming up with fresh content ideas every week is hard."</p>
 <p><strong>Section 3: Organic ↔ paid</strong>
@@ -1200,25 +1853,25 @@ td strong { color: var(--ink); }
 14. <em>(Perf. marketers)</em> Rate (1–5): "I get enough creative variations to test."
 15. How do you notice an ad is fatigued? <em>(open)</em></p>
 <p><strong>Section 4: Brief &amp; production</strong>
-16. How are content briefs usually shared? <em>(Verbal · WhatsApp · Doc/Notion · Deck · No brief)</em>
+16. How are content briefs usually shared? <em>(Verbal, WhatsApp, Doc/Notion, Deck, No brief)</em>
 17. How often do vague briefs cause re-shoots or re-edits? <em>(Very often … Never)</em>
 18. Rate (1–5): "Drop weeks are stressful for content."</p>
 <p><strong>Section 5: Pain &amp; wishes</strong>
-19. Rank your top 3 problems: <em>(Idea block · Not knowing what works · Too little time · Too few ad variations · Unclear briefs · Approval delays · Staying on-brand · Reporting takes time)</em>
+19. Rank your top 3 problems: <em>(Idea block, Not knowing what works, Too little time, Too few ad variations, Unclear briefs, Approval delays, Staying on-brand, Reporting takes time)</em>
 20. Would you trust content suggestions from an AI tool? <em>(Yes / Only if it explains why / Only as inspiration / No)</em>
 21. What must such a tool NEVER do? <em>(open)</em>
 22. If you had a magic content assistant, what's the first thing it would do for you? <em>(open)</em></p>
 <h3>11.2 Survey B: Audience</h3>
 <ol>
-<li>Age · 2. City · 3. Do you follow BLUORNG? · 4. Have you bought from BLUORNG? <em>(Yes / Planning to / No)</em></li>
-<li>Where do you <strong>discover</strong> new streetwear brands? <em>(IG Reels · IG Explore · Friends · Creators · Ads · Stores · Reddit/Discord · Other)</em></li>
-<li>Which content from fashion brands do you <strong>watch fully</strong>? <em>(multi: Drop teasers · Lookbooks · BTS/studio · ASMR/fabric close-ups · Styling guides · Fit checks/street style · Memes/culture · Collabs · Founder stories · Interactive stories)</em></li>
+<li>Age, 2. City, 3. Do you follow BLUORNG?, 4. Have you bought from BLUORNG? <em>(Yes / Planning to / No)</em></li>
+<li>Where do you <strong>discover</strong> new streetwear brands? <em>(IG Reels, IG Explore, Friends, Creators, Ads, Stores, Reddit/Discord, Other)</em></li>
+<li>Which content from fashion brands do you <strong>watch fully</strong>? <em>(multi: Drop teasers, Lookbooks, BTS/studio, ASMR/fabric close-ups, Styling guides, Fit checks/street style, Memes/culture, Collabs, Founder stories, Interactive stories)</em></li>
 <li>Which do you <strong>save or share</strong>? <em>(same list)</em></li>
 <li>Which content made you <strong>buy</strong> (or want to)? <em>(same list + open)</em></li>
 <li>Rate (1–5): "Brand ads on Instagram annoy me."</li>
-<li>Which ads make you stop scrolling? <em>(Creator wearing it · Close-up details · Drop countdown · Store/queue hype · Model lookbook · Price/offer)</em></li>
-<li>How often should a streetwear brand post? <em>(Daily · 3–5/week · 1–2/week)</em></li>
-<li>Do you take part in polls/quizzes in brand stories? <em>(Often · Sometimes · Never)</em></li>
+<li>Which ads make you stop scrolling? <em>(Creator wearing it, Close-up details, Drop countdown, Store/queue hype, Model lookbook, Price/offer)</em></li>
+<li>How often should a streetwear brand post? <em>(Daily, 3–5/week, 1–2/week)</em></li>
+<li>Do you take part in polls/quizzes in brand stories? <em>(Often, Sometimes, Never)</em></li>
 <li>One thing you'd love BLUORNG to post more of? <em>(open)</em></li>
 <li>One thing you'd want them to stop? <em>(open)</em></li>
 </ol>
@@ -1495,7 +2148,7 @@ td strong { color: var(--ink); }
 <tr>
 <td>H1 Intuition-led</td>
 <td>▢% chose gut/trends vs ▢% past data. Quote: "…"</td>
-<td>✅ / ❌ / partial</td>
+<td><span class="ok">Yes</span> / No / partial</td>
 </tr>
 <tr>
 <td>H2 Data not used to plan</td>
@@ -1711,371 +2364,113 @@ td strong { color: var(--ink); }
 </tr>
 </tbody>
 </table></div>
-<p><strong>Sectors needing immediate attention before ideation:</strong> (1) a shared <strong>content taxonomy</strong>, (2) the <strong>insight → idea</strong> link, (3) the <strong>organic ↔ paid</strong> bridge.</p></section>
-<section id="part5" class="part"><p class="eyebrow">Part 05</p><h1>Personas, Empathy Maps, Journey Map, Problem Statement &amp; Design Goals</h1><blockquote>
+<p><strong>Sectors needing immediate attention before ideation:</strong> (1) a shared <strong>content taxonomy</strong>, (2) the <strong>insight → idea</strong> link, (3) the <strong>organic ↔ paid</strong> bridge.</p></div></div></section>
+<section class="band chapter" id="part5"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 5 of 8</p><h2>People and problem</h2></div><div><p>Who we design for, how their week feels today, and the problem in one sentence.</p><div class="stage-chips"><span>Personas</span><span>Empathy maps</span><span>Journey map</span><span>Problem statement</span><span>Design goals</span></div></div></div><div class="doc"><blockquote>
 <p>These are <strong>proto-personas</strong> built from secondary research and in-house observation. After your interviews and surveys, update the quotes, numbers and frustrations with real data so they become <strong>data-backed personas</strong>.</p>
 </blockquote>
 
-<h2>14. Personas</h2>
-<h3>Persona 1 (Primary): Ria Malhotra, The Strategist</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Role</strong></td>
-<td>Social Media Manager, premium streetwear brand (Delhi)</td>
-</tr>
-<tr>
-<td><strong>Age</strong></td>
-<td>26</td>
-</tr>
-<tr>
-<td><strong>Experience</strong></td>
-<td>4 years, 2 at an agency</td>
-</tr>
-<tr>
-<td><strong>Tools</strong></td>
-<td>IG Insights, Meta Business Suite, Notion, WhatsApp, Pinterest, CapCut, ChatGPT</td>
-</tr>
-<tr>
-<td><strong>Goals</strong></td>
-<td>Keep the feed fresh and on-brand. Grow reach and saves. Make every drop feel like an event</td>
-</tr>
-<tr>
-<td><strong>Frustrations</strong></td>
-<td>"I have Insights open every day, but I can't tell <em>why</em> a Reel worked." Idea block before drops. Making reports manually. Founder feedback arrives late on WhatsApp</td>
-</tr>
-<tr>
-<td><strong>Behaviours</strong></td>
-<td>Screenshots competitor posts. Keeps a messy Notes app idea list. Checks Reels reach daily</td>
-</tr>
-<tr>
-<td><strong>Needs</strong></td>
-<td>Ideas grounded in what works <em>for us</em>. A series/IP plan. Instant reporting</td>
-</tr>
-<tr>
-<td><strong>Quote</strong></td>
-<td><em>"I don't need more data. I need someone to tell me what the data means for next week."</em></td>
-</tr>
-</tbody>
-</table></div>
-<h3>Persona 2 (Primary): Arjun Mehta, The Optimiser</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Role</strong></td>
-<td>Performance Marketer (Meta Ads)</td>
-</tr>
-<tr>
-<td><strong>Age</strong></td>
-<td>29</td>
-</tr>
-<tr>
-<td><strong>Experience</strong></td>
-<td>6 years across D2C brands</td>
-</tr>
-<tr>
-<td><strong>Tools</strong></td>
-<td>Meta Ads Manager, Google Sheets, Shopify, Ads Library</td>
-</tr>
-<tr>
-<td><strong>Goals</strong></td>
-<td>Hit ROAS targets on drops. Keep CPA stable. Test 10+ creatives a month</td>
-</tr>
-<tr>
-<td><strong>Frustrations</strong></td>
-<td>"I get 3 edits from one lookbook shoot and they all look the same." Notices fatigue too late. Has to beg for UGC/creator content</td>
-</tr>
-<tr>
-<td><strong>Behaviours</strong></td>
-<td>Data-heavy. Checks Ads Manager several times a day. Keeps a test log in Sheets</td>
-</tr>
-<tr>
-<td><strong>Needs</strong></td>
-<td>Angle × hook variation plan <em>before</em> the shoot. Fatigue alerts. Quick access to organic winners</td>
-</tr>
-<tr>
-<td><strong>Quote</strong></td>
-<td><em>"Creative is my targeting now, and I'm always out of creative."</em></td>
-</tr>
-</tbody>
-</table></div>
-<h3>Persona 3 (Secondary): Kabir Singh, The Maker</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Role</strong></td>
-<td>Cinematographer / Editor</td>
-</tr>
-<tr>
-<td><strong>Age</strong></td>
-<td>24</td>
-</tr>
-<tr>
-<td><strong>Tools</strong></td>
-<td>Camera, Premiere/DaVinci, CapCut, WhatsApp, Google Drive</td>
-</tr>
-<tr>
-<td><strong>Goals</strong></td>
-<td>Shoot beautiful, purposeful content. Avoid re-shoots. Grow his craft</td>
-</tr>
-<tr>
-<td><strong>Frustrations</strong></td>
-<td>Briefs are voice notes. Learns about 9:16 + 4:5 + 1:1 needs after the shoot. Last-minute "can we also get…"</td>
-</tr>
-<tr>
-<td><strong>Needs</strong></td>
-<td>Clear shot list, hook, references, ratios, deadlines on his phone, on set</td>
-</tr>
-<tr>
-<td><strong>Quote</strong></td>
-<td><em>"Tell me the story and the hook before I pick up the camera, not after the edit."</em></td>
-</tr>
-</tbody>
-</table></div>
-<h3>Persona 4 (Approver): Siddharth K., The Brand Guardian</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Role</strong></td>
-<td>Co-founder / Brand head</td>
-</tr>
-<tr>
-<td><strong>Age</strong></td>
-<td>30</td>
-</tr>
-<tr>
-<td><strong>Goals</strong></td>
-<td>Protect the brand's premium, cultural image. Grow sales and recall</td>
-</tr>
-<tr>
-<td><strong>Frustrations</strong></td>
-<td>Too many approval pings. Can't see the bigger picture. Fears the brand looking "mass"</td>
-</tr>
-<tr>
-<td><strong>Needs</strong></td>
-<td>One place to approve, with a clear <em>why</em> and a brand-fit check</td>
-</tr>
-<tr>
-<td><strong>Quote</strong></td>
-<td><em>"If it looks like every other brand, it's not us. I don't care how many views it gets."</em></td>
-</tr>
-</tbody>
-</table></div>
+<h2>14. Personas</h2><div class="personas">
+  <article class="persona"><div class="persona-in">
+    <div class="p-top"><div class="mono-av">RM</div><div><h4>Ria Malhotra, 26</h4><p>Social media manager. 4 years, 2 at an agency.</p></div><span class="chip chip-acc ring-wrap">Primary</span></div>
+    <p class="p-quote">"I don't need more data. I need someone to tell me what the data means for next week."</p>
+    <div class="p-grid">
+      <div class="gl"><h6>Goals</h6><ul><li>Keep the feed fresh and on-brand</li><li>Grow reach and saves</li><li>Make every drop feel like an event</li></ul></div>
+      <div class="fr"><h6>Frustrations</h6><ul><li>Can't tell why a Reel worked</li><li>Idea block right before drops</li><li>Builds reports by hand</li><li>Founder feedback arrives late</li></ul></div>
+    </div>
+    <div class="p-foot"><div class="tools"><span>IG Insights</span><span>Notion</span><span>WhatsApp</span><span>Pinterest</span><span>CapCut</span></div><div class="meter">Data comfort <i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+  </div></article>
+  <article class="persona"><div class="persona-in">
+    <div class="p-top"><div class="mono-av">AM</div><div><h4>Arjun Mehta, 29</h4><p>Performance marketer, Meta ads. 6 years across D2C brands.</p></div><span class="chip chip-acc ring-wrap">Primary</span></div>
+    <p class="p-quote">"Creative is my targeting now, and I'm always out of creative."</p>
+    <div class="p-grid">
+      <div class="gl"><h6>Goals</h6><ul><li>Hit return targets on drops</li><li>Keep cost per sale stable</li><li>Test 10+ creatives a month</li></ul></div>
+      <div class="fr"><h6>Frustrations</h6><ul><li>Three edits from one shoot, all alike</li><li>Notices fatigue too late</li><li>Has to chase creator content</li></ul></div>
+    </div>
+    <div class="p-foot"><div class="tools"><span>Ads Manager</span><span>Sheets</span><span>Shopify</span><span>Ads Library</span></div><div class="meter">Data comfort <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+  </div></article>
+  <article class="persona"><div class="persona-in">
+    <div class="p-top"><div class="mono-av alt">KS</div><div><h4>Kabir Singh, 24</h4><p>Cinematographer and editor.</p></div><span class="chip chip-mute ring-wrap">Secondary</span></div>
+    <p class="p-quote">"Tell me the story and the hook before I pick up the camera, not after the edit."</p>
+    <div class="p-grid">
+      <div class="gl"><h6>Goals</h6><ul><li>Shoot beautiful, purposeful content</li><li>Avoid re-shoots</li><li>Grow his craft</li></ul></div>
+      <div class="fr"><h6>Frustrations</h6><ul><li>Briefs arrive as voice notes</li><li>Finds out about 9:16 and 4:5 after the shoot</li><li>Last-minute add-ons</li></ul></div>
+    </div>
+    <div class="p-foot"><div class="tools"><span>Camera</span><span>Premiere</span><span>DaVinci</span><span>Drive</span></div><div class="meter">Data comfort <i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div>
+  </div></article>
+  <article class="persona"><div class="persona-in">
+    <div class="p-top"><div class="mono-av out">SK</div><div><h4>Siddharth K., 30</h4><p>Co-founder and brand head. Approves content.</p></div><span class="chip chip-mute ring-wrap">Approver</span></div>
+    <p class="p-quote">"If it looks like every other brand, it's not us. I don't care how many views it gets."</p>
+    <div class="p-grid">
+      <div class="gl"><h6>Goals</h6><ul><li>Protect the premium, cultural image</li><li>Grow sales and recall</li></ul></div>
+      <div class="fr"><h6>Frustrations</h6><ul><li>Too many approval pings</li><li>Can't see the bigger picture</li><li>Fears the brand looking mass-market</li></ul></div>
+    </div>
+    <div class="p-foot"><div class="tools"><span>WhatsApp</span><span>Instagram</span></div><div class="meter">Data comfort <i class="on"></i><i></i><i></i><i></i><i></i></div></div>
+  </div></article>
+</div>
 
-<h2>15. Empathy Maps</h2>
-<h3>Ria (Strategist)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th><strong>SAYS</strong></th>
-<th><strong>THINKS</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>"What's trending this week?" · "That Reel did 3× reach, let's do more like that?" · "I'll send the report tonight"</td>
-<td>"Am I just guessing?" · "Will the founders like this?" · "We posted a lot but did it matter?"</td>
-</tr>
-<tr>
-<td><strong>DOES</strong></td>
-<td><strong>FEELS</strong></td>
-</tr>
-<tr>
-<td>Scrolls competitors, saves audio, writes ideas in Notes, compiles Insights screenshots into a deck</td>
-<td>Pressure before drops · Creative burnout · Proud when a post blows up · Anxious about the algorithm</td>
-</tr>
-<tr>
-<td><strong>PAINS</strong></td>
-<td><strong>GAINS</strong></td>
-</tr>
-<tr>
-<td>No link between data and ideas · Manual reporting · Idea block</td>
-<td>Confidence in decisions · Repeatable wins · Time to be creative</td>
-</tr>
-</tbody>
-</table></div>
-<h3>Arjun (Optimiser)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th><strong>SAYS</strong></th>
-<th><strong>THINKS</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>"Need 5 new hooks by Thursday" · "Frequency is 4.2, we're burning out"</td>
-<td>"The organic team had a great Reel and nobody told me" · "Is it the creative or the audience?"</td>
-</tr>
-<tr>
-<td><strong>DOES</strong></td>
-<td><strong>FEELS</strong></td>
-</tr>
-<tr>
-<td>Duplicates ad sets, swaps headlines, logs tests in Sheets</td>
-<td>Frustrated waiting on creative · Stressed during drop launches</td>
-</tr>
-<tr>
-<td><strong>PAINS</strong></td>
-<td><strong>GAINS</strong></td>
-</tr>
-<tr>
-<td>Few variations · Late fatigue detection · Silos</td>
-<td>Predictable CPA · Planned testing pipeline</td>
-</tr>
-</tbody>
-</table></div>
-<h3>Kabir (Maker)</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th><strong>SAYS</strong></th>
-<th><strong>THINKS</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>"What's the ratio?" · "Can I get references?"</td>
-<td>"This brief changed three times" · "This shot would make a great ASMR ad, but nobody asked"</td>
-</tr>
-<tr>
-<td><strong>DOES</strong></td>
-<td><strong>FEELS</strong></td>
-</tr>
-<tr>
-<td>Shoots extra coverage "just in case", re-edits</td>
-<td>Undervalued when plans change last minute · Energised on a clear, creative shoot</td>
-</tr>
-<tr>
-<td><strong>PAINS</strong></td>
-<td><strong>GAINS</strong></td>
-</tr>
-<tr>
-<td>Vague briefs · Re-shoots</td>
-<td>A clear shot list · Creative ownership</td>
-</tr>
-</tbody>
-</table></div>
+<h2>15. Empathy Maps</h2><div class="emp-grid">
+  <article class="emp">
+    <div class="emp-h"><div class="mono-av">RM</div><div><b>Ria</b><span>The strategist</span></div></div>
+    <div class="quad">
+      <div><h6>SAYS</h6>"What's trending this week?" "That Reel did 3x reach, let's do more like that?"</div>
+      <div><h6>THINKS</h6>"Am I just guessing?" "Will the founders like this?"</div>
+      <div><h6>DOES</h6>Scrolls competitors, saves audio, keeps ideas in Notes, pastes Insights screenshots into decks.</div>
+      <div><h6>FEELS</h6>Pressure before drops, creative burnout, proud when a post takes off.</div>
+    </div>
+    <div class="pg"><div class="pa"><h6>PAINS</h6>No link between data and ideas. Manual reports.</div><div class="ga"><h6>GAINS</h6>Confidence. Repeatable wins. Time to be creative.</div></div>
+  </article>
+  <article class="emp">
+    <div class="emp-h"><div class="mono-av">AM</div><div><b>Arjun</b><span>The optimiser</span></div></div>
+    <div class="quad">
+      <div><h6>SAYS</h6>"Need 5 new hooks by Thursday." "Frequency is 4.2, we're burning out."</div>
+      <div><h6>THINKS</h6>"The organic team had a great Reel and nobody told me."</div>
+      <div><h6>DOES</h6>Duplicates ad sets, swaps headlines, logs tests in Sheets.</div>
+      <div><h6>FEELS</h6>Stuck waiting on creative. Stressed on launch days.</div>
+    </div>
+    <div class="pg"><div class="pa"><h6>PAINS</h6>Few variations. Late fatigue alerts. Silos.</div><div class="ga"><h6>GAINS</h6>Steady cost per sale. A planned test pipeline.</div></div>
+  </article>
+  <article class="emp">
+    <div class="emp-h"><div class="mono-av alt">KS</div><div><b>Kabir</b><span>The maker</span></div></div>
+    <div class="quad">
+      <div><h6>SAYS</h6>"What's the ratio?" "Can I get references?"</div>
+      <div><h6>THINKS</h6>"This shot would make a great ASMR ad, but nobody asked."</div>
+      <div><h6>DOES</h6>Shoots extra coverage just in case, then re-edits.</div>
+      <div><h6>FEELS</h6>Undervalued when plans change. Energised by a clear brief.</div>
+    </div>
+    <div class="pg"><div class="pa"><h6>PAINS</h6>Vague briefs. Re-shoots.</div><div class="ga"><h6>GAINS</h6>A clear shot list. Creative ownership.</div></div>
+  </article>
+</div>
 
-<h2>16. User Journey Map: "Planning content for a new drop" (Ria + Arjun, AS-IS)</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>1. Drop announced</th>
-<th>2. Ideate</th>
-<th>3. Decide &amp; approve</th>
-<th>4. Brief &amp; shoot</th>
-<th>5. Edit &amp; post</th>
-<th>6. Run ads</th>
-<th>7. Review</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Actions</strong></td>
-<td>Gets drop date &amp; products from design team</td>
-<td>Scrolls IG, Pinterest, competitors; brainstorms on WhatsApp</td>
-<td>Sends ideas to founder; waits</td>
-<td>Voice-note brief to cinematographer; one shoot day</td>
-<td>Edits multiple versions; schedules posts</td>
-<td>Arjun picks clips from the shoot for ads</td>
-<td>Screenshots Insights; quick chat</td>
-</tr>
-<tr>
-<td><strong>Touchpoints</strong></td>
-<td>Email, meeting</td>
-<td>IG, Pinterest, WhatsApp, Notes</td>
-<td>WhatsApp</td>
-<td>WhatsApp, Drive</td>
-<td>CapCut, Premiere, IG</td>
-<td>Ads Manager</td>
-<td>IG Insights, Ads Manager</td>
-</tr>
-<tr>
-<td><strong>Thoughts</strong></td>
-<td>"Only 10 days?"</td>
-<td>"What haven't we done yet?"</td>
-<td>"Will he like it?"</td>
-<td>"Did I mention 9:16?"</td>
-<td>"Need one more cut for ads"</td>
-<td>"These all look the same"</td>
-<td>"Why did that one work?"</td>
-</tr>
-<tr>
-<td><strong>Emotion</strong></td>
-<td>😐</td>
-<td>😟</td>
-<td>😬</td>
-<td>😐</td>
-<td>🙂</td>
-<td>😤</td>
-<td>😕</td>
-</tr>
-<tr>
-<td><strong>Pain points</strong></td>
-<td>Late notice</td>
-<td>Idea block, no data link</td>
-<td>Approval delay</td>
-<td>Vague brief</td>
-<td>Re-edits</td>
-<td>Low variation, fatigue</td>
-<td>No learning saved</td>
-</tr>
-<tr>
-<td><strong>Opportunities</strong></td>
-<td>Drop calendar sync</td>
-<td><strong>Data-backed idea recommendations</strong></td>
-<td>Approval with rationale + brand-fit</td>
-<td><strong>Auto-brief + shot list for organic &amp; ads</strong></td>
-<td>Ratio checklist</td>
-<td><strong>Angle × hook matrix, promote organic winners</strong></td>
-<td><strong>Auto insights → next ideas</strong></td>
-</tr>
-</tbody>
-</table></div>
-<div class="diagram"><pre class="mermaid">journey
-    title AS-IS journey: planning content for a drop
-    section Drop announced
-      Receive drop date: 3: Ria
-    section Ideate
-      Scroll trends &amp; competitors: 2: Ria
-      Brainstorm on WhatsApp: 2: Ria
-    section Decide
-      Wait for founder approval: 1: Ria
-    section Shoot
-      Voice-note brief: 2: Ria, Kabir
-      Shoot day: 3: Kabir
-    section Post &amp; promote
-      Edit &amp; post: 3: Ria, Kabir
-      Pick ad clips - all similar: 1: Arjun
-    section Review
-      Screenshot insights: 2: Ria
-</pre></div>
+<h2>16. User Journey Map: "Planning content for a new drop" (Ria + Arjun, AS-IS)</h2><p>Ria and Arjun planning content for a new drop, as it works today.</p>
+<figure class="fig"><div class="fig-core"><div class="journey">
+  <div class="rl sh"></div>
+  <div class="sh"><small>01</small>Drop announced</div><div class="sh"><small>02</small>Ideate</div><div class="sh"><small>03</small>Decide</div><div class="sh"><small>04</small>Brief and shoot</div><div class="sh"><small>05</small>Edit and post</div><div class="sh"><small>06</small>Run ads</div><div class="sh"><small>07</small>Review</div>
+  <div class="rl">Emotion</div>
+  <div class="curve" style="position:relative">
+    <svg viewBox="0 0 700 150" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="0" y1="80" x2="700" y2="80" class="sv-line" stroke-dasharray="3 5" vector-effect="non-scaling-stroke"/>
+      <path d="M50 80 C100 80 100 107.5 150 107.5 C200 107.5 200 121 250 121 C300 121 300 80 350 80 C400 80 400 52.5 450 52.5 C500 52.5 500 135 550 135 C600 135 600 107.5 650 107.5 L650 150 L50 150 Z" style="fill:color-mix(in srgb, var(--accent) 12%, transparent)"/>
+      <path d="M50 80 C100 80 100 107.5 150 107.5 C200 107.5 200 121 250 121 C300 121 300 80 350 80 C400 80 400 52.5 450 52.5 C500 52.5 500 135 550 135 C600 135 600 107.5 650 107.5" fill="none" style="stroke:var(--accent)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <span class="jd" style="left:7.14%;top:53.3%"></span>
+    <span class="jd" style="left:21.43%;top:71.7%"></span>
+    <span class="jd low" style="left:35.71%;top:80.7%"><em>Waiting on approval</em></span>
+    <span class="jd" style="left:50%;top:53.3%"></span>
+    <span class="jd high" style="left:64.29%;top:35%"><em>Post goes live</em></span>
+    <span class="jd low" style="left:78.57%;top:90%"><em>Ads all look alike</em></span>
+    <span class="jd" style="left:92.86%;top:71.7%"></span>
+  </div>
+  <div class="rl">Doing</div>
+  <div>Gets the drop date and products</div><div>Scrolls IG, Pinterest, competitors. Brainstorms on WhatsApp</div><div>Sends ideas to the founder and waits</div><div>Voice-note brief. One shoot day</div><div>Edits several versions, schedules</div><div>Arjun picks ad clips from the shoot</div><div>Screenshots Insights</div>
+  <div class="rl">Thinking</div>
+  <div class="think">"Only 10 days?"</div><div class="think">"What haven't we done yet?"</div><div class="think">"Will he like it?"</div><div class="think">"Did I mention 9:16?"</div><div class="think">"Need one more cut for ads"</div><div class="think">"These all look the same"</div><div class="think">"Why did that one work?"</div>
+  <div class="rl">Touchpoints</div>
+  <div>Email, meeting</div><div>IG, Pinterest, WhatsApp</div><div>WhatsApp</div><div>WhatsApp, Drive</div><div>CapCut, Premiere, IG</div><div>Ads Manager</div><div>Insights, Ads Manager</div>
+  <div class="rl">Pain</div>
+  <div class="pain">Late notice</div><div class="pain">Idea block, no link to data</div><div class="pain">Approval delay</div><div class="pain">Vague brief</div><div class="pain">Re-edits</div><div class="pain">Low variety, fatigue</div><div class="pain">Nothing learned is saved</div>
+  <div class="rl">Opportunity</div>
+  <div class="opp">Sync the drop calendar</div><div class="opp">Ideas backed by own results</div><div class="opp">Approve with reason and brand-fit</div><div class="opp">Auto brief with shot list</div><div class="opp">Ratio checklist</div><div class="opp">Angle x hook matrix, promote winners</div><div class="opp">Auto insights feed next ideas</div>
+</div></div><figcaption class="fig-cap"><b>Current journey</b><span>Low points in orange are where BLUPRINT steps in</span></figcaption></figure>
 
 <h2>17. Problem Statement</h2>
 <p><strong>How-Might-We / POV format:</strong></p>
@@ -2150,8 +2545,8 @@ td strong { color: var(--ink); }
 <td>Contrast &amp; touch targets pass checks</td>
 </tr>
 </tbody>
-</table></div></section>
-<section id="part6" class="part"><p class="eyebrow">Part 06</p><h1>Ideation, Filtration, 3 Concepts &amp; Final Selection</h1>
+</table></div></div></div></section>
+<section class="band chapter" id="part6"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 6 of 8</p><h2>Ideas to direction</h2></div><div><p>From forty-plus raw ideas to three concepts, then one direction with a reason.</p><div class="stage-chips"><span>Brainstorming</span><span>Brainwriting</span><span>SCAMPER</span><span>Space saturation</span><span>Bullseye</span><span>Priority matrix</span><span>3 concepts</span><span>Final selection</span></div></div></div><div class="doc">
 <h2>19. Ideation Techniques</h2>
 <h3>19.1 Brainstorming (HMW-driven, 40+ raw ideas)</h3>
 <div class="table-wrap"><table>
@@ -2164,27 +2559,27 @@ td strong { color: var(--ink); }
 <tbody>
 <tr>
 <td><strong>HMW1</strong> understand <em>why</em> content worked</td>
-<td>Auto-tag every post by format/IP/hook/emotion · "Why it worked" cards · Compare to own median · Hook heatmap (retention curve) · Weekly AI digest on WhatsApp · Leaderboard of IPs · "Content DNA" fingerprint per post</td>
+<td>Auto-tag every post by format/IP/hook/emotion, "Why it worked" cards, Compare to own median, Hook heatmap (retention curve), Weekly AI digest on WhatsApp, Leaderboard of IPs, "Content DNA" fingerprint per post</td>
 </tr>
 <tr>
 <td><strong>HMW2</strong> fresh on-brand organic ideas</td>
-<td>IP/series recommender · Idea bank with tags · Trend radar filtered by brand-fit · "Remix a winner" button · Audience question-mining from comments/DMs · Collab idea generator · Seasonal/culture calendar (festivals, music drops, cricket, fashion weeks) · Story Experience builder (polls, quizzes)</td>
+<td>IP/series recommender, Idea bank with tags, Trend radar filtered by brand-fit, "Remix a winner" button, Audience question-mining from comments/DMs, Collab idea generator, Seasonal/culture calendar (festivals, music drops, cricket, fashion weeks), Story Experience builder (polls, quizzes)</td>
 </tr>
 <tr>
 <td><strong>HMW3</strong> diverse ad angles</td>
-<td>Angle × hook matrix · "Missing angles" alert · Fatigue predictor · Variation generator (same footage, new hooks/captions) · Competitor ad swipe file · Creator/UGC brief generator</td>
+<td>Angle × hook matrix, "Missing angles" alert, Fatigue predictor, Variation generator (same footage, new hooks/captions), Competitor ad swipe file, Creator/UGC brief generator</td>
 </tr>
 <tr>
 <td><strong>HMW4</strong> one shoot → both outputs</td>
-<td>Shoot planner that merges organic + ad shots · "Ad-ready" checklist per shot (ratios, hook frames, safe zones) · Promote-winner pipeline</td>
+<td>Shoot planner that merges organic + ad shots, "Ad-ready" checklist per shot (ratios, hook frames, safe zones), Promote-winner pipeline</td>
 </tr>
 <tr>
 <td><strong>HMW5</strong> clear briefs</td>
-<td>One-click brief · Shot list with reference frames · Mobile "set mode" with checkboxes · Voice-note-to-brief converter · Moodboard auto-pull</td>
+<td>One-click brief, Shot list with reference frames, Mobile "set mode" with checkboxes, Voice-note-to-brief converter, Moodboard auto-pull</td>
 </tr>
 <tr>
 <td><strong>HMW6</strong> on-brand &amp; trustworthy</td>
-<td>Brand DNA setup · Brand-fit score · "Never suggest" list · Explain-why panel · Thumbs up/down learning · Founder approval queue</td>
+<td>Brand DNA setup, Brand-fit score, "Never suggest" list, Explain-why panel, Thumbs up/down learning, Founder approval queue</td>
 </tr>
 </tbody>
 </table></div>
@@ -2274,27 +2669,27 @@ td strong { color: var(--ink); }
 </thead>
 <tbody>
 <tr>
-<td>🔍 <strong>Insight</strong></td>
+<td><strong>Insight</strong></td>
 <td>Auto-tagging, why-it-worked, IP leaderboard, hook heatmap, digest</td>
 </tr>
 <tr>
-<td>💡 <strong>Ideate</strong></td>
+<td><strong>Ideate</strong></td>
 <td>IP recommender, trend radar, remix a winner, Ideas Weekly, comment mining, collab generator</td>
 </tr>
 <tr>
-<td>🎯 <strong>Paid creative</strong></td>
+<td><strong>Paid creative</strong></td>
 <td>Angle × hook matrix, missing angles, fatigue predictor, variation generator, UGC brief</td>
 </tr>
 <tr>
-<td>📝 <strong>Brief &amp; produce</strong></td>
+<td><strong>Brief &amp; produce</strong></td>
 <td>One-click brief, shot list, set mode, voice-to-brief, moodboard</td>
 </tr>
 <tr>
-<td>📅 <strong>Plan</strong></td>
+<td><strong>Plan</strong></td>
 <td>Drop calendar, culture calendar, shared organic + paid timeline</td>
 </tr>
 <tr>
-<td>🛡️ <strong>Brand &amp; trust</strong></td>
+<td><strong>Brand &amp; trust</strong></td>
 <td>Brand DNA, brand-fit score, explain-why, feedback loop, approvals</td>
 </tr>
 </tbody>
@@ -2303,193 +2698,106 @@ td strong { color: var(--ink); }
 <p>8 sketches in 8 minutes for the home screen: (1) feed of idea cards, (2) calendar-first, (3) dashboard-first, (4) chat co-pilot, (5) Tinder-style swipe on ideas, (6) kanban idea → brief → shot → live, (7) "Drop Room" per drop, (8) mobile set mode. <em>Add your hand sketches here.</em></p>
 
 <h2>20. Ideation Filtration</h2>
-<h3>20.1 Bullseye diagram</h3>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Ring</th>
-<th>Ideas</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>🎯 <strong>Core: must have</strong></td>
-<td>Auto-tagging by content type · "Why it worked" insights · Organic IP/format recommender · Paid angle × hook matrix · One-click brief · Brand DNA + brand-fit score · Explain-why on every suggestion</td>
-</tr>
-<tr>
-<td>⭕ <strong>Middle: should have</strong></td>
-<td>Drop calendar (organic + paid) · Promote-winner pipeline · Fatigue alerts · Mobile set mode · Approval queue · Ideas Weekly digest</td>
-</tr>
-<tr>
-<td>⚪ <strong>Outer: nice to have</strong></td>
-<td>Trend radar · Comment/DM mining · Competitor swipe file · Hook heatmap · Collab generator</td>
-</tr>
-<tr>
-<td>❌ <strong>Parked</strong></td>
-<td>Auto-posting · Auto ad buying · AI-generated final videos · Influencer marketplace</td>
-</tr>
-</tbody>
-</table></div>
-<h3>20.2 Priority matrix (Impact vs Effort)</h3>
-<div class="diagram"><pre class="mermaid">quadrantChart
-    title Priority matrix - Impact vs Effort
-    x-axis Low Effort --&gt; High Effort
-    y-axis Low Impact --&gt; High Impact
-    quadrant-1 Big bets
-    quadrant-2 Quick wins
-    quadrant-3 Fill-ins
-    quadrant-4 Money pits
-    One-click brief: [0.20, 0.84]
-    Brand DNA + fit score: [0.38, 0.72]
-    Why-it-worked insights: [0.55, 0.90]
-    Organic IP recommender: [0.70, 0.80]
-    Angle x hook matrix: [0.40, 0.85]
-    Promote winner: [0.20, 0.70]
-    Drop calendar: [0.30, 0.65]
-    Fatigue alerts: [0.60, 0.66]
-    Mobile set mode: [0.30, 0.42]
-    Trend radar: [0.75, 0.55]
-    Comment mining: [0.40, 0.30]
-    Auto-posting: [0.60, 0.20]
-    AI final video gen: [0.82, 0.30]
-</pre></div>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Quadrant</th>
-<th>Ideas</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Quick wins</strong> (high impact, low effort)</td>
-<td>One-click brief, promote winner, angle × hook matrix, brand DNA, drop calendar</td>
-</tr>
-<tr>
-<td><strong>Big bets</strong> (high impact, high effort)</td>
-<td>Why-it-worked insights, organic IP recommender, fatigue alerts, trend radar (later phase)</td>
-</tr>
-<tr>
-<td><strong>Fill-ins</strong></td>
-<td>Mobile set mode, comment mining</td>
-</tr>
-<tr>
-<td><strong>Money pits</strong> (avoid)</td>
-<td>Auto-posting, AI final video generation</td>
-</tr>
-</tbody>
-</table></div>
+<h3>20.1 Bullseye diagram</h3><figure class="fig"><div class="fig-core"><div class="split">
+  <svg class="svg-fluid" viewBox="0 0 440 440" role="img" aria-label="Bullseye diagram of feature priority">
+    <circle cx="220" cy="220" r="205" style="fill:color-mix(in srgb, var(--accent) 6%, transparent)" class="sv-line"/>
+    <circle cx="220" cy="220" r="138" style="fill:color-mix(in srgb, var(--accent) 16%, transparent)" class="sv-line"/>
+    <circle cx="220" cy="220" r="72" class="sv-acc"/>
+    <line x1="220" y1="6" x2="220" y2="434" class="sv-line" stroke-dasharray="2 6"/>
+    <line x1="6" y1="220" x2="434" y2="220" class="sv-line" stroke-dasharray="2 6"/>
+    <text x="220" y="214" text-anchor="middle" font-size="15" font-weight="700" style="fill:var(--on-accent)">Must have</text>
+    <text x="220" y="234" text-anchor="middle" font-size="12" style="fill:var(--on-accent);opacity:.75">7 features</text>
+    <text x="220" y="112" text-anchor="middle" font-size="11" class="sv-ink sv-mono">SHOULD HAVE, 6</text>
+    <text x="220" y="44" text-anchor="middle" font-size="11" class="sv-ink2 sv-mono">NICE TO HAVE, 5</text>
+  </svg>
+  <div class="legend-list">
+    <div class="lg-row"><i style="background:var(--accent)"></i><div><b>Must have</b><span>Auto-tagging by type, why-it-worked insights, organic series suggestions, ad angle x hook matrix, one-click brief, Brand DNA and brand-fit, a reason on every suggestion.</span></div></div>
+    <div class="lg-row"><i style="background:color-mix(in srgb, var(--accent) 40%, var(--surface))"></i><div><b>Should have</b><span>Drop calendar, promote-a-winner, fatigue alerts, Set Mode on mobile, approval queue, weekly ideas digest.</span></div></div>
+    <div class="lg-row"><i style="background:color-mix(in srgb, var(--accent) 12%, var(--surface)); border:1px solid var(--line)"></i><div><b>Nice to have</b><span>Trend radar, mining comments and DMs, competitor swipe file, hook retention heatmap, collab idea generator.</span></div></div>
+    <div class="lg-row"><i style="background:var(--heat-soft); border:1.5px dashed var(--heat)"></i><div><b>Parked</b><span>Auto-posting, buying ads inside the tool, AI-generated final videos, an influencer marketplace.</span></div></div>
+  </div>
+</div></div><figcaption class="fig-cap"><b>Bullseye filtration</b><span>Inner ring ships first</span></figcaption></figure>
 
-<h2>21. Three Concepts</h2>
-<h3>Concept A: "PULSE", the insight-first dashboard</h3>
-<p><strong>Idea:</strong> An analytics dashboard that pulls IG + Meta + Shopify data, auto-tags content, and shows <em>what worked and why</em> with a ranked list of recommendations.</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Home</td>
-<td>KPIs + IP leaderboard + "This week's 5 recommendations"</td>
-</tr>
-<tr>
-<td>Strength</td>
-<td>Strong data foundation; great for Arjun and founders</td>
-</tr>
-<tr>
-<td>Weakness</td>
-<td>Doesn't help with <em>creating</em> ideas or briefs; Ria and Kabir still go to WhatsApp</td>
-</tr>
-<tr>
-<td>Tech</td>
-<td>Graph API + Marketing API, tagging model, charts</td>
-</tr>
-<tr>
-<td>Feasibility</td>
-<td>✅ High (data APIs exist)</td>
-</tr>
-<tr>
-<td>Risk</td>
-<td>Becomes "another dashboard nobody opens"</td>
-</tr>
-</tbody>
-</table></div>
-<h3>Concept B: "STUDIO", the ideation co-pilot</h3>
-<p><strong>Idea:</strong> An AI co-pilot where the team picks a goal (e.g. "Drop hype for the Winter capsule") and gets brand-fit ideas for organic IPs and ad angles, each with hook, format and reason, plus a one-click brief.</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Home</td>
-<td>Idea feed + prompt bar ("I need…") + idea bank</td>
-</tr>
-<tr>
-<td>Strength</td>
-<td>Solves idea block; loved by Ria and Kabir; creates briefs</td>
-</tr>
-<tr>
-<td>Weakness</td>
-<td>Without solid insight data, ideas can be generic; trust depends on explanations</td>
-</tr>
-<tr>
-<td>Tech</td>
-<td>LLM + brand DNA prompt + performance context</td>
-</tr>
-<tr>
-<td>Feasibility</td>
-<td>✅ Medium–high</td>
-</tr>
-<tr>
-<td>Risk</td>
-<td>Generic AI ideas → rejection by brand guardian</td>
-</tr>
-</tbody>
-</table></div>
-<h3>Concept C: "DROP ROOM", the calendar-first command centre</h3>
-<p><strong>Idea:</strong> Everything is organised around <strong>drops</strong>. Each drop gets a "room" with a timeline (T-14 to T+14), planned organic content, ad variations, shoot plan and approvals.</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Home</td>
-<td>Drop calendar + active drop rooms</td>
-</tr>
-<tr>
-<td>Strength</td>
-<td>Matches how BLUORNG actually works; bridges organic + paid; great for coordination</td>
-</tr>
-<tr>
-<td>Weakness</td>
-<td>Weak on <em>why</em> and on idea generation; mostly a planning tool (overlaps with Notion)</td>
-</tr>
-<tr>
-<td>Tech</td>
-<td>Calendar, tasks, integrations</td>
-</tr>
-<tr>
-<td>Feasibility</td>
-<td>✅ High</td>
-</tr>
-<tr>
-<td>Risk</td>
-<td>Seen as "just a project management tool"</td>
-</tr>
-</tbody>
-</table></div>
-<h3>21.1 Concept evaluation matrix (score 1–5, weighted)</h3>
+<h3>20.2 Priority matrix (Impact vs Effort)</h3><figure class="fig"><div class="fig-core">
+  <svg class="svg-fluid" viewBox="0 0 640 430" role="img" aria-label="Priority matrix, impact against effort" style="min-width:560px">
+    <rect x="60" y="20" width="260" height="180" style="fill:color-mix(in srgb, var(--accent) 12%, transparent)"/>
+    <rect x="320" y="200" width="260" height="180" style="fill:color-mix(in srgb, var(--heat) 8%, transparent)"/>
+    <rect x="60" y="20" width="520" height="360" class="sv-line"/>
+    <line x1="320" y1="20" x2="320" y2="380" class="sv-line" stroke-dasharray="4 4"/>
+    <line x1="60" y1="200" x2="580" y2="200" class="sv-line" stroke-dasharray="4 4"/>
+    <text x="72" y="40" font-size="11" class="sv-accs sv-mono">QUICK WINS</text>
+    <text x="568" y="40" font-size="11" text-anchor="end" class="sv-ink sv-mono">BIG BETS</text>
+    <text x="72" y="370" font-size="11" class="sv-mute sv-mono">FILL-INS</text>
+    <text x="568" y="370" font-size="11" text-anchor="end" class="sv-heat sv-mono">MONEY PITS</text>
+    <text x="320" y="410" text-anchor="middle" font-size="12" class="sv-mute">Effort →</text>
+    <text x="0" y="0" transform="translate(32 200) rotate(-90)" text-anchor="middle" font-size="12" class="sv-mute">Impact →</text>
+    <g font-size="12.5">
+      <circle cx="164" cy="78" r="7" class="sv-acc"/><text x="154" y="82" text-anchor="end" class="sv-ink" font-weight="600">One-click brief</text>
+      <circle cx="268" cy="74" r="7" class="sv-acc"/><text x="278" y="78" class="sv-ink" font-weight="600">Angle x hook matrix</text>
+      <circle cx="346" cy="56" r="7" class="sv-ink"/><text x="356" y="60" class="sv-ink" font-weight="600">Why-it-worked insights</text>
+      <circle cx="424" cy="92" r="7" class="sv-ink"/><text x="434" y="96" class="sv-ink" font-weight="600">Organic series ideas</text>
+      <circle cx="164" cy="128" r="7" class="sv-acc"/><text x="154" y="132" text-anchor="end" class="sv-ink" font-weight="600">Promote winner</text>
+      <circle cx="258" cy="121" r="7" class="sv-acc"/><text x="268" y="125" class="sv-ink" font-weight="600">Brand DNA</text>
+      <circle cx="216" cy="146" r="7" class="sv-acc"/><text x="226" y="160" class="sv-ink" font-weight="600">Drop calendar</text>
+      <circle cx="372" cy="142" r="7" class="sv-ink"/><text x="382" y="146" class="sv-ink" font-weight="600">Fatigue alerts</text>
+      <circle cx="450" cy="182" r="6" class="sv-mute"/><text x="460" y="186" class="sv-ink2">Trend radar</text>
+      <circle cx="216" cy="229" r="6" class="sv-mute"/><text x="226" y="233" class="sv-ink2">Mobile Set Mode</text>
+      <circle cx="268" cy="272" r="6" class="sv-mute"/><text x="278" y="276" class="sv-ink2">Comment mining</text>
+      <circle cx="372" cy="308" r="6" class="sv-heat"/><text x="382" y="312" class="sv-ink2">Auto-posting</text>
+      <circle cx="507" cy="250" r="6" class="sv-heat"/><text x="497" y="254" text-anchor="end" class="sv-ink2">AI final video</text>
+    </g>
+  </svg>
+</div><figcaption class="fig-cap"><b>Priority matrix</b><span>Quick wins ship in the first release, big bets follow</span></figcaption></figure>
+
+<h2>21. Three Concepts</h2><p>Three directions, each sketched as a home screen and scored against the research needs and feasibility.</p>
+<div class="concepts">
+  <article class="concept">
+    <div class="wf">
+      <div class="r"><span class="b" style="flex:1;height:30px"></span><span class="b" style="flex:1;height:30px"></span><span class="b" style="flex:1;height:30px"></span></div>
+      <div class="r" style="align-items:flex-end;height:70px"><span class="b a" style="flex:1;height:70%"></span><span class="b a" style="flex:1;height:45%"></span><span class="b a" style="flex:1;height:90%"></span><span class="b a" style="flex:1;height:55%"></span><span class="b a" style="flex:1;height:35%"></span><span class="b a" style="flex:1;height:62%"></span></div>
+      <div class="b" style="height:12px;width:80%"></div><div class="b" style="height:12px;width:60%"></div>
+    </div>
+    <div class="c-label"><small>CONCEPT A</small><span class="score">3.35 <span>/ 5</span></span></div>
+    <h4>Pulse</h4>
+    <p>An insight-first dashboard that pulls Instagram, Meta and Shopify data and ranks recommendations.</p>
+    <div class="pc"><div><span class="plus">+</span>Strong data base, great for the marketer and founders</div><div><span class="plus">+</span>APIs already exist</div><div><span class="minus">-</span>Doesn't help write ideas or briefs</div><div><span class="minus">-</span>Risks becoming a dashboard nobody opens</div></div>
+  </article>
+  <article class="concept win">
+    <div class="wf">
+      <div class="b as" style="height:24px"></div>
+      <div class="r"><span class="b" style="flex:1;height:52px;box-shadow:inset 3px 0 0 var(--accent)"></span><span class="b" style="width:52px;height:52px;border-radius:50%;background:var(--accent-soft);border:3px solid var(--accent)"></span></div>
+      <div class="r"><span class="b" style="flex:1;height:30px;box-shadow:inset 3px 0 0 var(--accent)"></span></div>
+      <div class="r"><span class="b a" style="width:70px;height:16px;border-radius:999px"></span><span class="b" style="width:50px;height:16px;border-radius:999px"></span></div>
+    </div>
+    <div class="c-label"><small>CONCEPT B</small><span class="score">4.05 <span>/ 5</span></span></div>
+    <h4>Studio</h4>
+    <p>An ideation co-pilot. Pick a goal and get on-brand ideas for series and ad angles, each with a hook, a reason and a one-click brief.</p>
+    <div class="pc"><div><span class="plus">+</span>Solves idea block, writes briefs</div><div><span class="plus">+</span>Loved by the strategist and the maker</div><div><span class="minus">-</span>Generic without real results behind it</div><div><span class="minus">-</span>Trust depends on clear reasons</div></div>
+    <span class="badge-win">Core of the final concept</span>
+  </article>
+  <article class="concept">
+    <div class="wf">
+      <div class="r"><span class="b" style="width:30%;height:14px;margin-left:0"></span></div>
+      <div class="r"><span class="b a" style="width:40%;height:14px;margin-left:10%"></span></div>
+      <div class="r"><span class="b as" style="width:30%;height:14px;margin-left:35%"></span></div>
+      <div class="r"><span class="b a" style="width:25%;height:14px;margin-left:55%"></span></div>
+      <div class="r"><span class="b" style="width:35%;height:14px;margin-left:20%"></span></div>
+      <div class="r"><span class="b" style="width:2px;height:28px;margin-left:62%;background:var(--heat)"></span></div>
+    </div>
+    <div class="c-label"><small>CONCEPT C</small><span class="score">3.60 <span>/ 5</span></span></div>
+    <h4>Drop Room</h4>
+    <p>A calendar-first command centre. Each drop gets a room with a timeline, the organic plan, ad variations, shoot plan and approvals.</p>
+    <div class="pc"><div><span class="plus">+</span>Matches how BLUORNG actually works</div><div><span class="plus">+</span>Joins organic and paid</div><div><span class="minus">-</span>Weak on why and on new ideas</div><div><span class="minus">-</span>Overlaps with Notion</div></div>
+  </article>
+</div>
+
+<h3>21.1 Concept evaluation matrix (score 1–5, weighted)</h3><figure class="fig"><div class="fig-core"><div class="scorebars">
+  <div class="sb"><span>A. Pulse</span><span class="t"><i style="width:67%"></i></span><b>3.35</b></div>
+  <div class="sb win"><span>B. Studio</span><span class="t"><i style="width:81%"></i></span><b>4.05</b></div>
+  <div class="sb"><span>C. Drop Room</span><span class="t"><i style="width:72%"></i></span><b>3.60</b></div>
+</div></div><figcaption class="fig-cap"><b>Weighted score out of 5</b><span>Draft scores, re-score with mentors</span></figcaption></figure>
+
+
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -2558,7 +2866,26 @@ td strong { color: var(--ink); }
 </table></div>
 <p><em>(Re-score this table with your mentors and concept-probe participants. These are draft scores.)</em></p>
 
-<h2>22. Final Concept: BLUPRINT = Studio core + Pulse brain + Drop Room spine</h2>
+<h2>22. Final Concept: BLUPRINT = Studio core + Pulse brain + Drop Room spine</h2><figure class="fig"><div class="fig-core">
+  <svg class="svg-fluid" viewBox="0 0 560 420" role="img" aria-label="Final concept combines Studio, Pulse and Drop Room" style="max-width:620px;margin:0 auto">
+    <circle cx="205" cy="160" r="130" style="fill:color-mix(in srgb, var(--accent) 12%, transparent);stroke:var(--line)" stroke-width="1.5"/>
+    <circle cx="355" cy="160" r="130" style="fill:color-mix(in srgb, var(--accent) 12%, transparent);stroke:var(--line)" stroke-width="1.5"/>
+    <circle cx="280" cy="285" r="130" style="fill:color-mix(in srgb, var(--accent) 30%, transparent);stroke:var(--accent)" stroke-width="1.5"/>
+    <text x="150" y="110" text-anchor="middle" font-size="11" class="sv-mute sv-mono">CONCEPT A</text>
+    <text x="150" y="134" text-anchor="middle" font-size="20" font-weight="700" class="sv-ink">Pulse</text>
+    <text x="150" y="154" text-anchor="middle" font-size="12.5" class="sv-ink2">the insight brain</text>
+    <text x="410" y="110" text-anchor="middle" font-size="11" class="sv-mute sv-mono">CONCEPT C</text>
+    <text x="410" y="134" text-anchor="middle" font-size="20" font-weight="700" class="sv-ink">Drop Room</text>
+    <text x="410" y="154" text-anchor="middle" font-size="12.5" class="sv-ink2">the planning spine</text>
+    <text x="280" y="352" text-anchor="middle" font-size="11" class="sv-accs sv-mono">CONCEPT B</text>
+    <text x="280" y="376" text-anchor="middle" font-size="20" font-weight="700" class="sv-ink">Studio</text>
+    <text x="280" y="396" text-anchor="middle" font-size="12.5" class="sv-ink2">the ideation core</text>
+    <rect x="218" y="186" width="124" height="34" rx="17" class="sv-acc"/>
+    <text x="280" y="208" text-anchor="middle" font-size="14" font-weight="800" letter-spacing=".04em" style="fill:var(--on-accent)">BLUPRINT</text>
+  </svg>
+</div><figcaption class="fig-cap"><b>Final direction</b><span>Studio experience, powered by Pulse, organised by drop</span></figcaption></figure>
+
+
 <p><strong>Selected direction:</strong> <strong>Concept B (Studio)</strong> as the core experience, powered by <strong>A's insight engine</strong> (so ideas come from real data, not generic AI) and organised on <strong>C's drop timeline</strong> (so it fits how BLUORNG works).</p>
 <h3>22.1 Justification</h3>
 <ol>
@@ -2575,8 +2902,8 @@ td strong { color: var(--ink); }
 <ul>
 <li>Paper prototype of: Home (Ideas feed), Idea detail (with <em>why</em>), Brief builder, Drop timeline, Pulse board, Mobile set mode.</li>
 <li>Test with 3 team members using 3 tasks (see Part 7, Task Analysis).</li>
-</ul></section>
-<section id="part7" class="part"><p class="eyebrow">Part 07</p><h1>User Scenarios, Storyboards, User &amp; Task Flows, Task Analysis, Feature Mapping</h1>
+</ul></div></div></section>
+<section class="band chapter" id="part7"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 7 of 8</p><h2>Scenarios and flows</h2></div><div><p>How each person moves through BLUPRINT, step by step.</p><div class="stage-chips"><span>User scenarios</span><span>Storyboards</span><span>User flows</span><span>Task flows</span><span>Task analysis</span><span>Feature mapping</span></div></div></div><div class="doc">
 <h2>23. User Scenarios</h2>
 <h3>Scenario 1: Ria plans organic content for a drop (primary)</h3>
 <p><em>Monday, 10 AM. The "Winter Capsule" drops in 12 days.</em> Ria opens BLUPRINT on her laptop. The <strong>Drop Room</strong> already shows the drop date, synced from the design team. She opens <strong>Ideas → Organic</strong>. BLUPRINT suggests <em>"ASMR: Embroidery Close-ups, Ep. 4"</em>, with the reason: "Your ASMR series averages <strong>2.6× saves</strong> vs your median; last episode was 5 weeks ago." It also suggests a <strong>Story Experience: "Pick the colourway"</strong> poll for T-7. She tweaks the hook, sees a <strong>Brand-fit 92%</strong> badge, and adds both to the drop plan. Then she clicks <strong>Create brief</strong>.</p>
@@ -2597,9 +2924,9 @@ td strong { color: var(--ink); }
 | 1 | Ria staring at a blank Notion page, phone buzzing with "drop in 12 days" | Idea block before a drop |
 | 2 | Ria scrolling competitors, frustrated | Trend-chasing feels off-brand |
 | 3 | Opens BLUPRINT → Drop Room | Everything for the drop in one place |
-| 4 | Idea card: "ASMR Ep. 4 — 2.6× saves" with <em>why</em> | Ideas based on what works for <em>us</em> |
+| 4 | Idea card: "ASMR Ep. 4: 2.6× saves" with <em>why</em> | Ideas based on what works for <em>us</em> |
 | 5 | Taps "Create brief" → brief appears | Brief in one click |
-| 6 | Ria relaxed; founder replies "Approved 🔥" | Confident, fast, on-brand |</p>
+| 6 | Ria relaxed; founder replies "Approved " | Confident, fast, on-brand |</p>
 <p><strong>Storyboard 2: "One shoot, twelve ads" (Arjun + Kabir)</strong>
 | Frame | Visual | Caption |
 |---|---|---|
@@ -2612,47 +2939,62 @@ td strong { color: var(--ink); }
 
 <h2>25. User Flows &amp; Task Flows</h2>
 <h3>25.1 Primary user flow: get an idea → brief → plan</h3>
-<div class="diagram"><pre class="mermaid">flowchart TD
-    S([Open BLUPRINT]) --&gt; H[Home: This week + active Drop Rooms]
-    H --&gt; D{Working on a drop?}
-    D -- Yes --&gt; DR[Open Drop Room]
-    D -- No --&gt; IDEAS[Ideas: Always-on]
-    DR --&gt; T{Organic or Paid?}
-    T -- Organic --&gt; OI[Organic ideas: IPs, formats, stories]
-    T -- Paid --&gt; PI[Paid: Angle x Hook matrix]
-    IDEAS --&gt; OI
-    OI --&gt; IC[Idea card: hook, format, why, brand-fit]
-    PI --&gt; IC
-    IC --&gt; E{Like it?}
-    E -- Edit --&gt; ED[Edit hook / format / tone] --&gt; IC
-    E -- No --&gt; FB[Thumbs down + reason] --&gt; OI
-    E -- Yes --&gt; ADD[Add to plan]
-    ADD --&gt; BR[Create brief]
-    BR --&gt; SL[Auto shot list + ratios + refs]
-    SL --&gt; AP[Send for approval]
-    AP --&gt; OK{Approved?}
-    OK -- Changes --&gt; ED
-    OK -- Yes --&gt; SCH[Scheduled in Drop timeline + Set Mode]
-    SCH --&gt; END([Done])
-</pre></div>
+<figure class="fig"><div class="fig-core">
+  <div class="rail" style="min-width:1060px">
+    <div class="node"><div class="card"><small>START</small>Open BLUPRINT</div></div>
+    <div class="node"><div class="card"><small>HOME</small>This week's ideas and active drops</div></div>
+    <div class="node"><div class="card dec"><small>DECISION</small>Working on a drop?</div></div>
+    <div class="node"><div class="card"><small>DROP ROOM</small>Pick organic or paid</div></div>
+    <div class="node"><div class="card"><small>IDEA CARD</small>Hook, format, reason, brand-fit</div></div>
+    <div class="node"><div class="card dec"><small>DECISION</small>Like it?</div></div>
+    <div class="node"><div class="card"><small>BRIEF</small>Auto shot list, ratios, refs</div></div>
+    <div class="node"><div class="card dec"><small>DECISION</small>Approved?</div></div>
+    <div class="node"><div class="card endc"><small>DONE</small>On the timeline and in Set Mode</div></div>
+  </div>
+  <div class="branches" style="min-width:1060px">
+    <div class="branch"><span class="dia"></span><span><b>No active drop:</b> go to Ideas for always-on content, then rejoin at the idea card.</span></div>
+    <div class="branch"><span class="dia"></span><span><b>Not quite:</b> edit the hook, format or tone. <b>No:</b> thumbs-down with a reason, and new ideas load.</span></div>
+    <div class="branch"><span class="dia"></span><span><b>Changes requested:</b> edit the idea and send it back for approval.</span></div>
+  </div>
+</div><figcaption class="fig-cap"><b>Primary user flow</b><span>From opening the app to a planned, approved shoot</span></figcaption></figure>
+
+
 <h3>25.2 Task flow: create a brief from an idea (linear)</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    A[Idea card] --&gt; B[Tap 'Create brief'] --&gt; C[Review auto-filled: objective, hook, format, ratios] --&gt; D[Add/edit shots] --&gt; E[Attach references] --&gt; F[Assign maker + date] --&gt; G[Send for approval] --&gt; H[Brief live in Set Mode]
-</pre></div>
+<figure class="fig"><div class="fig-core"><div class="rail">
+  <div class="node"><div class="card"><small>1</small>Idea card</div></div>
+  <div class="node"><div class="card"><small>2</small>Tap Create brief</div></div>
+  <div class="node"><div class="card"><small>3</small>Review objective, hook, format, ratios</div></div>
+  <div class="node"><div class="card"><small>4</small>Add or edit shots</div></div>
+  <div class="node"><div class="card"><small>5</small>Attach references</div></div>
+  <div class="node"><div class="card"><small>6</small>Assign maker and date</div></div>
+  <div class="node"><div class="card"><small>7</small>Send for approval</div></div>
+  <div class="node"><div class="card endc"><small>DONE</small>Live in Set Mode</div></div>
+</div></div><figcaption class="fig-cap"><b>Task flow: create a brief</b><span>Target: under 5 minutes</span></figcaption></figure>
+
+
 <h3>25.3 Task flow: promote an organic winner to ads</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    A[Pulse alert: Reel is a winner] --&gt; B[Open post insights] --&gt; C[Tap 'Promote'] --&gt; D[Pick angles + hooks to vary] --&gt; E[Generate variation plan] --&gt; F{New footage needed?}
-    F -- No --&gt; G[Export to Ads Manager checklist]
-    F -- Yes --&gt; H[Create brief] --&gt; G
-</pre></div>
+<figure class="fig"><div class="fig-core"><div class="rail">
+  <div class="node"><div class="card"><small>1</small>Pulse flags a winning Reel</div></div>
+  <div class="node"><div class="card"><small>2</small>Open its insights</div></div>
+  <div class="node"><div class="card"><small>3</small>Tap Promote</div></div>
+  <div class="node"><div class="card"><small>4</small>Pick angles and hooks to vary</div></div>
+  <div class="node"><div class="card"><small>5</small>Variation plan generated</div></div>
+  <div class="node"><div class="card dec"><small>DECISION</small>New footage needed? Yes: create a brief</div></div>
+  <div class="node"><div class="card endc"><small>DONE</small>Ads Manager checklist</div></div>
+</div></div><figcaption class="fig-cap"><b>Task flow: promote an organic winner</b><span>The bridge between organic and paid</span></figcaption></figure>
+
+
 <h3>25.4 Task flow: approve a plan (founder, mobile)</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    A[Push notification] --&gt; B[Approval queue] --&gt; C[Swipe idea cards] --&gt; D{Decision}
-    D -- Approve --&gt; E[Next card]
-    D -- Comment --&gt; F[Write note] --&gt; E
-    D -- Reject --&gt; G[Pick reason] --&gt; E
-    E --&gt; H[Summary sent to team]
-</pre></div>
+<figure class="fig"><div class="fig-core"><div class="rail">
+  <div class="node"><div class="card"><small>1</small>Notification on phone</div></div>
+  <div class="node"><div class="card"><small>2</small>Open approval queue</div></div>
+  <div class="node"><div class="card"><small>3</small>Swipe through idea cards</div></div>
+  <div class="node"><div class="card dec"><small>DECISION</small>Approve, comment, or reject with a reason</div></div>
+  <div class="node"><div class="card"><small>4</small>Next card</div></div>
+  <div class="node"><div class="card endc"><small>DONE</small>Summary sent to the team</div></div>
+</div></div><figcaption class="fig-cap"><b>Task flow: approve a plan</b><span>Founder, on mobile, under 10 minutes</span></figcaption></figure>
+
+
 
 <h2>26. Task Analysis</h2>
 <h3>26.1 Hierarchical Task Analysis (HTA): "Plan content for a drop"</h3>
@@ -2900,8 +3242,8 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 <td>Pulse</td>
 </tr>
 </tbody>
-</table></div></section>
-<section id="part8" class="part"><p class="eyebrow">Part 08</p><h1>Information Architecture &amp; Proposed Solution</h1>
+</table></div></div></div></section>
+<section class="band chapter" id="part8"><div class="wrap"><div class="band-head"><div><p class="eyebrow">Part 8 of 8</p><h2>Information architecture</h2></div><div><p>How the product is organised, named and navigated, and the final proposal.</p><div class="stage-chips"><span>Content strategy</span><span>Organisation</span><span>Sitemap</span><span>Navigation</span><span>Labeling</span><span>Proposed solution</span></div></div></div><div class="doc">
 <h2>28. Content Strategy &amp; Analysis</h2>
 <h3>28.1 Content goals of the product</h3>
 <ol>
@@ -2972,11 +3314,11 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </table></div>
 <h3>28.3 Content types for recommendations (taxonomy used across the product)</h3>
 <ul>
-<li><strong>Organic formats:</strong> Reel · Carousel · Static · Story · Story Experience (interactive) · Collab post · Broadcast message</li>
-<li><strong>Organic IPs (series):</strong> Drop Countdown · Lookbook / Campaign Film · ASMR · Studio Diaries · One Piece Three Ways · Fit Check · Collab Universe · Culture Drop · Founder POV · UGC Wall</li>
-<li><strong>Paid angles:</strong> Scarcity/Drop · Craft &amp; Quality · Social Proof · Creator / UGC · Lookbook Carousel · Retargeting/DPA · Store Footfall · Collab Announce</li>
-<li><strong>Hook types:</strong> Visual shock · Close-up detail · Question · Text overlay claim · Sound-led (ASMR) · POV · Behind-the-scenes reveal · Countdown</li>
-<li><strong>Goals:</strong> Hype · Reach · Saves · Shares · Sales · Footfall · Recall</li>
+<li><strong>Organic formats:</strong> Reel, Carousel, Static, Story, Story Experience (interactive), Collab post, Broadcast message</li>
+<li><strong>Organic IPs (series):</strong> Drop Countdown, Lookbook / Campaign Film, ASMR, Studio Diaries, One Piece Three Ways, Fit Check, Collab Universe, Culture Drop, Founder POV, UGC Wall</li>
+<li><strong>Paid angles:</strong> Scarcity/Drop, Craft &amp; Quality, Social Proof, Creator / UGC, Lookbook Carousel, Retargeting/DPA, Store Footfall, Collab Announce</li>
+<li><strong>Hook types:</strong> Visual shock, Close-up detail, Question, Text overlay claim, Sound-led (ASMR), POV, Behind-the-scenes reveal, Countdown</li>
+<li><strong>Goals:</strong> Hype, Reach, Saves, Shares, Sales, Footfall, Recall</li>
 </ul>
 <h3>28.4 Voice &amp; tone of the UI</h3>
 <div class="table-wrap"><table>
@@ -3038,57 +3380,60 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </ul>
 
 <h2>30. Structuring: Sitemap</h2>
-<div class="diagram"><pre class="mermaid">flowchart TB
-    ROOT((BLUPRINT))
-    ROOT --&gt; HOME[🏠 Home]
-    ROOT --&gt; PULSE[📈 Pulse]
-    ROOT --&gt; IDEAS[💡 Ideas]
-    ROOT --&gt; BRIEFS[📝 Briefs]
-    ROOT --&gt; PLAN[📅 Plan]
-    ROOT --&gt; BRAND[🧬 Brand DNA]
-    ROOT --&gt; SET[⚙️ Settings]
+<figure class="fig"><div class="fig-core"><div class="sitemap">
+  <div class="sm-root">BLUPRINT</div>
+  <div class="sm-stem"></div>
+  <div class="sm-cols">
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-home"/></svg>Home</div><ul><li>This week: top 3 ideas</li><li>Active Drop Rooms</li><li>Alerts: winners, fatigue, approvals</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-pulse"/></svg>Pulse</div><ul><li>Overview, organic and paid</li><li>Series and format leaderboard</li><li>Post or ad detail, why it worked</li><li>Paid: angles, hooks, fatigue</li><li>Weekly digest</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-bulb"/></svg>Ideas</div><ul><li>Organic: series, formats, story experiences</li><li>Paid: angle x hook matrix</li><li>Ask BLUPRINT</li><li>Idea bank</li><li>Idea detail</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-doc"/></svg>Briefs</div><ul><li>All briefs by status</li><li>Brief builder</li><li>Shoot plan, merged shot list</li><li>Set Mode, mobile</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-cal"/></svg>Plan</div><ul><li>Calendar, organic and paid</li><li>Drop Rooms</li><li class="sub">Timeline T-14 to T+14</li><li class="sub">Organic plan</li><li class="sub">Paid plan</li><li class="sub">Briefs and shoot</li><li>Approvals queue</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-dna"/></svg>Brand DNA</div><ul><li>Tone and voice</li><li>Visual references</li><li>Do's, don'ts, never suggest</li><li>Products and collections</li></ul></div>
+    <div class="sm-col"><div class="sm-h"><svg class="i"><use href="#i-gear"/></svg>Settings</div><ul><li>Integrations: Instagram, Meta, Shopify</li><li>Team and roles</li><li>Notifications</li></ul></div>
+  </div>
+</div></div><figcaption class="fig-cap"><b>Sitemap, web app</b><span>Mobile companion: Home, Ideas, Capture, Approvals, Set Mode</span></figcaption></figure>
 
-    HOME --&gt; H1[This week: top 3 ideas]
-    HOME --&gt; H2[Active Drop Rooms]
-    HOME --&gt; H3[Alerts: winners, fatigue, approvals]
 
-    PULSE --&gt; P1[Overview: organic + paid]
-    PULSE --&gt; P2[IP &amp; format leaderboard]
-    PULSE --&gt; P3[Post / Ad detail + Why it worked]
-    PULSE --&gt; P4[Paid: angles, hooks, fatigue]
-    PULSE --&gt; P5[Weekly digest]
+<p><strong>Mobile companion (subset):</strong> Home, Approvals, Set Mode, Ideas (quick capture), Pulse digest</p>
 
-    IDEAS --&gt; I1[Organic: IPs, formats, Story Experiences]
-    IDEAS --&gt; I2[Paid: Angle x Hook matrix]
-    IDEAS --&gt; I3[Ask BLUPRINT - prompt]
-    IDEAS --&gt; I4[Idea bank - saved]
-    IDEAS --&gt; I5[Idea detail: why, refs, brand-fit, edit]
+<h2>31. Navigation</h2><figure class="fig"><div class="fig-core"><div class="navmock">
+  <div>
+    <div class="laptop"><div class="lb">
+      <div class="sd">
+        <div class="drop">Winter Capsule, T-12</div>
+        <div class="nav-i"><svg class="i"><use href="#i-home"/></svg>Home</div>
+        <div class="nav-i"><svg class="i"><use href="#i-pulse"/></svg>Pulse</div>
+        <div class="nav-i"><svg class="i"><use href="#i-bulb"/></svg>Ideas</div>
+        <div class="nav-i"><svg class="i"><use href="#i-doc"/></svg>Briefs</div>
+        <div class="nav-i on"><svg class="i"><use href="#i-cal"/></svg>Plan</div>
+        <div class="nav-i"><svg class="i"><use href="#i-dna"/></svg>Brand DNA</div>
+      </div>
+      <div class="ct">
+        <div class="bc">Plan / Winter Capsule / <b>Paid</b></div>
+        <div class="tabs"><span>Overview</span><span>Organic</span><span class="on">Paid</span><span>Briefs</span></div>
+        <div class="status"><span>Idea</span>→<span>Brief</span>→<span class="on">Approved</span>→<span>Shot</span>→<span>Live</span></div>
+        <div class="ph-ct"></div>
+      </div>
+    </div></div>
+    <p class="fig-cap" style="padding-left:0"><b>Desktop: sidebar, tabs, breadcrumbs, status chips</b></p>
+  </div>
+  <div>
+    <div class="mob"><div class="mob-in">
+      <div class="ph-ct"></div>
+      <div class="tabbar">
+        <span class="on"><svg class="i"><use href="#i-home"/></svg>Home</span>
+        <span><svg class="i"><use href="#i-bulb"/></svg>Ideas</span>
+        <span><span class="plus"><svg class="i"><use href="#i-plus"/></svg></span></span>
+        <span><svg class="i"><use href="#i-inbox"/></svg>Approvals</span>
+        <span><svg class="i"><use href="#i-cam"/></svg>Set Mode</span>
+      </div>
+    </div></div>
+    <p class="fig-cap" style="justify-content:center"><b>Mobile: five-tab bar with quick capture</b></p>
+  </div>
+</div></div></figure>
 
-    BRIEFS --&gt; B1[All briefs - by status]
-    BRIEFS --&gt; B2[Brief builder]
-    BRIEFS --&gt; B3[Shoot plan - merged shot list]
-    BRIEFS --&gt; B4[Set Mode - mobile]
 
-    PLAN --&gt; L1[Calendar - organic + paid]
-    PLAN --&gt; L2[Drop Rooms]
-    L2 --&gt; L21[Drop timeline T-14..T+14]
-    L2 --&gt; L22[Drop: organic plan]
-    L2 --&gt; L23[Drop: paid plan]
-    L2 --&gt; L24[Drop: briefs &amp; shoot]
-    PLAN --&gt; L3[Approvals queue]
-
-    BRAND --&gt; D1[Tone &amp; voice]
-    BRAND --&gt; D2[Visual references]
-    BRAND --&gt; D3[Do's &amp; Don'ts / never-suggest list]
-    BRAND --&gt; D4[Products &amp; collections]
-
-    SET --&gt; S1[Integrations: Instagram, Meta Ads, Shopify]
-    SET --&gt; S2[Team &amp; roles]
-    SET --&gt; S3[Notifications]
-</pre></div>
-<p><strong>Mobile companion (subset):</strong> Home · Approvals · Set Mode · Ideas (quick capture) · Pulse digest</p>
-
-<h2>31. Navigation</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -3101,7 +3446,7 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 <tr>
 <td><strong>Global</strong></td>
 <td>Left sidebar: Home, Pulse, Ideas, Briefs, Plan, Brand DNA, Settings, plus Drop switcher at the top</td>
-<td>Bottom tab bar (5): Home · Ideas · <strong>+ Capture</strong> · Approvals · Set Mode</td>
+<td>Bottom tab bar (5): Home, Ideas, <strong>+ Capture</strong>, Approvals, Set Mode</td>
 </tr>
 <tr>
 <td><strong>Local</strong></td>
@@ -3130,7 +3475,7 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </tr>
 </tbody>
 </table></div>
-<p><strong>Navigation principles:</strong> max 7 top-level items · every insight links to an action · drop context is always visible · ≤ 3 clicks from Home to a brief.</p>
+<p><strong>Navigation principles:</strong> max 7 top-level items, every insight links to an action, drop context is always visible, ≤ 3 clicks from Home to a brief.</p>
 
 <h2>32. Labeling</h2>
 <div class="table-wrap"><table>
@@ -3231,15 +3576,55 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 <p><strong>BLUPRINT tells BLUORNG's content team what to make next, for Instagram and Meta ads, and why, then turns it into a brief they can shoot.</strong></p>
 </blockquote>
 <h3>33.2 How it works</h3>
-<div class="diagram"><pre class="mermaid">flowchart LR
-    A[1. CONNECT&lt;br/&gt;Instagram, Meta Ads,&lt;br/&gt;Shopify, drop calendar] --&gt; B[2. UNDERSTAND&lt;br/&gt;Pulse auto-tags content&lt;br/&gt;&amp; finds what works + why]
-    B --&gt; C[3. SUGGEST&lt;br/&gt;Ideas: organic IPs &amp; formats,&lt;br/&gt;paid angles x hooks,&lt;br/&gt;filtered by Brand DNA]
-    C --&gt; D[4. BRIEF&lt;br/&gt;One-click brief + merged&lt;br/&gt;shot list for organic + ads]
-    D --&gt; E[5. PLAN &amp; APPROVE&lt;br/&gt;Drop Room timeline,&lt;br/&gt;mobile approvals]
-    E --&gt; F[6. SHOOT &amp; LAUNCH&lt;br/&gt;Set Mode on phone]
-    F --&gt; G[7. LEARN&lt;br/&gt;Results + team feedback&lt;br/&gt;train the next ideas]
-    G --&gt; B
-</pre></div>
+<figure class="fig"><div class="fig-core">
+  <svg class="svg-fluid" viewBox="-110 -10 800 480" role="img" aria-label="The BLUPRINT loop in seven steps" style="min-width:620px;max-width:820px;margin:0 auto">
+    <circle cx="260" cy="260" r="170" fill="none" class="sv-line" stroke-width="1.5"/>
+    <g style="fill:var(--muted)">
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(333.7 106.8) rotate(25.7)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(425.7 222) rotate(77.1)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(392.9 366.1) rotate(128.6)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(260 430) rotate(180)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(127.1 366.1) rotate(231.4)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(94.3 222) rotate(282.9)"/>
+      <path d="M-5 -6 L5 0 L-5 6 Z" transform="translate(186.3 106.8) rotate(334.3)"/>
+    </g>
+    <g>
+      <circle cx="260" cy="90" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="392.9" cy="154" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="425.7" cy="297.8" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="333.8" cy="413.2" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="186.2" cy="413.2" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="94.3" cy="297.8" r="30" class="sv-surf" style="stroke:var(--accent)" stroke-width="2"/>
+      <circle cx="127.1" cy="154" r="30" class="sv-acc"/>
+    </g>
+    <g font-size="17" font-weight="700" text-anchor="middle">
+      <text x="260" y="96" class="sv-accs">1</text><text x="392.9" y="160" class="sv-accs">2</text><text x="425.7" y="303.8" class="sv-accs">3</text>
+      <text x="333.8" y="419.2" class="sv-accs">4</text><text x="186.2" y="419.2" class="sv-accs">5</text><text x="94.3" y="303.8" class="sv-accs">6</text>
+      <text x="127.1" y="160" style="fill:var(--on-accent)">7</text>
+    </g>
+    <g font-size="15" font-weight="700" class="sv-ink">
+      <text x="260" y="26" text-anchor="middle">Connect</text>
+      <text x="437" y="150">Understand</text>
+      <text x="470" y="294">Suggest</text>
+      <text x="378" y="410">Brief</text>
+      <text x="142" y="410" text-anchor="end">Plan and approve</text>
+      <text x="50" y="294" text-anchor="end">Shoot and launch</text>
+      <text x="83" y="150" text-anchor="end">Learn</text>
+    </g>
+    <g font-size="12.5" class="sv-mute">
+      <text x="260" y="44" text-anchor="middle">Instagram, Meta, Shopify</text>
+      <text x="437" y="168">Pulse finds what works</text>
+      <text x="470" y="312">Filtered by Brand DNA</text>
+      <text x="378" y="428">One shot list, both channels</text>
+      <text x="142" y="428" text-anchor="end">Drop Room and approvals</text>
+      <text x="50" y="312" text-anchor="end">Set Mode on set</text>
+      <text x="83" y="168" text-anchor="end">Results train next ideas</text>
+    </g>
+    <text x="260" y="254" text-anchor="middle" font-size="26" font-weight="800" class="sv-ink" style="font-family:var(--display);font-stretch:72%">The loop</text>
+    <text x="260" y="278" text-anchor="middle" font-size="13" class="sv-mute">Each drop teaches the next</text>
+  </svg>
+</div><figcaption class="fig-cap"><b>How BLUPRINT works</b><span>Seven steps, repeated every drop</span></figcaption></figure>
+
 <h3>33.3 Core modules</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -3326,21 +3711,30 @@ Plan 0: do 1 → (2 and 3 in any order) → 4 → 5 → 6
 </tbody>
 </table></div>
 <h3>33.6 Next stages (after this document)</h3>
-<p>Wireframes → paper prototype test → design system (colour, type, icons) → style guide &amp; interaction patterns → accessibility (WCAG 2.2 AA, iOS HIG, Material 3) → grids → wireflows &amp; digital prototype → usability testing (2 rounds).</p></section>
-  </main>
-</div>
+<p>Wireframes → paper prototype test → design system (colour, type, icons) → style guide &amp; interaction patterns → accessibility (WCAG 2.2 AA, iOS HIG, Material 3) → grids → wireflows &amp; digital prototype → usability testing (2 rounds).</p></div></div></section>
+
+<footer class="wrap">
+  <div class="foot">
+    <div class="mark">BLU<b>PRINT</b></div>
+    <p>A UI/UX graduation project with BLUORNG. Secondary figures are third-party estimates. Primary research findings are filled in from the student's own fieldwork.</p>
+  </div>
+</footer>
+
 <script>
 (function () {
   const links = [...document.querySelectorAll('#toc a')];
-  const map = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const nav = document.getElementById('toc');
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       links.forEach(a => a.classList.remove('on'));
-      const a = map.get(e.target.id);
-      if (a) { a.classList.add('on'); const nav = a.parentElement; if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = a.offsetLeft - 16; }
+      const a = byId.get(e.target.id);
+      if (!a) return;
+      a.classList.add('on');
+      if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = a.offsetLeft - 40;
     });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-  document.querySelectorAll('section.part').forEach(s => io.observe(s));
+  }, { rootMargin: '-30% 0px -65% 0px' });
+  document.querySelectorAll('#product, section.chapter').forEach(s => io.observe(s));
 })();
 </script>

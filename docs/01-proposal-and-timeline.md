@@ -66,7 +66,7 @@ Design a platform that turns **performance data + brand identity + trend signals
 
 | Week | Phase | Stages / Deliverables | Milestone |
 |---|---|---|---|
-| 1 | Kick-off | Project proposal, timeline, mentor sign-off, confidentiality agreement | ✅ Proposal approved |
+| 1 | Kick-off | Project proposal, timeline, mentor sign-off, confidentiality agreement | Proposal approved |
 | 2–3 | Discover: secondary | Domain study, literature review, competitor/tool analysis | |
 | 3–4 | Discover: system | Stakeholder map, system map, problem mapping, problem area & target users | |
 | 4 | Plan | Primary research plan, questionnaire draft, **pilot test (3–5 people)**, revise | |
