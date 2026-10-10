@@ -108,7 +108,7 @@ SECTIONS = {
 
 
 def load_figures():
-    text = (BOOK / "graphics.html").read_text()
+    text = (BOOK / "graphics.html").read_text() + "\n" + (BOOK / "research.html").read_text()
     parts = re.split(r"<!-- @@([\w-]+) -->\n", text)
     figs = {parts[i]: parts[i + 1] for i in range(1, len(parts), 2)}
     for k, v in figs.items():

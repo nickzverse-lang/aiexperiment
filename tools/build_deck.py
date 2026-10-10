@@ -32,8 +32,8 @@ def slides(figs, logos):
     S = []
     part = [None]
 
-    def add(title, body, sub="", source="", w=1240):
-        S.append(dict(kind="content", part=part[0], title=title, sub=sub, body=body, source=source, w=w))
+    def add(title, body, sub="", source="", w=1240, sample=False):
+        S.append(dict(kind="content", part=part[0], title=title, sub=sub, body=body, source=source, w=w, sample=sample))
 
     def divider(i):
         short, title, summary, stages = bb.CHAPTERS[i - 1]
@@ -100,14 +100,29 @@ def slides(figs, logos):
     add("User segmentation", figs["segments"], w=1400)
     add("Research instruments", figs["instr"])
     add("The surveys", figs["surveymock"], sub="Survey A: 22 questions for practitioners. Survey B: 14 questions for the audience. Full list in the project files.", w=1100)
-    add("Research report: charts", figs["slots"], sub="Ten charts, each tied to a question and a hypothesis. Filled from fieldwork.", w=1300)
+    R = dict(sample=True, source="Sample data for layout. Replace with your fieldwork results")
+    add("Fieldwork completed", figs["r-overview"], sub="Primary research report.", w=1400, **R)
+    add("What the team told us", figs["r-quotes-team"], sub="Interviews with six BLUORNG content and marketing team members.", w=1300, **R)
+    add("What the audience told us", figs["r-quotes-aud"], sub="Interviews with four followers and buyers.", w=1300, **R)
+    add("Interview themes", figs["r-themes"], sub="How many people raised each theme.", w=1400, **R)
+    add("Survey A: how content gets decided", figs["r-sa1"], sub="24 practitioners from fashion and D2C brands.", w=1400, **R)
+    add("Survey A: organic, paid and briefs", figs["r-sa2"], w=1400, **R)
+    add("Survey A: problems and trust", figs["r-sa3"], w=1400, **R)
+    add("Survey B: who answered", figs["r-sb1"], sub="132 streetwear followers aged 18 to 30.", w=1400, **R)
+    add("Survey B: watch, save, buy", figs["r-sb2"], w=1500, **R)
+    add("Survey B: ads and frequency", figs["r-sb3"], w=1400, **R)
+    add("Focus groups", figs["r-focus"], w=1400, **R)
+    add("Shadowing a drop week", figs["r-shadow"], w=1400, **R)
+    add("Content audit", figs["r-audit"], w=1500, **R)
+    add("Hypotheses: what held up", figs["r-hyp"], w=1400, **R)
+    add("Key insights", figs["r-insights"], w=1400, **R)
     add("Priority areas", figs["priority"], w=1200)
     add("Redefined brief", figs["rebrief"], w=1300)
     add("Environment and context", figs["context"], w=1300)
 
     # ---------- part 5 ----------
     divider(5)
-    add("Personas", figs["personas"], sub="Proto-personas, to be updated with interview data.", w=1400)
+    add("Personas", figs["personas"], sub="Built from the team interviews and Survey A.", w=1400)
     add("Empathy maps", figs["empathy"], w=1400)
     add("User journey map", figs["journey"], sub="Planning content for a new drop, as it works today.", w=1400)
     add("Problem statement", figs["statement"], w=1400)
@@ -207,7 +222,7 @@ def render(S, logos):
             i, ptitle = s["part"]
             src = f'<span>Source: {html.escape(s["source"])}</span>' if s["source"] else "<span></span>"
             sub = f'<p class="s-sub">{html.escape(s["sub"])}</p>' if s["sub"] else ""
-            out.append(f'''<section class="slide"><div class="s-top"><span>Part 0{i} / {html.escape(ptitle)}</span><span class="tr">{logos["{{SVG_monogram}}"]}{pg}</span></div>
+            out.append(f'''<section class="slide"><div class="s-top"><span>Part 0{i} / {html.escape(ptitle)}</span><span class="tr">{'<span class="samp">Sample data</span>' if s.get("sample") else ""}{logos["{{SVG_monogram}}"]}{pg}</span></div>
   <h2 class="s-title">{html.escape(s["title"])}</h2>{sub}
   <div class="s-body"><div class="s-fit doc" style="width:{s["w"]}px">{s["body"]}</div></div>
   <div class="s-foot">{src}<span>BLUPRINT × BLUORNG</span></div></section>''')
