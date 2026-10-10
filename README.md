@@ -16,7 +16,7 @@
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
 ## Presentation
-- [`docs/bluprint-deck.pdf`](docs/bluprint-deck.pdf): the 81-slide 16:9 presentation, Proposal to Proposed Solution.
+- [`docs/bluprint-deck.pdf`](docs/bluprint-deck.pdf): the 95-slide 16:9 presentation, Proposal to Proposed Solution.
 - [`docs/bluprint-deck.html`](docs/bluprint-deck.html): the same deck in a browser; use the arrow keys to move between slides.
 - Rebuild: `python3 tools/build_deck.py` (slide list lives in that file). PDF: `python3 tools/build_deck.py --local <deps> <out>.html`, wrap it in a document, serve over http, then `node tools/make_pdf.js <url> docs/bluprint-deck.pdf 1920 1080`.
 
