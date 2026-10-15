@@ -15,6 +15,13 @@
 | [07 — Scenarios, Flows & Tasks](docs/07-scenarios-flows-tasks.md) | User Scenarios · Storyboarding · User Flows · Task Flows · Task Analysis · Feature Mapping |
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
+## Case study (A4, college grid)
+- [`docs/bluorng-casestudy.pdf`](docs/bluorng-casestudy.pdf): 59-page UX case study, A4 landscape. It runs from the project proposal and timeline to user scenarios and storyboards. All content sits inside the grid's content box (left margin 33.867 mm, the other margins 23.989 mm).
+- [`docs/bluorng-casestudy.html`](docs/bluorng-casestudy.html): the same pages in a browser.
+- [`docs/research/survey_responses_sample.csv`](docs/research/survey_responses_sample.csv): the 80 sample survey responses behind the charts.
+- Content: `tools/cs/pages.py`. Sample survey and interviews: `tools/cs/data.py`. Renderer: `tools/build_casestudy.py`.
+- PDF: `python3 tools/build_casestudy.py --local <deps> <out>.html`, serve `/` over http, then `node tools/make_pdf.js <url> docs/bluorng-casestudy.pdf 297mm 210mm`.
+
 ## Presentation
 - [`docs/bluprint-deck.pdf`](docs/bluprint-deck.pdf): the 95-slide 16:9 presentation, Proposal to Proposed Solution.
 - [`docs/bluprint-deck.html`](docs/bluprint-deck.html): the same deck in a browser; use the arrow keys to move between slides.
