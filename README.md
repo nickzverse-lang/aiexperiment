@@ -16,7 +16,7 @@
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
 ## BLUPRINT dashboard (final solution)
-A content audit and planning dashboard for @bluorng: snapshot, what's working, hashtags, posting pattern, audience sentiment, 10 content ideas and a 30-day calendar, in one self-contained HTML file.
+A content audit and planning dashboard for @bluorng: snapshot, what's working, hashtags, posting pattern, audience sentiment, 10 content ideas and a 30-day calendar, in one self-contained HTML file (light BLUORNG store style, fonts embedded).
 
 - [`docs/bluprint/bluorng-dashboard-demo.html`](docs/bluprint/bluorng-dashboard-demo.html): the dashboard running on **demo data** (made up, labelled on the page). Written audit: [`docs/bluprint/bluorng-dashboard-demo.md`](docs/bluprint/bluorng-dashboard-demo.md).
 - Real run, steps 1 and 2 (Apify actor `apify/instagram-scraper`, no login needed):

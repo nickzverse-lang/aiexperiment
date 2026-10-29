@@ -6,6 +6,7 @@ Also writes <out>.md, the written audit (steps 3 to 9) behind the dashboard.
 """
 import argparse
 import datetime as dt
+import base64
 import html
 import json
 import pathlib
@@ -44,12 +45,24 @@ def tip(*lines):
     return e(" | ".join(str(x) for x in lines), quote=True)
 
 
-def logo():
-    svg = (ROOT / "tools/book/brand/monogram.svg").read_text()
-    return svg.replace('<svg xmlns="http://www.w3.org/2000/svg"', '<svg class="logo" aria-label="BG" role="img"')
+def logo(name="monogram", cls="logo"):
+    svg = (ROOT / f"tools/book/brand/{name}.svg").read_text()
+    return svg.replace('<svg xmlns="http://www.w3.org/2000/svg"', f'<svg class="{cls}" aria-hidden="true" focusable="false"')
 
 
-# ---------------------------------------------------------------- blocks
+def b64(path):
+    return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
+
+
+def font_faces():
+    f = pathlib.Path(__file__).resolve().parent / "fonts"
+    faces = [("Archivo", "archivo-latin-wdth-normal.woff2", "100 900", "font-stretch: 62% 125%;"),
+             ("Geist", "geist-sans-latin-400-normal.woff2", "400", ""), ("Geist", "geist-sans-latin-500-normal.woff2", "500", ""),
+             ("Geist", "geist-sans-latin-600-normal.woff2", "600", ""), ("Geist Mono", "geist-mono-latin-500-normal.woff2", "400 600", "")]
+    return "".join(f'@font-face {{ font-family: "{n}"; src: url(data:font/woff2;base64,{b64(f / fn)}) format("woff2"); font-weight: {w}; font-display: swap; {x} }}\n'
+                   for n, fn, w, x in faces)
+
+
 def hbar_rows(rows, maxv, cls="", label_w="minmax(160px,1.3fr)"):
     out = []
     for r in rows:
@@ -65,14 +78,15 @@ def kpis(a):
     s = a["snapshot"]
     best = s["top5"][0]
     tr = s["trend"]
-    cards = [("Posts analysed", str(s["n"]), f'{e(s["first"])} to {e(s["last"])}', ""),
-             ("Avg likes", "Hidden" if s["likes_hidden"] else k(s["avg_likes"]), "per post" if not s["likes_hidden"] else "likes hidden on this account", ""),
-             ("Avg comments", k(s["avg_comments"]), f'median engagement {k(s["median_eng"])}', ""),
-             ("Engagement trend", tr["direction"], f'{sign(tr["fit_change"])} across the period (trend line)', tone(tr["fit_change"], 10)),
-             ("Best format", s["best_type"]["name"], f'{sign(s["best_type"]["lift"])} vs account average, {s["best_type"]["n"]} posts', "up")]
-    out = "".join(f'<div class="kpi {t}"><span class="kk">{e(l)}</span><b>{v}</b><span class="ks">{sub}</span></div>' for l, v, sub, t in cards)
-    out += (f'<a class="kpi best" href="{e(best["url"])}" target="_blank" rel="noopener"><span class="kk">Best post</span><b>{k(best["eng"])}</b>'
-            f'<span class="ks">{e(best["type"])} · {date(best)} · {e(best["cluster"])}</span><span class="kc">“{e(snip(best["caption"], 80))}”</span></a>')
+    cards = [("Posts analysed", str(s["n"]), f'{dt.date.fromisoformat(s["first"]).strftime("%d %b")} – {dt.date.fromisoformat(s["last"]).strftime("%d %b %Y")}', ""),
+             ("Avg likes", "Hidden" if s["likes_hidden"] else k(s["avg_likes"]), "Per post" if not s["likes_hidden"] else "Likes hidden", ""),
+             ("Avg comments", k(s["avg_comments"]), f'Median eng. {k(s["median_eng"])}', ""),
+             ("Engagement trend", tr["direction"], f'{sign(tr["fit_change"])} over the period', tone(tr["fit_change"], 10)),
+             ("Best format", s["best_type"]["name"] + "s", f'{sign(s["best_type"]["lift"])} vs average', "")]
+    out = "".join(f'<article class="kp {t}"><div class="kp-shot"><b>{v}</b></div><div class="kp-meta"><h3>{e(l)}</h3><span>{sub}</span></div></article>'
+                  for l, v, sub, t in cards)
+    out += (f'<a class="kp best" href="{e(best["url"])}" target="_blank" rel="noopener"><div class="kp-shot"><span class="stag">No. 1 post</span><b>{k(best["eng"])}</b>'
+            f'<q>{e(snip(best["caption"], 64))}</q></div><div class="kp-meta"><h3>Best post</h3><span>{e(best["type"])} · {best["ts"].strftime("%d %b")}</span></div></a>')
     return f'<div class="kpis">{out}</div>'
 
 
@@ -112,9 +126,10 @@ def timeline(a):
         cls = "up" if p["eng"] >= base * 1.08 else "down" if p["eng"] <= base * .92 else "flat"
         pts.append(f'<g class="dot {cls}" tabindex="0" data-tip="{tip(f"{p["eng"]:,} engagements", p["type"] + ", " + date(p), snip(p["caption"], 50))}">'
                    f'<circle cx="{xs(p):.1f}" cy="{ys(p["eng"]):.1f}" r="10" class="hit"/><circle cx="{xs(p):.1f}" cy="{ys(p["eng"]):.1f}" r="3.6"/></g>')
-    avg = f'<line x1="{L}" x2="{W - 10}" y1="{ys(base):.1f}" y2="{ys(base):.1f}" class="avg"/><text x="{L + 6}" y="{ys(base) - 6:.1f}" class="ax">account avg {k(base)}</text>'
-    return (f'<svg class="chart" viewBox="0 0 {W} {H}" role="img" aria-label="Engagement per post over time">{grid}{months}{avg}'
-            f'<g>{"".join(pts)}</g><path d="{line}" class="roll"/></svg>'
+    avg = f'<line x1="{L}" x2="{W - 10}" y1="{ys(base):.1f}" y2="{ys(base):.1f}" class="avg"/>'
+    avg_lab = f'<text x="{L + 6}" y="{ys(base) - 7:.1f}" class="ax halo">account avg {k(base)}</text>'
+    return (f'<div class="chart-wrap"><svg class="chart" viewBox="0 0 {W} {H}" role="img" aria-label="Engagement per post over time">{grid}{months}{avg}'
+            f'<g>{"".join(pts)}</g><path d="{line}" class="roll"/>{avg_lab}</svg></div>'
             '<div class="legend"><span><i class="lk line"></i>10-post rolling average</span><span><i class="lk dot up"></i>Above average</span>'
             '<span><i class="lk dot down"></i>Below average</span><span><i class="lk dot flat"></i>Near average</span></div>')
 
@@ -218,7 +233,7 @@ def heatmap(a):
     ps = a["posting"]
     vals = [c["avg"] for row in ps["heat"] for c in row if c["n"]]
     lo, hi = min(vals), max(vals)
-    head = '<span></span>' + "".join(f'<span class="hh">{e(n)}<small>{s_:02d}-{e_:02d}</small></span>' for n, s_, e_ in A.SLOTS)
+    head = '<span></span>' + "".join(f'<span class="hh"><span class="hn">{e(n)}</span><small>{s_:02d}-{e_:02d}</small></span>' for n, s_, e_ in A.SLOTS)
     body = ""
     for d, row in enumerate(ps["heat"]):
         body += f'<span class="hd">{A.DAYS[d]}</span>'
@@ -227,9 +242,9 @@ def heatmap(a):
                 body += '<span class="hc empty" aria-label="no posts">·</span>'
                 continue
             t = (c["avg"] - lo) / ((hi - lo) or 1)
-            body += (f'<span class="hc" tabindex="0" style="--p:{12 + t * 88:.0f}%" data-tip="{tip(f"{c["avg"]:,.0f} avg engagements", f"{A.DAYS[d]}, {A.SLOTS[si][0]} (IST)", f"{c["n"]} posts")}">'
+            body += (f'<span class="hc{" dk" if t > .5 else ""}" tabindex="0" style="--p:{8 + t * 92:.0f}%" data-tip="{tip(f"{c["avg"]:,.0f} avg engagements", f"{A.DAYS[d]}, {A.SLOTS[si][0]} (IST)", f"{c["n"]} posts")}">'
                      f'<b>{k(c["avg"])}</b><small>{c["n"]}</small></span>')
-    return (f'<div class="heat">{head}{body}</div><div class="legend"><span class="ramp"><i style="--p:12%"></i><i style="--p:40%"></i><i style="--p:70%"></i><i style="--p:100%"></i></span>'
+    return (f'<div class="heat">{head}{body}</div><div class="legend"><span class="ramp"><i style="--p:8%"></i><i style="--p:38%"></i><i style="--p:69%"></i><i style="--p:100%"></i></span>'
             f'<span>Avg engagement, low to high ({k(lo)} to {k(hi)})</span><span>Small number = posts in that slot</span><span>Times in IST</span></div>')
 
 
@@ -274,10 +289,12 @@ def sentiment(a):
 def idea_cards(a):
     out = []
     for i, x in enumerate(a["ideas"], 1):
-        out.append(f'<article class="idea" data-format="{e(x["format"])}"><div class="idea-h"><span class="no">{i:02d}</span><span class="badge {x["confidence"].lower()}">{x["confidence"]} confidence</span></div>'
-                   f'<h4>{e(x["title"])}</h4><p class="hook">“{e(x["hook"])}”</p>'
-                   f'<dl><dt>Why it will work</dt><dd>{e(x["why"])}</dd><dt>Format</dt><dd>{e(x["format"])}</dd><dt>Formula</dt><dd>{e(x["formula"])}</dd>'
-                   f'<dt>Caption opener</dt><dd>{e(x["opener"])}</dd></dl></article>')
+        c = x["confidence"].lower()
+        out.append(f'<article class="idea" data-format="{e(x["format"])}"><div class="idea-shot"><span class="stag {c}">{x["confidence"]} confidence</span>'
+                   f'<span class="no">{i:02d}</span><p class="hook">{e(x["hook"])}</p></div>'
+                   f'<div class="idea-meta"><h3>{e(x["title"])}</h3><span>{e(x["format"])}</span></div>'
+                   f'<dl><dt>Why it will work</dt><dd>{e(x["why"])}</dd><dt>Formula</dt><dd>{e(x["formula"])}</dd>'
+                   f'<dt>Caption opener</dt><dd>“{e(x["opener"])}”</dd></dl></article>')
     return '<div class="ideas">' + "".join(out) + "</div>"
 
 
@@ -314,48 +331,78 @@ def csv_data(a):
 
 
 # ---------------------------------------------------------------- page
-def section(n, title, sub, body, sid):
-    return f'<section id="{sid}" class="sec"><div class="sec-h"><span class="sn">{n}</span><div><h2>{e(title)}</h2><p>{e(sub)}</p></div></div>{body}</section>'
+def section(n, title, sub, body, sid, crumb=None):
+    return (f'<section id="{sid}" class="band"><div class="wrap"><p class="crumbs">Audit / <b>{n} {e(crumb or title)}</b></p>'
+            f'<div class="sec-head"><h2>{e(title)}</h2><p>{e(sub)}</p></div>{body}</div></section>')
+
+
+def ticker(a):
+    s, w, ps, se = a["snapshot"], a["working"], a["posting"], a["sentiment"]
+    items = [f'{s["n"]} posts analysed', f'{s["best_type"]["name"]}s {sign(s["best_type"]["lift"])} vs average',
+             f'Top topic: {w["all_clusters"][0]["name"]}', f'Engagement trend: {s["trend"]["direction"]} {sign(s["trend"]["fit_change"])}']
+    if ps["best_days"]:
+        items.append(f'Best day: {ps["best_days"][0]["name"]}')
+    if se["asks"]:
+        items.append(f'Most asked: {se["asks"][0][0].lower()}')
+    items.append("10 ideas ready")
+    run = "".join(f"<span>{e(x)}</span>" for x in items)
+    return f'<div class="announce" aria-label="Key numbers"><div class="mq"><div class="mq-run">{run}</div><div class="mq-run" aria-hidden="true">{run}</div></div></div>'
 
 
 def render(a):
     s, w = a["snapshot"], a["working"]
     handle = a["handle"]
     audit = dt.date.fromisoformat(a["audit_date"]).strftime("%d %b %Y")
-    demo = ('<div class="demo" role="note"><b>Demo data</b> These numbers are generated to test the dashboard. They are not BLUORNG\'s real results. '
+    period = f'{dt.date.fromisoformat(s["first"]).strftime("%d %b %Y")} to {dt.date.fromisoformat(s["last"]).strftime("%d %b %Y")}'
+    demo = ('<div class="demo" role="note"><span>Demo data</span>These numbers are generated to test the dashboard. They are not BLUORNG\'s real results. '
             'Run the Apify step to replace them with the real scrape.</div>') if a["demo"] else ""
-    nav = [("overview", "Overview"), ("working", "What's working"), ("avoid", "What to avoid"), ("hashtags", "Hashtags"), ("posting", "Posting"),
-           ("audience", "Audience"), ("ideas", "Content ideas"), ("calendar", "Calendar")]
-    navh = "".join(f'<a href="#{i}"><span>{n + 1:02d}</span>{e(t)}</a>' for n, (i, t) in enumerate(nav))
+    nav = [("overview", "Overview"), ("working", "What's working"), ("avoid", "Avoid"), ("hashtags", "Hashtags"), ("posting", "Posting"),
+           ("audience", "Audience"), ("ideas", "Ideas"), ("calendar", "Calendar")]
+    cats = "".join(f'<a href="#{i}">{e(t)}</a>' for i, t in nav)
     tr = s["trend"]
     body = [
-        section("01", "Performance snapshot", f'{s["n"]} posts from {s["first"]} to {s["last"]}. Engagement = likes + comments.',
-                kpis(a) + f'<div class="grid g2w"><div class="panel"><h3>Top 10 posts by engagement</h3>{top10(a)}<p class="note">Click a bar to open the post.</p></div>'
-                f'<div class="panel"><h3>Format performance</h3>{lift_bars(s["types"])}<p class="note">Average engagement per post; % vs account average of {k(s["avg_eng"])}.</p></div></div>'
+        section("01", "Performance", f'{s["n"]} posts from {period}. Engagement = likes + comments.',
+                kpis(a) + f'<div class="grid g2w"><div class="panel"><h3>Top 10 posts by engagement</h3>{top10(a)}<p class="note">Select a bar to open the post on Instagram.</p></div>'
+                f'<div class="panel"><h3>Format performance</h3>{lift_bars(s["types"], "minmax(130px,1fr)")}<p class="note">Average engagement per post; % vs the account average of {k(s["avg_eng"])}.</p></div></div>'
                 f'<div class="panel"><h3>Engagement over time <span class="pill {tone(tr["fit_change"], 10)}">{tr["direction"]} {sign(tr["fit_change"])}</span></h3>{timeline(a)}'
-                f'<p class="note">Trend line change {sign(tr["fit_change"])}; second half vs first half {sign(tr["halves_change"])}. Up or down means more than 10% either way.</p></div>', "overview"),
-        section("02", "What's working", f'Patterns in the top {w["top_k"]} posts (top 10%) compared with the whole account.',
-                formulas(a) + f'<div class="grid g2"><div class="panel"><h3>Content clusters</h3>{lift_bars(w["clusters"])}<p class="note">Topics found from captions and hashtags. Blue = above account average, orange = below.</p></div>'
+                f'<p class="note">Trend line change {sign(tr["fit_change"])}; second half vs first half {sign(tr["halves_change"])}. Up or down means more than 10% either way.</p></div>',
+                "overview", "Performance snapshot"),
+        section("02", "What's working", f'What the top {w["top_k"]} posts (top 10%) have in common, compared with the whole account.',
+                formulas(a) + f'<div class="grid g2"><div class="panel"><h3>Content clusters</h3>{lift_bars(w["clusters"])}<p class="note">Topics found from captions and hashtags. Black = above account average, red = below.</p></div>'
                 f'<div class="panel"><h3>Hook styles</h3>{hooks(a)}</div></div>'
                 f'<div class="grid g2"><div class="panel"><h3>Caption length</h3>{lift_bars(w["lengths"])}<p class="note">Characters in the caption, hashtags included.</p></div>'
                 f'<div class="panel"><h3>Call to action vs none</h3>{cta_block(a)}</div></div>', "working"),
-        section("03", "What to avoid", f'Patterns over-represented in the bottom {w["top_k"]} posts.',
+        section("03", "What to avoid", f'Patterns that show up more often in the bottom {w["top_k"]} posts.',
                 avoid(a) + f'<div class="panel"><h3>Bottom {w["top_k"]} posts</h3>{bottom_list(a)}</div>', "avoid"),
-        section("04", "Hashtag intelligence", f'{len(a["hashtags"]["all"])} unique hashtags across {s["n"]} posts.',
-                f'<div class="panel"><h3>Hashtag cloud</h3>{cloud(a)}</div>' + tag_lists(a), "hashtags"),
-        section("05", "Posting pattern", "When the account posts, when it performs, and how often to post.",
+        section("04", "Hashtags", f'{len(a["hashtags"]["all"])} unique hashtags across {s["n"]} posts, ranked by how the posts using them perform.',
+                f'<div class="panel"><h3>Hashtag cloud</h3>{cloud(a)}</div>' + tag_lists(a), "hashtags", "Hashtag intelligence"),
+        section("05", "Posting pattern", "When the account posts, when it performs, and how often it should post.",
                 f'<div class="panel"><h3>Day × time heatmap</h3>{heatmap(a)}</div><div class="grid g2"><div class="panel"><h3>Best days</h3>{lift_bars(a["posting"]["by_day"], "minmax(90px,.6fr)")}</div>'
                 f'<div class="panel"><h3>Recommended schedule</h3>{schedule(a)}</div></div>{frequency(a)}', "posting"),
-        section("06", "Audience sentiment", "Reactions in the comments, and what people keep asking for.", sentiment(a), "audience"),
-        section("07", "10 content ideas", "Each idea cites the data signal behind it. Confidence reflects the size of the effect and the number of posts behind it.", idea_cards(a), "ideas"),
-        section("08", "30-day content calendar", f'Ideas placed on the recommended posting days, filled with lighter formats. Starts the day after the audit.', calendar(a) + all_posts(a), "calendar"),
+        section("06", "Audience", "Reactions in the comments, and what people keep asking for.", sentiment(a), "audience", "Audience sentiment"),
+        section("07", "10 content ideas", "Each idea cites the data behind it. Confidence reflects how big the effect is and how many posts support it.", idea_cards(a), "ideas", "Content ideas"),
+        section("08", "30-day calendar", "Ideas placed on the recommended posting days, with lighter formats in between. Starts the day after the audit.",
+                calendar(a) + all_posts(a), "calendar", "Content calendar"),
     ]
     src = e(a["source"] or "apify/instagram-scraper")
-    page = TEMPLATE.replace("{{CSS}}", CSS).replace("{{JS}}", JS)
-    page = page.replace("{{TITLE}}", f"@{e(handle)} content audit").replace("{{LOGO}}", logo()).replace("{{HANDLE}}", e(handle))
-    page = page.replace("{{AUDIT}}", audit).replace("{{DEMO}}", demo).replace("{{NAV}}", navh).replace("{{BODY}}", "\n".join(body))
-    page = page.replace("{{SUB}}", f'Instagram content audit · {s["n"]} posts · {dt.date.fromisoformat(s["first"]).strftime("%d %b %Y")} to {dt.date.fromisoformat(s["last"]).strftime("%d %b %Y")}')
-    page = page.replace("{{SRC}}", src).replace("{{DATA}}", csv_data(a))
+    hero = (f'<section class="hero inv" id="top"><div class="hero-word">{logo("wordmark", "logo")}</div>'
+            f'<img class="hero-mark" src="data:image/webp;base64,{b64(ROOT / "tools/book/renders/cover.webp")}" alt="">'
+            f'<div class="wrap hero-copy"><div><span class="lbl">Instagram content audit</span><h1>@{e(handle)}</h1>'
+            f'<p class="lede">{s["n"]} posts, {period}. What works, what to drop, and what to make next for the feed and for Meta ads.</p>'
+            f'<div class="ctas"><a class="btn btn-solid" href="#ideas">See 10 ideas</a><a class="btn btn-line" href="#calendar">30-day calendar</a></div></div>'
+            f'<dl class="hero-side"><dt>Audit date</dt><dd>{audit}</dd><dt>Data</dt><dd>{src}</dd><dt>Posts</dt><dd>{s["n"]}</dd></dl></div></section>')
+    foot_links = "".join(f'<li><a href="#{i}">{e(t)}</a></li>' for i, t in nav)
+    footer = (f'<footer class="foot"><div class="wrap foot-top"><div><a class="lockup" href="#top">{logo()}<span class="x">×</span><span class="bp">BLUPRINT</span></a>'
+              f'<p>Engagement = likes + comments, the two counts a public scrape returns. Saves, shares and reach need the account\'s own Insights. '
+              f'Topics, hooks, CTAs and comment reactions are found with keyword rules on captions and comments. Times are IST.</p></div>'
+              f'<div><h4>Sections</h4><ul>{foot_links}</ul></div>'
+              f'<div><h4>Data</h4><ul><li>{src}</li><li>{s["n"]} posts</li><li>{period}</li><li>Audit {audit}</li></ul></div>'
+              f'<div><h4>Project</h4><ul><li>BLUPRINT, a UI/UX graduation project with BLUORNG</li><li>Not an official BLUORNG publication</li></ul></div></div>'
+              f'<div class="wrap foot-word">{logo("wordmark", "logo")}</div></footer>')
+    page = TEMPLATE.replace("{{CSS}}", font_faces() + CSS).replace("{{JS}}", JS)
+    page = page.replace("{{TITLE}}", f"@{e(handle)} content audit · BLUPRINT").replace("{{LOGO}}", logo()).replace("{{TICKER}}", ticker(a))
+    page = page.replace("{{AUDIT}}", audit).replace("{{DEMO}}", demo).replace("{{CATS}}", cats).replace("{{HERO}}", hero)
+    page = page.replace("{{BODY}}", "\n".join(body)).replace("{{FOOT}}", footer).replace("{{DATA}}", csv_data(a))
     return page
 
 
@@ -363,18 +410,18 @@ TEMPLATE = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE}}</title><style>{{CSS}}</style></head>
 <body>
-<div class="bar">Content audit · @{{HANDLE}} · Source: {{SRC}} · Audit date {{AUDIT}}</div>
+{{TICKER}}
 {{DEMO}}
-<header class="top"><div class="brand">{{LOGO}}<span class="x">×</span><span class="bp">BLUPRINT</span></div>
-<div class="actions"><span class="date">Audit {{AUDIT}}</span><button type="button" id="csv">Export CSV</button><button type="button" onclick="print()">Print</button></div></header>
-<div class="shell"><nav class="side" aria-label="Sections">{{NAV}}</nav>
+<header class="store"><div class="wrap store-top">
+<nav class="l" aria-label="Quick links"><a href="#ideas">Ideas</a><a href="#calendar">Calendar</a><a href="#hashtags">Hashtags</a></nav>
+<a class="lockup" href="#top" aria-label="BLUPRINT, back to top">{{LOGO}}<span class="x">×</span><span class="bp">BLUPRINT</span></a>
+<div class="r"><span class="lbl">Audit {{AUDIT}}</span><button type="button" class="btn-s solid" id="csv">Export CSV</button><button type="button" class="btn-s" onclick="print()">Print</button></div>
+</div><nav class="cats" aria-label="Sections">{{CATS}}</nav><div class="progress"></div></header>
 <main>
-<div class="hero"><span class="kk">Social media manager dashboard</span><h1>@{{HANDLE}}</h1><p>{{SUB}}</p></div>
+{{HERO}}
 {{BODY}}
-<footer><p><b>Method.</b> Engagement = likes + comments, the two counts public scrapes return; saves, shares and reach need the account's own Insights.
-Topics, hooks, CTAs and comment reactions are found with keyword rules on captions and comments. Times are IST.</p>
-<p>Built with BLUPRINT, a UI/UX graduation project with BLUORNG. Not an official BLUORNG publication.</p></footer>
-</main></div>
+</main>
+{{FOOT}}
 <div id="tip" role="tooltip" hidden></div>
 <script type="application/json" id="data">{{DATA}}</script>
 <script>{{JS}}</script>
@@ -382,166 +429,209 @@ Topics, hooks, CTAs and comment reactions are found with keyword rules on captio
 '''
 
 CSS = r'''
-:root { --bg:#0a0a0a; --panel:#111111; --panel-2:#171717; --line:#262626; --line-2:#1d1d1d; --ink:#f4f4f4; --ink-2:#c4c4c4; --muted:#8a8a8a;
-  --blue:#3f7fe0; --orange:#dc6f25; --neutral:#5e5e5e;
-  --display:"Helvetica Neue", Helvetica, Arial, sans-serif; --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace; color-scheme: dark; }
+:root { --bg:#ffffff; --bg-2:#f4f4f4; --bg-3:#ebebeb; --line:#dcdcdc; --line-soft:#e9e9e9; --ink:#0b0b0b; --ink-2:#3b3b3b; --muted:#747474;
+  --heat:#c3141b; --mid:#a9a9a9; --one:#cfcfcf;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif; --body:"Geist", "Helvetica Neue", Arial, sans-serif; --mono:"Geist Mono", ui-monospace, Menlo, monospace;
+  --ease:cubic-bezier(0.23, 1, 0.32, 1); color-scheme: light; }
+.inv { --bg:#0a0a0a; --bg-2:#141414; --ink:#f4f4f4; --ink-2:#c8c8c8; --muted:#8c8c8c; --line:#2d2d2d; background: var(--bg); color: var(--ink); }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.55 var(--display); -webkit-font-smoothing: antialiased; }
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-.bar { background: var(--ink); color: var(--bg); text-align: center; font: 700 10.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; padding: 9px 16px; }
-.demo { background: var(--orange); color: #0a0a0a; padding: 10px 16px; text-align: center; font-size: 13px; }
-.demo b { text-transform: uppercase; letter-spacing: .14em; margin-right: 8px; font-size: 11px; }
-.top { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 28px;
-  background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-.brand { display: flex; align-items: center; gap: 12px; }
-.logo { height: 22px; width: auto; color: var(--ink); } .logo path { fill: currentColor; }
-.brand .x { color: var(--muted); font-size: 13px; } .brand .bp { font-weight: 900; letter-spacing: .06em; font-size: 17px; }
-.actions { display: flex; gap: 8px; align-items: center; }
-.actions .date { font: 600 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
-.actions button, .filters button { background: transparent; color: var(--ink); border: 1px solid var(--line); padding: 9px 14px; font: 700 10.5px/1 var(--display);
-  letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
-.actions button:hover, .filters button:hover { border-color: var(--ink); }
-.actions button:first-of-type { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.shell { display: grid; grid-template-columns: 210px minmax(0, 1fr); }
-.side { position: sticky; top: 59px; align-self: start; height: calc(100vh - 59px); padding: 26px 14px 26px 28px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; }
-.side a { display: flex; gap: 12px; padding: 9px 10px; font: 700 11px/1.2 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); transition: color .15s, background .15s; }
-.side a span { font: 500 10.5px/1.2 var(--mono); letter-spacing: 0; }
-.side a:hover, .side a.on { color: var(--ink); background: var(--panel); }
-main { padding: 0 32px 40px; min-width: 0; }
-.hero { padding: 40px 0 26px; border-bottom: 1px solid var(--line); }
-.kk { display: block; font: 700 10px/1.2 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-.hero h1 { margin: 10px 0 0; font: 900 clamp(44px, 7vw, 92px)/.9 var(--display); letter-spacing: -.035em; text-transform: uppercase; }
-.hero p { margin: 14px 0 0; color: var(--ink-2); font-size: 15px; }
-.sec { padding: 40px 0 8px; scroll-margin-top: 70px; }
-.sec-h { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 18px; }
-.sn { font: 500 12px/1 var(--mono); color: var(--muted); padding-top: 8px; }
-.sec-h h2 { margin: 0; font: 900 clamp(24px, 3vw, 34px)/1 var(--display); letter-spacing: -.02em; text-transform: uppercase; }
-.sec-h p { margin: 8px 0 0; color: var(--muted); }
-.kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
-.kpi { background: var(--panel); border: 1px solid var(--line-2); padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.kpi b { font: 900 30px/1 var(--display); letter-spacing: -.02em; }
-.kpi .ks { font-size: 12px; color: var(--muted); }
-.kpi.up b { color: var(--blue); } .kpi.down b { color: var(--orange); }
-.kpi.best { border-color: var(--line); transition: border-color .15s; } .kpi.best:hover { border-color: var(--ink); }
-.kpi .kc { font-size: 12px; color: var(--ink-2); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.grid { display: grid; gap: 10px; margin-bottom: 10px; }
-.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .g2w { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
-.panel { background: var(--panel); border: 1px solid var(--line-2); padding: 20px; min-width: 0; margin-bottom: 10px; }
-.grid > .panel { margin-bottom: 0; }
-.panel h3 { margin: 0 0 16px; font: 800 12px/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.note { margin: 14px 0 0; font-size: 12px; color: var(--muted); } .note b { color: var(--ink); }
-.pill { font: 700 10px/1 var(--display); letter-spacing: .1em; padding: 5px 8px; border: 1px solid currentColor; }
-.pill.up { color: var(--blue); } .pill.down { color: var(--orange); } .pill.flat { color: var(--ink-2); }
-/* horizontal bars */
-.hbs { display: grid; gap: 6px; }
-.hb { display: grid; gap: 12px; align-items: center; padding: 4px 6px; margin: 0 -6px; outline: none; transition: background .12s; }
-.hb:hover, .hb:focus-visible { background: var(--panel-2); }
-.hb-l { display: flex; gap: 8px; align-items: baseline; min-width: 0; font-size: 13px; color: var(--ink); }
-.hb-l em { font: 500 11px/1 var(--mono); font-style: normal; color: var(--muted); }
-.hb-l span { white-space: nowrap; } .hb-l small { color: var(--muted); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hb-t { height: 12px; position: relative; background: var(--line-2); }
-.hb-t i { position: absolute; inset: 0 auto 0 0; background: var(--neutral); border-radius: 0 4px 4px 0; }
-.hb.up .hb-t i, .hb-t.up i { background: var(--blue); } .hb.down .hb-t i { background: var(--orange); } .hb-t.flat i { background: var(--neutral); }
-.hb > b { font: 600 12.5px/1 var(--mono); text-align: right; white-space: nowrap; } .hb > b small { color: var(--muted); font-size: 11px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; } button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(16px, 3.5vw, 40px); }
+.lbl { font: 500 11px/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.logo { display: block; width: 100%; height: auto; } .logo path { fill: currentColor; }
+/* store chrome */
+.announce { background: #0b0b0b; color: #f4f4f4; overflow: hidden; font: 500 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
+.mq { display: flex; width: max-content; animation: mq 38s linear infinite; }
+.mq-run { display: flex; } .mq-run span { padding: 11px 28px; white-space: nowrap; } .mq-run span::after { content: "✦"; margin-left: 56px; font-size: 8px; vertical-align: 2px; color: #8c8c8c; }
+@keyframes mq { to { transform: translateX(-50%); } }
+.announce:hover .mq { animation-play-state: paused; }
+.demo { background: var(--heat); color: #fff; text-align: center; padding: 10px 16px; font-size: 13px; }
+.demo span { font: 700 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; border: 1px solid #fff; padding: 4px 7px; margin-right: 10px; }
+.store { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, #fff 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-soft); }
+.store-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; gap: 16px; }
+.store-top nav.l { display: flex; gap: 22px; }
+.store-top nav a, .cats a { font: 600 11.5px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; transition: opacity .2s; }
+.store-top .r { display: flex; gap: 8px; justify-content: flex-end; align-items: center; } .store-top .r .lbl { margin-right: 8px; }
+.lockup { display: flex; align-items: center; gap: 14px; color: var(--ink); }
+.lockup .logo { height: 22px; width: auto; } .lockup .x { font: 400 13px/1 var(--display); color: var(--muted); }
+.lockup .bp { font: 900 19px/1 var(--display); font-stretch: 112%; letter-spacing: .02em; }
+.btn-s { border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 10px 14px; font: 700 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s, transform .16s var(--ease); }
+.btn-s.solid { background: var(--ink); color: #fff; } .btn-s:active, .btn:active { transform: scale(.97); }
+.cats { display: flex; justify-content: center; gap: 28px; height: 40px; align-items: center; border-top: 1px solid var(--line-soft); overflow-x: auto; scrollbar-width: none; padding-inline: 16px; }
+.cats::-webkit-scrollbar { display: none; }
+.cats a { color: var(--muted); font-weight: 500; padding-block: 13px; }
+.cats a.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+@media (hover: hover) and (pointer: fine) { .cats a:hover, .store-top nav a:hover { opacity: .55; } .btn-s:hover { background: var(--ink); color: #fff; } .btn-s.solid:hover { background: #fff; color: var(--ink); } }
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); }
+@supports (animation-timeline: scroll()) { .progress { animation: grow linear both; animation-timeline: scroll(root); } @keyframes grow { to { transform: scaleX(1); } } }
+/* campaign hero */
+.hero { position: relative; overflow: hidden; min-height: clamp(520px, 78vh, 760px); display: flex; align-items: flex-end; background: radial-gradient(ellipse 55% 60% at 68% 42%, #222 0%, #0a0a0a 70%); }
+.hero-word { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); width: 116%; color: #fff; opacity: .045; pointer-events: none; }
+.hero-mark { position: absolute; right: max(3vw, calc(50% - 620px)); top: 44%; transform: translateY(-60%); width: min(34vw, 440px); height: auto; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.hero-copy { position: relative; z-index: 2; width: 100%; padding-block: 64px clamp(40px, 6vw, 72px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; }
+.hero h1 { margin: 14px 0 0; font: 800 clamp(52px, 9vw, 136px)/.88 var(--display); text-transform: uppercase; letter-spacing: -.035em; font-stretch: 105%; }
+.lede { margin: 22px 0 30px; max-width: 46ch; color: var(--ink-2); font-size: 16px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-width: 200px; padding: 16px 22px; font: 700 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--ink); transition: background-color .2s, color .2s, transform .16s var(--ease); }
+.btn-solid { background: var(--ink); color: var(--bg); } .btn-line { color: var(--ink); }
+@media (hover: hover) and (pointer: fine) { .btn-solid:hover { background: transparent; color: var(--ink); } .btn-line:hover { background: var(--ink); color: var(--bg); } }
+.hero-side { position: relative; z-index: 2; margin: 0; text-align: right; display: grid; gap: 4px; justify-items: end; }
+.hero-side dt { font: 500 10.5px/1.3 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+.hero-side dd { margin: 0; font: 600 13px/1.3 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+/* sections */
+.band { padding-block: clamp(56px, 7vw, 96px) 24px; border-bottom: 1px solid var(--line-soft); scroll-margin-top: 104px; }
+.crumbs { margin: 0 0 20px; font: 500 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); } .crumbs b { color: var(--ink); font-weight: 600; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .75fr); gap: 16px 64px; align-items: end; margin-bottom: clamp(28px, 4vw, 44px); }
+.sec-head h2 { margin: 0; font: 800 clamp(36px, 5.4vw, 76px)/.9 var(--display); text-transform: uppercase; letter-spacing: -.03em; text-wrap: balance; }
+.sec-head p { margin: 0; color: var(--ink-2); max-width: 46ch; }
+.grid { display: grid; gap: 14px; margin-bottom: 14px; } .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .g2w { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.panel { background: var(--bg-2); padding: clamp(18px, 2vw, 26px); min-width: 0; margin-bottom: 14px; } .grid > .panel { margin-bottom: 0; }
+.panel h3 { margin: 0 0 18px; font: 700 12px/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.note { margin: 16px 0 0; font-size: 12.5px; color: var(--muted); } .note b { color: var(--ink); }
+.pill { font: 700 10px/1 var(--display); letter-spacing: .12em; padding: 5px 8px; border: 1px solid currentColor; }
+.pill.up, .pill.flat { color: var(--ink); } .pill.down { color: var(--heat); }
+/* KPI product tiles */
+.kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 14px; margin-bottom: 36px; }
+.kp { display: flex; flex-direction: column; min-width: 0; }
+.kp-shot { background: var(--bg-2); aspect-ratio: 4 / 5; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; padding: 16px; position: relative; text-align: center; transition: background-color .3s var(--ease); }
+.kp-shot b { font: 800 clamp(30px, 3.2vw, 46px)/1 var(--display); letter-spacing: -.03em; text-transform: uppercase; }
+.kp.down .kp-shot b { color: var(--heat); }
+.kp-meta { padding-top: 12px; display: grid; gap: 3px; }
+.kp-meta h3 { margin: 0; font: 700 12px/1.3 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+.kp-meta span { font: 500 11.5px/1.3 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kp.best .kp-shot { background: #0b0b0b; color: #f4f4f4; } .kp.best q { font-size: 12px; color: #c8c8c8; line-height: 1.4; quotes: "“" "”"; }
+@media (hover: hover) and (pointer: fine) { .kp:hover .kp-shot { background: var(--bg-3); } .kp.best:hover .kp-shot { background: #222; } }
+.stag { position: absolute; left: 12px; top: 12px; font: 700 9.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; padding: 6px 8px; background: #0b0b0b; color: #fff; }
+.kp.best .stag { background: #fff; color: #0b0b0b; }
+/* bars */
+.hbs { display: grid; gap: 4px; }
+.hb { display: grid; gap: 14px; align-items: center; padding: 6px 8px; margin: 0 -8px; transition: background-color .15s; }
+.hb:hover, .hb:focus-visible { background: #fff; }
+.hb-l { display: flex; gap: 8px; align-items: baseline; min-width: 0; font-size: 13.5px; }
+.hb-l em { font: 500 11px/1 var(--mono); font-style: normal; color: var(--muted); } .hb-l span { white-space: nowrap; }
+.hb-l small { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-t { height: 12px; position: relative; background: #fff; }
+.hb-t i { position: absolute; inset: 0 auto 0 0; background: var(--mid); border-radius: 0 4px 4px 0; }
+.hb.up .hb-t i, .hb-t.up i { background: var(--ink); } .hb.down .hb-t i { background: var(--heat); } .hb-t.flat i { background: var(--mid); }
+.hb > b { font: 500 12.5px/1 var(--mono); text-align: right; white-space: nowrap; } .hb > b small { color: var(--muted); font-size: 11px; }
+.hb.down > b small { color: var(--heat); }
 /* timeline */
 .chart { width: 100%; height: auto; display: block; }
 .chart .gl { stroke: var(--line); stroke-width: 1; } .chart .ax { fill: var(--muted); font: 10.5px var(--mono); }
 .chart .avg { stroke: var(--muted); stroke-dasharray: 3 5; }
-.chart .roll { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
-.dot circle:not(.hit) { fill: var(--neutral); stroke: var(--panel); stroke-width: 2; transition: r .12s; }
-.dot.up circle:not(.hit) { fill: var(--blue); } .dot.down circle:not(.hit) { fill: var(--orange); }
+.chart .halo { paint-order: stroke; stroke: var(--bg-2); stroke-width: 5px; stroke-linejoin: round; font-weight: 500; fill: var(--ink-2); }
+.chart .roll { fill: none; stroke: var(--ink); stroke-width: 2.5; pointer-events: none; paint-order: stroke; }
+.dot circle:not(.hit) { fill: var(--mid); stroke: var(--bg-2); stroke-width: 2; transition: r .12s; }
+.dot.up circle:not(.hit) { fill: var(--ink); } .dot.down circle:not(.hit) { fill: var(--heat); }
 .dot .hit { fill: transparent; } .dot { outline: none; cursor: pointer; } .dot:hover circle:not(.hit), .dot:focus circle:not(.hit) { r: 6; }
-.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; font-size: 12px; color: var(--muted); align-items: center; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; font-size: 12px; color: var(--muted); align-items: center; }
 .legend span { display: inline-flex; gap: 7px; align-items: center; }
-.lk { display: inline-block; flex: none; } .lk.line { width: 16px; height: 2px; background: var(--ink); }
-.lk.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--neutral); } .lk.sq { width: 11px; height: 11px; background: var(--neutral); }
-.lk.up { background: var(--blue); } .lk.down { background: var(--orange); } .lk.one { background: #3a3a3a; }
+.lk { display: inline-block; flex: none; } .lk.line { width: 18px; height: 2.5px; background: var(--ink); }
+.lk.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mid); } .lk.sq { width: 11px; height: 11px; background: var(--mid); }
+.lk.up { background: var(--ink); } .lk.down { background: var(--heat); } .lk.one { background: var(--one); }
 /* tables */
 .tbl-wrap { overflow-x: auto; }
-.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tbl th { text-align: left; font: 700 10px/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 12px 10px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
-.tbl td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line-2); vertical-align: top; color: var(--ink-2); }
-.tbl td:first-child { color: var(--ink); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th { text-align: left; font: 600 10.5px/1.3 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 12px 10px 0; border-bottom: 1px solid var(--ink); white-space: nowrap; }
 .tbl.hooks th { white-space: normal; }
+.tbl td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+.tbl td:first-child { color: var(--ink); font-weight: 500; }
 .tbl .num { text-align: right; font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
-.tbl td.up { color: var(--blue); } .tbl td.down { color: var(--orange); }
-.tbl td small { display: block; color: var(--muted); font-size: 11px; }
+.tbl td.up { color: var(--ink); font-weight: 600; } .tbl td.down { color: var(--heat); }
+.tbl td small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
 /* cards */
-.cards { display: grid; gap: 10px; margin-bottom: 10px; } .cards.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cards.c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line-2); padding: 18px; min-width: 0; }
-.card h4 { margin: 8px 0 6px; font: 800 17px/1.2 var(--display); text-transform: uppercase; letter-spacing: -.005em; }
-.card p { margin: 0; color: var(--ink-2); font-size: 13px; }
-.card.win { border-top: 2px solid var(--blue); } .card.bad { border-top: 2px solid var(--orange); }
-.plist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
-.plist a { display: grid; gap: 2px; padding: 12px; background: var(--panel-2); border-left: 2px solid var(--orange); transition: background .15s; }
-.plist a:hover { background: #1d1d1d; } .plist b { font: 800 18px/1.1 var(--display); } .plist span { font-size: 12px; color: var(--muted); } .plist small { font-size: 12px; color: var(--ink-2); }
+.cards { display: grid; gap: 14px; margin-bottom: 14px; } .cards.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cards.c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card { background: var(--bg-2); padding: 22px; min-width: 0; border-top: 2px solid transparent; }
+.card .kk { font: 600 10.5px/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.card h4 { margin: 10px 0 8px; font: 800 20px/1.05 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+.card p { margin: 0; color: var(--ink-2); font-size: 13.5px; }
+.card.win { border-top-color: var(--ink); } .card.bad { border-top-color: var(--heat); } .card.bad h4 { color: var(--heat); }
+.plist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.plist a { display: grid; gap: 3px; padding: 14px; background: #fff; border-left: 2px solid var(--heat); transition: background-color .15s; height: 100%; }
+.plist a:hover { background: var(--bg-3); } .plist b { font: 800 20px/1.1 var(--display); } .plist span { font-size: 12px; color: var(--muted); } .plist small { font-size: 12.5px; color: var(--ink-2); }
 /* hashtags */
-.cloud { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; line-height: 1.25; }
-.tag { font-weight: 800; letter-spacing: -.01em; cursor: default; outline: none; transition: opacity .15s; color: var(--ink-2); }
-.tag.up { color: var(--blue); } .tag.down { color: var(--orange); } .tag.one { color: #5a5a5a; }
-.cloud:hover .tag { opacity: .45; } .cloud .tag:hover, .tag:focus-visible { opacity: 1; }
-.tl { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 7px; }
-.tl li { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding-bottom: 7px; border-bottom: 1px solid var(--line-2); }
-.tl li span { color: var(--muted); font-size: 12px; text-align: right; }
-.tl.up b { color: var(--blue); } .tl.down b { color: var(--orange); } .tl.new b { color: var(--ink); }
+.cloud { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; line-height: 1.2; }
+.tag { font-family: var(--display); font-weight: 800; letter-spacing: -.01em; text-transform: lowercase; outline: none; transition: opacity .15s; color: var(--mid); cursor: default; }
+.tag.up { color: var(--ink); } .tag.down { color: var(--heat); } .tag.one { color: var(--one); }
+.cloud:hover .tag { opacity: .35; } .cloud .tag:hover, .tag:focus-visible { opacity: 1; }
+.tl { list-style: none; margin: 14px 0 0; padding: 0; display: grid; }
+.tl li { display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.tl li span { color: var(--muted); font-size: 12px; text-align: right; } .tl b { font-weight: 600; }
+.tl.down b { color: var(--heat); }
 /* heatmap */
 .heat { display: grid; grid-template-columns: 52px repeat(7, minmax(0, 1fr)); gap: 3px; }
-.heat .hh { font: 700 9.5px/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 0 6px; text-align: center; }
+.heat .hh { font: 600 9.5px/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; text-align: center; }
 .heat .hh small { display: block; font: 400 10px/1.3 var(--mono); letter-spacing: 0; }
-.heat .hd { font: 700 11px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; }
-.hc { min-height: 50px; background: color-mix(in srgb, var(--blue) var(--p), var(--panel-2)); display: flex; flex-direction: column; justify-content: center; align-items: center; outline: none; transition: box-shadow .12s; }
-.hc b { font: 700 12px/1 var(--mono); } .hc small { font: 10px/1.2 var(--mono); color: color-mix(in srgb, var(--ink) 70%, transparent); margin-top: 3px; }
-.hc:hover, .hc:focus-visible { box-shadow: inset 0 0 0 2px var(--ink); }
-.hc.empty { background: transparent; border: 1px dashed var(--line); color: #444; }
-.ramp { display: inline-flex !important; gap: 2px !important; } .ramp i { width: 18px; height: 10px; display: block; background: color-mix(in srgb, var(--blue) var(--p), var(--panel-2)); }
-.sched { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
-.sched div { background: var(--panel-2); padding: 14px; border-top: 2px solid var(--blue); display: grid; gap: 3px; }
-.sched b { font: 900 22px/1 var(--display); text-transform: uppercase; } .sched span { font-size: 12.5px; } .sched small { font: 11px var(--mono); color: var(--muted); }
+.heat .hd { font: 700 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; display: flex; align-items: center; }
+.hc { min-height: 52px; background: color-mix(in srgb, #0b0b0b var(--p), #ffffff); color: var(--ink); display: flex; flex-direction: column; justify-content: center; align-items: center; outline: none; transition: box-shadow .12s; }
+.hc.dk { color: #fff; } .hc b { font: 500 12px/1 var(--mono); } .hc small { font: 10px/1.2 var(--mono); opacity: .65; margin-top: 3px; }
+.hc:hover, .hc:focus-visible { box-shadow: inset 0 0 0 2px var(--heat); }
+.hc.empty { background: transparent; border: 1px dashed var(--line); color: var(--one); }
+.ramp { display: inline-flex !important; gap: 2px !important; } .ramp i { width: 18px; height: 10px; display: block; background: color-mix(in srgb, #0b0b0b var(--p), #fff); }
+.sched { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+.sched div { background: #fff; padding: 16px; border-top: 2px solid var(--ink); display: grid; gap: 4px; }
+.sched b { font: 800 26px/1 var(--display); text-transform: uppercase; } .sched span { font-size: 13px; } .sched small { font: 11px var(--mono); color: var(--muted); }
 /* sentiment */
 .gbs { display: grid; gap: 12px; }
-.gb { display: grid; grid-template-columns: minmax(110px, .8fr) minmax(0, 2fr) 70px; gap: 12px; align-items: center; }
-.gb-l { font-size: 13px; } .gb-b { display: grid; gap: 3px; } .gb-b .hb-t { height: 9px; outline: none; }
-.gb > b { font: 600 12.5px/1.2 var(--mono); text-align: right; } .gb > b small { display: block; color: var(--muted); font-size: 11px; }
-.quotes { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.quotes li { font-size: 12.5px; padding: 6px 10px; background: var(--panel-2); color: var(--ink-2); }
-/* ideas */
-.ideas { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
-.idea { background: var(--panel); border: 1px solid var(--line-2); padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s; }
-.idea:hover { border-color: var(--line); }
-.idea-h { display: flex; justify-content: space-between; align-items: center; } .idea .no { font: 500 12px/1 var(--mono); color: var(--muted); }
-.idea h4 { margin: 4px 0 0; font: 900 19px/1.1 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
-.idea .hook { margin: 0; font-size: 15px; color: var(--ink); font-weight: 600; }
-.idea dl { margin: 6px 0 0; display: grid; gap: 4px; } .idea dt { font: 700 9.5px/1.3 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
-.idea dd { margin: 0; font-size: 13px; color: var(--ink-2); }
-.badge { font: 800 9.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; padding: 6px 8px; border: 1px solid; white-space: nowrap; }
-.badge.high { background: var(--blue); border-color: var(--blue); color: #fff; } .badge.medium { color: var(--blue); border-color: var(--blue); }
-.badge.low { color: var(--muted); border-color: var(--line); } .badge.sm { padding: 3px 5px; font-size: 8.5px; margin-left: 6px; vertical-align: 1px; }
+.gb { display: grid; grid-template-columns: minmax(110px, .8fr) minmax(0, 2fr) 64px; gap: 12px; align-items: center; }
+.gb-l { font-size: 13.5px; } .gb-b { display: grid; gap: 3px; } .gb-b .hb-t { height: 9px; outline: none; }
+.gb > b { font: 500 12.5px/1.2 var(--mono); text-align: right; } .gb > b small { display: block; color: var(--muted); font-size: 11px; }
+.quotes { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.quotes li { font-size: 12.5px; padding: 7px 11px; background: #fff; color: var(--ink-2); }
+/* ideas as product cards */
+.ideas { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 36px 14px; }
+.idea { display: flex; flex-direction: column; min-width: 0; }
+.idea-shot { position: relative; background: var(--bg-2); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 48px 28px 28px; transition: background-color .3s var(--ease); }
+.idea:nth-child(4n+1) .idea-shot { background: #0b0b0b; color: #f4f4f4; }
+.idea-shot .hook { margin: 0; font: 800 clamp(22px, 2.2vw, 28px)/1.05 var(--display); text-transform: uppercase; letter-spacing: -.02em; text-align: center; text-wrap: balance; }
+.idea-shot .no { position: absolute; right: 12px; top: 12px; font: 500 11px/1 var(--mono); color: var(--muted); }
+.stag.high { background: #0b0b0b; color: #fff; } .stag.medium { background: #fff; color: #0b0b0b; border: 1px solid #0b0b0b; } .stag.low { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+.idea:nth-child(4n+1) .stag.high { background: #fff; color: #0b0b0b; } .idea:nth-child(4n+1) .stag.medium { background: transparent; color: #fff; border-color: #fff; }
+.idea-meta { display: flex; justify-content: space-between; gap: 12px; padding-top: 14px; }
+.idea-meta h3 { margin: 0; font: 700 13px/1.3 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+.idea-meta span { font: 500 12px/1.3 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.idea dl { margin: 10px 0 0; } .idea dt { font: 600 10px/1.3 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+.idea dd { margin: 3px 0 0; font-size: 13.5px; color: var(--ink-2); }
+@media (hover: hover) and (pointer: fine) { .idea:hover .idea-shot { background: var(--bg-3); } .idea:nth-child(4n+1):hover .idea-shot { background: #222; } }
 /* calendar */
-.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.filters button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.cal tr.k-idea td:first-child { box-shadow: inset 2px 0 0 var(--blue); padding-left: 10px; } .cal tr.k-filler td:first-child, .cal tr.k-rest td:first-child { padding-left: 10px; }
-.cal tr.k-rest td { color: var(--muted); } .cal td:first-child { white-space: nowrap; }
-.fmt { font: 700 10px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; padding: 4px 6px; border: 1px solid var(--line); }
-.groups { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.filters button { border: 1px solid var(--line); background: #fff; color: var(--ink); padding: 10px 14px; font: 600 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: border-color .15s; }
+.filters button:hover { border-color: var(--ink); } .filters button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cal tr.k-idea td:first-child { box-shadow: inset 2px 0 0 var(--ink); padding-left: 10px; } .cal tr.k-filler td:first-child, .cal tr.k-rest td:first-child { padding-left: 10px; }
+.cal tr.k-rest td { color: var(--muted); font-weight: 400; } .cal td:first-child { white-space: nowrap; }
+.badge { font: 700 9px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; padding: 4px 6px; margin-left: 6px; vertical-align: 1px; border: 1px solid var(--ink); white-space: nowrap; }
+.badge.high { background: var(--ink); color: #fff; } .badge.medium { color: var(--ink); } .badge.low { color: var(--muted); border-color: var(--line); }
+.fmt { font: 600 10px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; padding: 5px 7px; border: 1px solid var(--line); }
+.groups { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 12.5px; color: var(--muted); }
 .groups b { color: var(--ink); margin-right: 6px; }
-details.all { margin-top: 18px; } details.all summary { cursor: pointer; font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; padding: 14px 0; color: var(--ink-2); }
-.sortable th { cursor: pointer; } .sortable th:hover { color: var(--ink); } .sortable a { text-decoration: underline; text-decoration-color: var(--line); }
-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; } footer b { color: var(--ink-2); }
-#tip { position: fixed; z-index: 50; pointer-events: none; background: #f4f4f4; color: #0a0a0a; padding: 8px 10px; font-size: 12px; line-height: 1.4; max-width: 280px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
-#tip b { display: block; font-size: 14px; }
-@media (max-width: 1100px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cards.c3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 860px) {
-  .shell { grid-template-columns: 1fr; }
-  .side { position: sticky; top: 55px; z-index: 15; height: auto; flex-direction: row; overflow-x: auto; padding: 8px 16px; background: var(--bg); border-right: 0; border-bottom: 1px solid var(--line); }
-  .side a { white-space: nowrap; } main { padding: 0 16px 32px; } .top { padding: 12px 16px; } .actions .date { display: none; }
-  .g2, .g2w, .cards.c2, .cards.c3 { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hb { grid-template-columns: minmax(0, 1fr) 76px !important; } .hb .hb-t { grid-column: 1 / -1; grid-row: 2; }
-  .heat { grid-template-columns: 38px repeat(7, minmax(30px, 1fr)); overflow-x: auto; } .hc b { font-size: 10px; }
+details.all { margin-top: 22px; border-top: 1px solid var(--line); }
+details.all summary { cursor: pointer; font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; padding: 18px 0; }
+.sortable th { cursor: pointer; } .sortable th:hover { color: var(--ink); } .sortable a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+/* footer */
+.foot { margin-top: 0; }
+.foot-top { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 64px 40px; border-bottom: 1px solid var(--line); }
+.foot-top p { color: var(--muted); font-size: 13px; margin: 18px 0 0; max-width: 44ch; }
+.foot-top h4 { margin: 0 0 14px; font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
+.foot-top ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; } .foot-top li { color: var(--muted); font-size: 13px; }
+.foot-top a:hover { color: var(--ink); }
+.foot-word { padding-block: 28px 24px; color: var(--ink); }
+/* tooltip */
+#tip { position: fixed; z-index: 60; pointer-events: none; background: #0b0b0b; color: #f4f4f4; padding: 9px 11px; font-size: 12px; line-height: 1.45; max-width: 280px; }
+#tip b { display: block; font: 600 14px/1.3 var(--body); }
+@media (max-width: 1100px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cards.c3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .store-top nav.l { display: none; } .store-top { grid-template-columns: auto 1fr; } .store-top .lockup { order: -1; } }
+@media (max-width: 760px) {
+  .store-top { height: 56px; } .store-top .r .lbl { display: none; } .store-top .r .btn-s:not(.solid) { display: none; } .cats { justify-content: flex-start; gap: 22px; }
+  .hero { min-height: 0; } .hero-mark { width: 52vw; top: 28px; right: 16px; transform: none; } .hero-copy { grid-template-columns: 1fr; padding-top: calc(52vw + 24px); } .hero-side { justify-items: start; text-align: left; }
+  .sec-head, .g2, .g2w, .cards.c2, .cards.c3, .foot-top { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hb { grid-template-columns: minmax(0, 1fr) 84px !important; } .hb .hb-t { grid-column: 1 / -1; grid-row: 2; }
+  .heat { grid-template-columns: 34px repeat(7, minmax(0, 1fr)); gap: 2px; } .heat .hn { display: none; } .heat .hh small { font-size: 9px; } .hc { min-height: 44px; } .hc b { font-size: 9.5px; } .hc small { display: none; }
+  .kp-shot { aspect-ratio: 4 / 3; } .kp.best .kp-shot { padding-top: 44px; aspect-ratio: auto; min-height: 100%; } .chart-wrap { overflow-x: auto; margin-inline: -8px; } .chart-wrap .chart { min-width: 620px; } .btn { min-width: 0; flex: 1; }
 }
-@media print { .top, .side, .filters, .bar { display: none; } .shell { display: block; } body { background: #0a0a0a; } .sec { break-inside: avoid-page; } }
+@media print { .store, .announce, .filters, .ctas { display: none; } .band { break-inside: avoid-page; } }
 '''
 
 JS = r'''
@@ -591,12 +681,12 @@ JS = r'''
     });
   });
   // section highlight
-  var links = [].slice.call(document.querySelectorAll('.side a'));
+  var links = [].slice.call(document.querySelectorAll('.cats a'));
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { if (en.isIntersecting) links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + en.target.id); }); });
+      es.forEach(function (en) { if (en.isIntersecting) links.forEach(function (l) { var on = l.getAttribute('href') === '#' + en.target.id; l.classList.toggle('on', on); if (on && l.scrollIntoView && innerWidth < 760) l.parentNode.scrollLeft = l.offsetLeft - 16; }); });
     }, { rootMargin: '-30% 0px -60% 0px' });
-    document.querySelectorAll('.sec').forEach(function (s) { io.observe(s); });
+    document.querySelectorAll('.band').forEach(function (s) { io.observe(s); });
   }
   // CSV export
   document.getElementById('csv').addEventListener('click', function () {
