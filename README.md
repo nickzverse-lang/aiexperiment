@@ -26,11 +26,11 @@ A content audit and planning dashboard for @bluorng: snapshot, what's working, h
 - Code: `tools/bluprint/analyze.py` (all analysis), `tools/bluprint/dashboard.py` (HTML), `tools/bluprint/demo_data.py` (demo set).
 
 ## Case study (A4, college grid)
-- [`docs/bluorng-casestudy.pdf`](docs/bluorng-casestudy.pdf): 59-page UX case study, A4 landscape. It runs from the project proposal and timeline to user scenarios and storyboards. All content sits inside the grid's content box (left margin 33.867 mm, the other margins 23.989 mm).
+- [`docs/bluorng-casestudy.pdf`](docs/bluorng-casestudy.pdf): 100-page UX case study, A4 landscape, covering every stage from the project proposal to usability evaluation and the test report, ending in the BLUPRINT dashboard. All content sits inside the grid's content box (left margin 33.867 mm, the other margins 23.989 mm).
 - [`docs/bluorng-casestudy.html`](docs/bluorng-casestudy.html): the same pages in a browser.
 - [`docs/bluorng-casestudy-figma.html`](docs/bluorng-casestudy-figma.html): static, script-free version for Figma. Open it in Chrome and capture it with the html.to.design extension. Rebuild: `node tools/bake_figma.js <url of local build> docs/bluorng-casestudy-figma.html 297mm 210mm`.
 - [`docs/research/survey_responses_sample.csv`](docs/research/survey_responses_sample.csv): the 80 sample survey responses behind the charts.
-- Content: `tools/cs/pages.py`. Sample survey and interviews: `tools/cs/data.py`. Renderer: `tools/build_casestudy.py`.
+- Content: `tools/cs/pages.py` (months 1–3) and `tools/cs/pages_design.py` (month 4: flows to test report). Dashboard screenshots: `node tools/cs/shoot_dashboard.js docs/bluprint/bluorng-dashboard-demo.html <v1-dark.html> tools/cs/shots`. Sample survey and interviews: `tools/cs/data.py`. Renderer: `tools/build_casestudy.py`.
 - PDF: `python3 tools/build_casestudy.py --local <deps> <out>.html`, serve `/` over http, then `node tools/make_pdf.js <url> docs/bluorng-casestudy.pdf 297mm 210mm`.
 
 ## Presentation

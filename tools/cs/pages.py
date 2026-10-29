@@ -100,7 +100,7 @@ def pages():
     g += '<span class="ph-label">Reviews</span><span class="tl">Research review</span><span class="ms" style="grid-column:9/10"></span><span class="tl">Concept review</span><span class="ms" style="grid-column:13/14"></span><span class="tl">Final jury</span><span class="ms" style="grid-column:17/18"></span></div>'
     page("Overview", "Project timeline", "Four months, sixteen weeks",
          f'<div class="panel">{g}</div>', lead="Month by month: discover, research and define, ideate, then design and test.",
-         take="This document covers months 1 to 3, up to scenarios and storyboards. Month 4 builds and tests the design.", w=920)
+         take="This document follows all four months, from the proposal to the usability test report.", w=920)
 
     # ------------------------------------------------------------------ 01 DISCOVER
     divider("01", "Discover", "Understanding the brand, the content-creation domain, what others have written, and who is involved.",
@@ -660,5 +660,7 @@ def pages():
 
     P.append(dict(kind="storyboard", n=1))
     P.append(dict(kind="storyboard", n=2))
+    from pages_design import design_pages
+    P += design_pages()
     P.append(dict(kind="end"))
     return P

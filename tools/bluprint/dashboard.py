@@ -50,6 +50,16 @@ def logo(name="monogram", cls="logo"):
     return svg.replace('<svg xmlns="http://www.w3.org/2000/svg"', f'<svg class="{cls}" aria-hidden="true" focusable="false"')
 
 
+ICONS = {  # 24 px grid, 1.75 stroke, square caps: the dashboard's whole icon set
+    "download": "M12 4v11M7 10l5 5 5-5M5 20h14", "print": "M7 9V4h10v5M7 17H4v-7h16v7h-3M7 14h10v6H7z",
+    "external": "M14 4h6v6M20 4l-9 9M18 14v6H4V6h6", "arrow": "M4 12h16M14 6l6 6-6 6", "sort": "M8 9l4-4 4 4M8 15l4 4 4-4",
+}
+
+
+def ico(name, cls="ic"):
+    return f'<svg class="{cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="{ICONS[name]}"/></svg>'
+
+
 def b64(path):
     return base64.b64encode(pathlib.Path(path).read_bytes()).decode()
 
@@ -362,7 +372,7 @@ def render(a):
     tr = s["trend"]
     body = [
         section("01", "Performance", f'{s["n"]} posts from {period}. Engagement = likes + comments.',
-                kpis(a) + f'<div class="grid g2w"><div class="panel"><h3>Top 10 posts by engagement</h3>{top10(a)}<p class="note">Select a bar to open the post on Instagram.</p></div>'
+                kpis(a) + f'<div class="grid g2w"><div class="panel"><h3>Top 10 posts by engagement</h3>{top10(a)}<p class="note">{ico("external")} Select a bar to open the post on Instagram.</p></div>'
                 f'<div class="panel"><h3>Format performance</h3>{lift_bars(s["types"], "minmax(130px,1fr)")}<p class="note">Average engagement per post; % vs the account average of {k(s["avg_eng"])}.</p></div></div>'
                 f'<div class="panel"><h3>Engagement over time <span class="pill {tone(tr["fit_change"], 10)}">{tr["direction"]} {sign(tr["fit_change"])}</span></h3>{timeline(a)}'
                 f'<p class="note">Trend line change {sign(tr["fit_change"])}; second half vs first half {sign(tr["halves_change"])}. Up or down means more than 10% either way.</p></div>',
@@ -389,7 +399,7 @@ def render(a):
             f'<img class="hero-mark" src="data:image/webp;base64,{b64(ROOT / "tools/book/renders/cover.webp")}" alt="">'
             f'<div class="wrap hero-copy"><div><span class="lbl">Instagram content audit</span><h1>@{e(handle)}</h1>'
             f'<p class="lede">{s["n"]} posts, {period}. What works, what to drop, and what to make next for the feed and for Meta ads.</p>'
-            f'<div class="ctas"><a class="btn btn-solid" href="#ideas">See 10 ideas</a><a class="btn btn-line" href="#calendar">30-day calendar</a></div></div>'
+            f'<div class="ctas"><a class="btn btn-solid" href="#ideas">See 10 ideas {ico("arrow")}</a><a class="btn btn-line" href="#calendar">30-day calendar</a></div></div>'
             f'<dl class="hero-side"><dt>Audit date</dt><dd>{audit}</dd><dt>Data</dt><dd>{src}</dd><dt>Posts</dt><dd>{s["n"]}</dd></dl></div></section>')
     foot_links = "".join(f'<li><a href="#{i}">{e(t)}</a></li>' for i, t in nav)
     footer = (f'<footer class="foot"><div class="wrap foot-top"><div><a class="lockup" href="#top">{logo()}<span class="x">×</span><span class="bp">BLUPRINT</span></a>'
@@ -401,7 +411,7 @@ def render(a):
               f'<div class="wrap foot-word">{logo("wordmark", "logo")}</div></footer>')
     page = TEMPLATE.replace("{{CSS}}", font_faces() + CSS).replace("{{JS}}", JS)
     page = page.replace("{{TITLE}}", f"@{e(handle)} content audit · BLUPRINT").replace("{{LOGO}}", logo()).replace("{{TICKER}}", ticker(a))
-    page = page.replace("{{AUDIT}}", audit).replace("{{DEMO}}", demo).replace("{{CATS}}", cats).replace("{{HERO}}", hero)
+    page = page.replace("{{AUDIT}}", audit).replace("{{DEMO}}", demo).replace("{{CATS}}", cats).replace("{{IC_DL}}", ico("download")).replace("{{IC_PR}}", ico("print")).replace("{{HERO}}", hero)
     page = page.replace("{{BODY}}", "\n".join(body)).replace("{{FOOT}}", footer).replace("{{DATA}}", csv_data(a))
     return page
 
@@ -415,7 +425,7 @@ TEMPLATE = '''<!doctype html>
 <header class="store"><div class="wrap store-top">
 <nav class="l" aria-label="Quick links"><a href="#ideas">Ideas</a><a href="#calendar">Calendar</a><a href="#hashtags">Hashtags</a></nav>
 <a class="lockup" href="#top" aria-label="BLUPRINT, back to top">{{LOGO}}<span class="x">×</span><span class="bp">BLUPRINT</span></a>
-<div class="r"><span class="lbl">Audit {{AUDIT}}</span><button type="button" class="btn-s solid" id="csv">Export CSV</button><button type="button" class="btn-s" onclick="print()">Print</button></div>
+<div class="r"><span class="lbl">Audit {{AUDIT}}</span><button type="button" class="btn-s solid" id="csv" aria-label="Export CSV">{{IC_DL}}Export CSV</button><button type="button" class="btn-s" onclick="print()">{{IC_PR}}Print</button></div>
 </div><nav class="cats" aria-label="Sections">{{CATS}}</nav><div class="progress"></div></header>
 <main>
 {{HERO}}
@@ -429,8 +439,8 @@ TEMPLATE = '''<!doctype html>
 '''
 
 CSS = r'''
-:root { --bg:#ffffff; --bg-2:#f4f4f4; --bg-3:#ebebeb; --line:#dcdcdc; --line-soft:#e9e9e9; --ink:#0b0b0b; --ink-2:#3b3b3b; --muted:#747474;
-  --heat:#c3141b; --mid:#a9a9a9; --one:#cfcfcf;
+:root { --bg:#ffffff; --bg-2:#f4f4f4; --bg-3:#ebebeb; --line:#dcdcdc; --line-soft:#e9e9e9; --ink:#0b0b0b; --ink-2:#3b3b3b; --muted:#6b6b6b;
+  --heat:#c3141b; --mid:#8a8a8a; --one:#cfcfcf;
   --display:"Archivo", "Helvetica Neue", Arial, sans-serif; --body:"Geist", "Helvetica Neue", Arial, sans-serif; --mono:"Geist Mono", ui-monospace, Menlo, monospace;
   --ease:cubic-bezier(0.23, 1, 0.32, 1); color-scheme: light; }
 .inv { --bg:#0a0a0a; --bg-2:#141414; --ink:#f4f4f4; --ink-2:#c8c8c8; --muted:#8c8c8c; --line:#2d2d2d; background: var(--bg); color: var(--ink); }
@@ -459,15 +469,18 @@ a { color: inherit; text-decoration: none; } button { font: inherit; cursor: poi
 .lockup { display: flex; align-items: center; gap: 14px; color: var(--ink); }
 .lockup .logo { height: 22px; width: auto; } .lockup .x { font: 400 13px/1 var(--display); color: var(--muted); }
 .lockup .bp { font: 900 19px/1 var(--display); font-stretch: 112%; letter-spacing: .02em; }
-.btn-s { border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 10px 14px; font: 700 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s, transform .16s var(--ease); }
+.btn-s { min-height: 44px; border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 10px 16px; font: 700 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s, transform .16s var(--ease); }
 .btn-s.solid { background: var(--ink); color: #fff; } .btn-s:active, .btn:active { transform: scale(.97); }
-.cats { display: flex; justify-content: center; gap: 28px; height: 40px; align-items: center; border-top: 1px solid var(--line-soft); overflow-x: auto; scrollbar-width: none; padding-inline: 16px; }
+.cats { display: flex; justify-content: center; gap: 28px; height: 44px; align-items: center; border-top: 1px solid var(--line-soft); overflow-x: auto; scrollbar-width: none; padding-inline: 16px; }
 .cats::-webkit-scrollbar { display: none; }
-.cats a { color: var(--muted); font-weight: 500; padding-block: 13px; }
+.cats a { color: var(--muted); font-weight: 500; padding-block: 16px; }
 .cats a.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
 @media (hover: hover) and (pointer: fine) { .cats a:hover, .store-top nav a:hover { opacity: .55; } .btn-s:hover { background: var(--ink); color: #fff; } .btn-s.solid:hover { background: #fff; color: var(--ink); } }
 .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--ink); transform-origin: 0 50%; transform: scaleX(0); }
 @supports (animation-timeline: scroll()) { .progress { animation: grow linear both; animation-timeline: scroll(root); } @keyframes grow { to { transform: scaleX(1); } } }
+.ic { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: square; stroke-linejoin: miter; flex: none; vertical-align: -3px; }
+.btn-s { display: inline-flex; align-items: center; gap: 8px; } .btn .ic { margin-left: 10px; transition: transform .2s var(--ease); } .note .ic { width: 14px; height: 14px; margin-right: 4px; }
+@media (hover: hover) and (pointer: fine) { .btn:hover .ic { transform: translateX(3px); } }
 /* campaign hero */
 .hero { position: relative; overflow: hidden; min-height: clamp(520px, 78vh, 760px); display: flex; align-items: flex-end; background: radial-gradient(ellipse 55% 60% at 68% 42%, #222 0%, #0a0a0a 70%); }
 .hero-word { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); width: 116%; color: #fff; opacity: .045; pointer-events: none; }
@@ -532,7 +545,7 @@ a { color: inherit; text-decoration: none; } button { font: inherit; cursor: poi
 .legend span { display: inline-flex; gap: 7px; align-items: center; }
 .lk { display: inline-block; flex: none; } .lk.line { width: 18px; height: 2.5px; background: var(--ink); }
 .lk.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mid); } .lk.sq { width: 11px; height: 11px; background: var(--mid); }
-.lk.up { background: var(--ink); } .lk.down { background: var(--heat); } .lk.one { background: var(--one); }
+.lk.up { background: var(--ink); } .lk.down { background: var(--heat); } .lk.one { background: transparent; border: 1px solid var(--muted); }
 /* tables */
 .tbl-wrap { overflow-x: auto; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
@@ -556,7 +569,7 @@ a { color: inherit; text-decoration: none; } button { font: inherit; cursor: poi
 /* hashtags */
 .cloud { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; line-height: 1.2; }
 .tag { font-family: var(--display); font-weight: 800; letter-spacing: -.01em; text-transform: lowercase; outline: none; transition: opacity .15s; color: var(--mid); cursor: default; }
-.tag.up { color: var(--ink); } .tag.down { color: var(--heat); } .tag.one { color: var(--one); }
+.tag.up { color: var(--ink); } .tag.down { color: var(--heat); } .tag.one { color: var(--muted); font-weight: 500; }
 .cloud:hover .tag { opacity: .35; } .cloud .tag:hover, .tag:focus-visible { opacity: 1; }
 .tl { list-style: none; margin: 14px 0 0; padding: 0; display: grid; }
 .tl li { display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px; padding: 9px 0; border-bottom: 1px solid var(--line); }
@@ -599,7 +612,7 @@ a { color: inherit; text-decoration: none; } button { font: inherit; cursor: poi
 @media (hover: hover) and (pointer: fine) { .idea:hover .idea-shot { background: var(--bg-3); } .idea:nth-child(4n+1):hover .idea-shot { background: #222; } }
 /* calendar */
 .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-.filters button { border: 1px solid var(--line); background: #fff; color: var(--ink); padding: 10px 14px; font: 600 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: border-color .15s; }
+.filters button { min-height: 44px; border: 1px solid var(--line); background: #fff; color: var(--ink); padding: 10px 16px; font: 600 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; transition: border-color .15s; }
 .filters button:hover { border-color: var(--ink); } .filters button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .cal tr.k-idea td:first-child { box-shadow: inset 2px 0 0 var(--ink); padding-left: 10px; } .cal tr.k-filler td:first-child, .cal tr.k-rest td:first-child { padding-left: 10px; }
 .cal tr.k-rest td { color: var(--muted); font-weight: 400; } .cal td:first-child { white-space: nowrap; }
@@ -630,6 +643,11 @@ details.all summary { cursor: pointer; font: 700 11px/1 var(--display); letter-s
   .hb { grid-template-columns: minmax(0, 1fr) 84px !important; } .hb .hb-t { grid-column: 1 / -1; grid-row: 2; }
   .heat { grid-template-columns: 34px repeat(7, minmax(0, 1fr)); gap: 2px; } .heat .hn { display: none; } .heat .hh small { font-size: 9px; } .hc { min-height: 44px; } .hc b { font-size: 9.5px; } .hc small { display: none; }
   .kp-shot { aspect-ratio: 4 / 3; } .kp.best .kp-shot { padding-top: 44px; aspect-ratio: auto; min-height: 100%; } .chart-wrap { overflow-x: auto; margin-inline: -8px; } .chart-wrap .chart { min-width: 620px; } .btn { min-width: 0; flex: 1; }
+}
+@media (max-width: 420px) {
+  .store-top .r .btn-s.solid { font-size: 0; gap: 0; padding: 10px 13px; } .store-top .r .btn-s.solid .ic { width: 18px; height: 18px; }
+  .lockup { gap: 10px; } .lockup .bp { font-size: 16px; } .hero h1 { font-size: clamp(34px, 12.5vw, 52px); }
+  .hero-side dd { overflow-wrap: anywhere; } .tbl.hooks { font-size: 12.5px; }
 }
 @media print { .store, .announce, .filters, .ctas { display: none; } .band { break-inside: avoid-page; } }
 '''
