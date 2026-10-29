@@ -15,6 +15,16 @@
 | [07 — Scenarios, Flows & Tasks](docs/07-scenarios-flows-tasks.md) | User Scenarios · Storyboarding · User Flows · Task Flows · Task Analysis · Feature Mapping |
 | [08 — Information Architecture](docs/08-information-architecture.md) | Content Strategy · Organisation · Sitemap · Navigation · Labeling · Proposed Solution |
 
+## BLUPRINT dashboard (final solution)
+A content audit and planning dashboard for @bluorng: snapshot, what's working, hashtags, posting pattern, audience sentiment, 10 content ideas and a 30-day calendar, in one self-contained HTML file.
+
+- [`docs/bluprint/bluorng-dashboard-demo.html`](docs/bluprint/bluorng-dashboard-demo.html): the dashboard running on **demo data** (made up, labelled on the page). Written audit: [`docs/bluprint/bluorng-dashboard-demo.md`](docs/bluprint/bluorng-dashboard-demo.md).
+- Real run, steps 1 and 2 (Apify actor `apify/instagram-scraper`, no login needed):
+  - With API access: `APIFY_TOKEN=... python3 tools/bluprint/fetch_apify.py bluorng 150 data/bluorng_posts.json`
+  - Or in the Apify Console: run *Instagram Scraper* with the input from `python3 tools/bluprint/fetch_apify.py --print-input bluorng`, then export the dataset as JSON to `data/bluorng_posts.json`.
+- Steps 3 to 10: `python3 tools/bluprint/dashboard.py data/bluorng_posts.json --handle bluorng --limit 150` writes `docs/bluprint/bluorng-dashboard.html` and the `.md` audit.
+- Code: `tools/bluprint/analyze.py` (all analysis), `tools/bluprint/dashboard.py` (HTML), `tools/bluprint/demo_data.py` (demo set).
+
 ## Case study (A4, college grid)
 - [`docs/bluorng-casestudy.pdf`](docs/bluorng-casestudy.pdf): 59-page UX case study, A4 landscape. It runs from the project proposal and timeline to user scenarios and storyboards. All content sits inside the grid's content box (left margin 33.867 mm, the other margins 23.989 mm).
 - [`docs/bluorng-casestudy.html`](docs/bluorng-casestudy.html): the same pages in a browser.
