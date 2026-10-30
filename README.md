@@ -26,7 +26,7 @@ A content audit and planning dashboard for @bluorng: snapshot, what's working, h
 - Code: `tools/bluprint/analyze.py` (all analysis), `tools/bluprint/dashboard.py` (HTML), `tools/bluprint/demo_data.py` (demo set).
 
 ## Submissions (the case study in three parts)
-- [`docs/submissions/`](docs/submissions/): Submission 1 (research, analysis and inferences, 47 pages), Submission 2 (initial concepts and final concept selection, 29 pages), Submission 3 (design, prototype and testing, 35 pages). Same pages as the full deck, renumbered, each with its own contents page.
+- [`docs/submissions/`](docs/submissions/): Submission 1 (research, analysis and inferences, 47 pages), Submission 2 (initial concepts and final concept selection, 29 pages), Submission 3 (design, prototype and testing, 35 pages). Same pages as the full deck, renumbered, each with its own contents page. Each also has a `_figma.html` (static, script-free) for the html.to.design extension.
 - Rebuild: `python3 tools/build_casestudy.py --part N --local <deps> <out>.html`, then `node tools/make_pdf.js <file url> <out>.pdf 297mm 210mm`. The page lists are in `PARTS` in `tools/build_casestudy.py`.
 
 ## Case study (A4, college grid)
