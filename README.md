@@ -25,6 +25,10 @@ A content audit and planning dashboard for @bluorng: snapshot, what's working, h
 - Steps 3 to 10: `python3 tools/bluprint/dashboard.py data/bluorng_posts.json --handle bluorng --limit 150` writes `docs/bluprint/bluorng-dashboard.html` and the `.md` audit.
 - Code: `tools/bluprint/analyze.py` (all analysis), `tools/bluprint/dashboard.py` (HTML), `tools/bluprint/demo_data.py` (demo set).
 
+## Submissions (the case study in three parts)
+- [`docs/submissions/`](docs/submissions/): Submission 1 (research, analysis and inferences, 47 pages), Submission 2 (initial concepts and final concept selection, 29 pages), Submission 3 (design, prototype and testing, 35 pages). Same pages as the full deck, renumbered, each with its own contents page.
+- Rebuild: `python3 tools/build_casestudy.py --part N --local <deps> <out>.html`, then `node tools/make_pdf.js <file url> <out>.pdf 297mm 210mm`. The page lists are in `PARTS` in `tools/build_casestudy.py`.
+
 ## Case study (A4, college grid)
 - [`docs/bluorng-casestudy.pdf`](docs/bluorng-casestudy.pdf): 100-page UX case study, A4 landscape, covering every stage from the project proposal to usability evaluation and the test report, ending in the BLUPRINT dashboard. All content sits inside the grid's content box (left margin 33.867 mm, the other margins 23.989 mm).
 - [`docs/bluorng-casestudy.html`](docs/bluorng-casestudy.html): the same pages in a browser.

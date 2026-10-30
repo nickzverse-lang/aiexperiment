@@ -21,6 +21,16 @@ from pages import chips, pages  # noqa: E402
 BOOK = bb.BOOK
 OUT = bb.ROOT / "docs" / "bluorng-casestudy.html"
 e = html.escape
+# Three college submissions cut from the full deck (page numbers of the full 100-page deck). No new pages:
+# each part reuses the cover, contents (rebuilt for its own pages) and end page, plus its stages.
+PARTS = {
+    1: ("Submission 1 · Research, analysis and inferences", {1, 2},
+        [1, 2, *range(3, 47), 100]),
+    2: ("Submission 2 · Initial concepts and final concept selection", {3},
+        [1, 2, 40, 45, 46, *range(47, 70), 100]),
+    3: ("Submission 3 · Design, prototype and testing", {4},
+        [1, 2, 59, *range(69, 100), 100]),
+}
 PROJECT_TITLE = "Designing a Platform to Help Streetwear Brands Like BLUORNG Decide What Content to Create for Instagram and Meta Ads"
 
 
@@ -118,7 +128,7 @@ def render(P, logos):
   <div class="cv-word">{logos["{{SVG_wordmark}}"]}</div>
   <img class="cv-mark" src="{img("cover.webp")}" alt="">
   <div class="cv-top"><span class="lockup">{logos["{{SVG_monogram}}"]}</span><span class="lbl">UI/UX graduation project / UX case study</span></div>
-  <div class="cv-copy"><span class="lbl">Project proposal to usability evaluation and test report</span>
+  <div class="cv-copy"><span class="lbl">{e(COVER_LABEL[0])}</span>
     <h1>What should BLUORNG make next?</h1>
     <p>{e(PROJECT_TITLE)}</p></div>
   <div class="cv-meta"><div><span>Industry partner</span><b>BLUORNG, New Delhi</b></div><div><span>Role</span><b>UX designer</b></div><div><span>Duration</span><b>4 months</b></div><div><span>Student</span><b class="fill">Name, enrolment no.</b></div></div>
@@ -130,8 +140,8 @@ def render(P, logos):
                 for d, stages in toc)
             inner = f'''<div class="cb">{header(dict(no=p["no"], phase="Contents"), logos, total)}
   <h2 class="ttl">Contents</h2><p class="lead">The case study follows the design process in order. Each page leads to the next.</p>
-  <div class="toc">{cols}</div>
-  <div class="dd"><span>Month 1 · Discover</span><span>Month 2 · Research, define</span><span>Month 3 · Ideate</span><span>Month 4 · Design, test</span></div></div>'''
+  <div class="toc" style="grid-template-columns:repeat({min(4, len(toc))},minmax(0,1fr));grid-template-rows:{"repeat(2,minmax(0,1fr))" if len(toc) > 4 else "auto"};align-content:start">{cols}</div>
+  <div class="dd">{"".join(f'<span class="{"" if not MONTHS[0] or i in MONTHS[0] else "nx"}">{m}</span>' for i, m in enumerate(["Month 1 · Discover", "Month 2 · Research, define", "Month 3 · Ideate", "Month 4 · Design, test"], 1))}</div></div>'''
         elif k == "divider":
             inner = f'''<div class="cb divider">
   <div class="dv-copy"><span class="lbl">Phase {p["n"]}</span><div class="dv-n">{p["n"]}</div><h2>{e(p["title"])}</h2><p>{e(p["text"])}</p>{chips(p["stages"])}</div>
@@ -393,7 +403,23 @@ FIT_JS = r'''
 </script>'''
 
 
-def build(local_deps=None):
+COVER_LABEL = ["Project proposal to usability evaluation and test report"]
+MONTHS = [set()]
+
+
+def select(P, part):
+    import copy
+    label, months, nums = PARTS[part]
+    COVER_LABEL[0], MONTHS[0] = label, months
+    out = [copy.deepcopy(P[n - 1]) for n in nums]
+    stages = [p["stage"].lower() for p in out if p["kind"] == "content"]
+    for p in out:
+        if p["kind"] == "divider":
+            p["stages"] = [c for c in p["stages"] if any(c.lower() in st for st in stages)] or p["stages"]
+    return out
+
+
+def build(local_deps=None, part=None):
     logos = bb.load_logos()
     template = (BOOK / "template.html").read_text()
     css = re.search(r"<style>(.*?)</style>", template, flags=re.S).group(1)
@@ -402,6 +428,8 @@ def build(local_deps=None):
     sb = [i for i, p in enumerate(P) if p["kind"] == "storyboard"]
     for i in sb:
         P[i] = storyboard(P[i]["n"])
+    if part:
+        P = select(P, part)
     body = render(P, logos)
     head = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n<title>What should BLUORNG make next?</title>\n'
     if local_deps:
@@ -416,9 +444,14 @@ def build(local_deps=None):
 
 
 if __name__ == "__main__":
+    part = None
+    if "--part" in sys.argv:  # --part N: one of the three submissions
+        i = sys.argv.index("--part")
+        part = int(sys.argv[i + 1])
+        del sys.argv[i:i + 2]
     if len(sys.argv) == 4 and sys.argv[1] == "--local":
-        out, (page, n) = pathlib.Path(sys.argv[3]), build(sys.argv[2])
+        out, (page, n) = pathlib.Path(sys.argv[3]), build(sys.argv[2], part)
     else:
-        out, (page, n) = OUT, build()
+        out, (page, n) = OUT, build(part=part)
     out.write_text(page)
     print(out, len(page), "pages:", n)
