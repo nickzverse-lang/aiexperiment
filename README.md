@@ -25,6 +25,11 @@ A content audit and planning dashboard for @bluorng: snapshot, what's working, h
 - Steps 3 to 10: `python3 tools/bluprint/dashboard.py data/bluorng_posts.json --handle bluorng --limit 150` writes `docs/bluprint/bluorng-dashboard.html` and the `.md` audit.
 - Code: `tools/bluprint/analyze.py` (all analysis), `tools/bluprint/dashboard.py` (HTML), `tools/bluprint/demo_data.py` (demo set).
 
+## Final jury presentation (16:9)
+- [`docs/bluorng-jury-presentation.pdf`](docs/bluorng-jury-presentation.pdf): 64 slides in five parts: domain and problem, research and users, concepts and first prototype, final solution and testing, conclusion and future scope. Built from the case study pages plus a conclusion slide.
+- [`docs/bluorng-jury-presentation.html`](docs/bluorng-jury-presentation.html) (arrow keys to move) and [`docs/bluorng-jury-presentation-figma.html`](docs/bluorng-jury-presentation-figma.html) for html.to.design.
+- Rebuild: `python3 tools/build_presentation.py --local <deps> <out>.html`, then `node tools/make_pdf.js <file url> docs/bluorng-jury-presentation.pdf 1280 720`. Slide lists are in `PARTS` in `tools/build_presentation.py`.
+
 ## Submissions (the case study in three parts)
 - [`docs/submissions/`](docs/submissions/): Submission 1 (research, analysis and inferences, 47 pages), Submission 2 (initial concepts and final concept selection, 29 pages), Submission 3 (design, prototype and testing, 35 pages). Same pages as the full deck, renumbered, each with its own contents page. Each also has a `_figma.html` (static, script-free) for the html.to.design extension.
 - Rebuild: `python3 tools/build_casestudy.py --part N --local <deps> <out>.html`, then `node tools/make_pdf.js <file url> <out>.pdf 297mm 210mm`. The page lists are in `PARTS` in `tools/build_casestudy.py`.
